@@ -10,6 +10,7 @@ category: algorithm
              2. 权值
     如：从前往后依次扫描，则每次扫描一个字符  前面数值*10；
 　　　　　　如345，扫描3，再3\*10+4，再34\*10+5.从后往前扫描类似处理：
+{% highlight java %} i=i++ system.out.println(i); {% endhighlight %}
 　　　　　　
 {%   highlight java   %}
 　　
