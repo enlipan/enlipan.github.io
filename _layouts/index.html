@@ -34,22 +34,21 @@
         <form action="" id="search-form">
           <a href="/index.html" id="mobile-avatar"></a> 
         <!-- NOTE: input field is disabled by default
-         <gcse:search />    -->
+         <gcse:search /> 
+      	<script>
+        (function() {
+	      	var cx = '005621555737005064366:8r-7mpsslkg';
+	      	var gcse = document.createElement('script');
+	      	gcse.type = 'text/javascript';
+	      	gcse.async = true;
+	      	gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+	      		'//www.google.com/cse/cse.js?cx=' + cx;
+	      	var s = document.getElementsByTagName('script')[0];
+	      	s.parentNode.insertBefore(gcse, s);
+      		  })();
+      	</script>-->
           <input id="search-input" type="text" placeholder="Search..." disabled >
-          
-      			<script>
-      			  (function() {
-      				var cx = '005621555737005064366:8r-7mpsslkg';
-      				var gcse = document.createElement('script');
-      				gcse.type = 'text/javascript';
-      				gcse.async = true;
-      				gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-      					'//www.google.com/cse/cse.js?cx=' + cx;
-      				var s = document.getElementsByTagName('script')[0];
-      				s.parentNode.insertBefore(gcse, s);
-      			  })();
-      			</script>
-		 </form>
+ 	</form>
 
         <nav id="pl__container">
         {% for post in site.posts %}
