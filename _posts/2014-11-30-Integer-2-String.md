@@ -6,13 +6,12 @@ category: algorithm
 #字符串转换整数：
 
 　　　　虽然有类似的Integer.parseInt()，但是笔试面试明显不会如此：
-　　　　*转字符串可以考虑为：
+　　　　*转字符串可以考虑为：*
              1. 单个字符的转换
-             2. 权值*
-    　*如：从前往后依次扫描，则每次扫描一个字符  前面数值*10；
-　　　　　　如345，扫描3，再3*10+4，再34*10+5............
-　　　　　　从后往前扫描类似处理：*
-　　　　　　{% highlight java %}
+             2. 权值
+    如：从前往后依次扫描，则每次扫描一个字符  前面数值*10；
+　　　　　　如345，扫描3，再3\*10+4，再34\*10+5.从后往前扫描类似处理：
+　　{% highlight java %}
         class ParsInt{
         public static void main(String[] args) {        
         // TODO, add your application code           
