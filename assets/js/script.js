@@ -12,11 +12,11 @@ if ($(window).width() <= 1280) {
 
 // Variables
     tag1       = $('.pl__all'),
-    tag2       = $('.技术'),
-    tag3       = $('.Android'),
-    tag4       = $('.Network'),
-    tag5       = $('.Algorithm'),
-    tag6       = $('.其他');
+    tag2       = $('.java'),
+    tag3       = $('.android'),
+    tag4       = $('.network'),
+    tag5       = $('.algorithm'),
+    tag6       = $('.others');
 var sidebar    = $('#sidebar'),
     container  = $('#post'),
     content    = $('#pjax'),
