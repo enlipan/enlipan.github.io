@@ -51,9 +51,15 @@
  	</form>
 
         <nav id="pl__container">
-        {% for post in site.posts %}
-          <a class="{{ post.categories }} pl__all" href="{{ post.url }}"><span class="pl__circle"></span><span class="pl__title">{{ post.title }}</span><span class="pl__date">{{ post.date | date: "%b %Y" }}</span></a>
-        {% endfor %}
+{% for category in site.categories %}
+<h2>{{ category | first }}</h2>
+</span>{{ category | last | size }}</span>
+<ul class="arc-list">
+    {% for post in category.last %}
+        <li>{{ post.date | date:"%d/%m/%Y"}}<a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endfor %}
         </nav>
       </div> <!-- end #posts-list -->
     </aside> <!-- end #sidebar -->
