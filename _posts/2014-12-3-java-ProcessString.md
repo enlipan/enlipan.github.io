@@ -16,8 +16,7 @@ category: algorithm
             *  返回:无        
           
 
-｛% highlight   java  %｝
-
+{% highlight java %}
 public class ProcessString {    
     public static void main(String[] args) {        
         // TODO, add your application code
@@ -25,7 +24,7 @@ public class ProcessString {
         processString("cad","bef",strout);
         //System.out.println(reverseBinary("1011")); 
     }
-    static void  processString(String str1,String str2,String strOutput)    {
+        static void  processString(String str1,String str2,String strOutput){
         String  strs=str1+str2;
         char [] chs=strs.toCharArray();    
         int  len1=(chs.length%2==0)?(chs.length/2):(chs.length/2+1);
@@ -61,9 +60,7 @@ public class ProcessString {
         numorchar.put("E","1110");numorchar.put("F","1111");
         numorchar.put("1010","A");numorchar.put("1011","B");
         numorchar.put("1100","C");numorchar.put("1101","D");
-        numorchar.put("1110","E");numorchar.put("1111","F");
-
-        //进制变换        
+        numorchar.put("1110","E");numorchar.put("1111","F"); //进制变换  
         for (int i = 0; i<chs.length; i++){
             if((chs[i]>='0'&&chs[i]<='9')||    (chs[i]>='A'&&chs[i]<='F')||(chs[i]>='a'&&chs[i]<='f')){
                     if(chs[i]>='0'&&chs[i]<='9'){
@@ -83,8 +80,7 @@ public class ProcessString {
                             chs[i]=numorchar.get(s_rev).charAt(0);
                         }else{
                         chs[i]=(num+"").charAt(0);
-                        }    
-                    
+                        }
                     }else{
                     String s_rev=reverseBinary(numorchar.get(chs[i]+""));
                         int num=Integer.parseInt(s_rev,2);
@@ -93,10 +89,8 @@ public class ProcessString {
                         }else{
                         chs[i]=(num+"").charAt(0);
                         }    
-                    }
-                
-                }
-                
+                    }                
+                }                
         }        
         strOutput=new String(chs);
         System.out.println(strOutput);        
@@ -120,8 +114,7 @@ public class ProcessString {
             char key=k[low];
             while(low<high){
                 while((low<high)&&k[high]>=key)
-                    --high;
-    
+                    --high;    
             char temp=k[high];                
             k[high]=k[low];
             k[low]=temp;
@@ -143,7 +136,8 @@ public class ProcessString {
         }
         System.out.println();
     }
-}
-{%  endhighlight  %｝     
+}   
+
+{% endhighlight %}     
     
 暂时先就这么实现吧，应该有更好的办法，进制变换没有琢磨到好的办法
