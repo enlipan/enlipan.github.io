@@ -5,8 +5,7 @@ category: algorithm
 ---
 #字符串转换整数：
 
-　　　　虽然有类似的Integer.parseInt()，但是笔试面试明显不会如此：
-　　　　转字符串可以考虑为：
+　　　　虽然有类似的Integer.parseInt()，但是笔试面试明显不会如此;转字符串可以考虑为：
 
          - 单个字符的转换
          - 权值
