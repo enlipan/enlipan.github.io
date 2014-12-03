@@ -10,12 +10,13 @@ category: algorithm
 关于文章的聚类问题，最后困扰了我大半天：
 核心问题是文章无法按照既定约束去聚类：
 最后发现是文章头`category`转换问题；也就是说当我`category`设定为大写时：
--category: Java
--category: JAVA
+
+         - category: Java
+         - category: JAVA
 
 之类的时候，默认文章全部设定为：
 
--category: java
+         - category: java
 
 这点是在输出之后发现的：[参考链接](http://www.tuicool.com/articles/INBnMz)
 
