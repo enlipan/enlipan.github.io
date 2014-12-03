@@ -138,5 +138,5 @@ public class ProcessString {
 }   
 
 {% endhighlight %}     
-    
+- - -    
 暂时先就这么实现吧，应该有更好的办法，进制变换没有琢磨到好的办法
