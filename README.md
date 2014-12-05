@@ -1,6 +1,6 @@
 ---
 #模版来源
-# 3-Jekyll Theme[Github](https://github.com/P233/3-Ghost)
+# 3-Jekyll Theme[Github](https://github.com/P233/3-Jekyll)
 ---
 
 ## Copyright & License
