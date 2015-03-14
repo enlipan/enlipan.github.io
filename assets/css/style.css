@@ -593,13 +593,13 @@ iframe {
 #copyright {
   margin: 0;
   padding-top: 1em;
-  font-size: .9em;
+  font-size: .3em;
   text-align: center;
-  border-top: 2px solid rgba(229, 232, 236, 0.5); }
+  border-top: 2px solid rgba(200,200,200, 0.5); }
   #copyright > a {
-    color: #2eb695; }
+    color: #BDE2BB; }
     #copyright > a:hover {
-      text-decoration: underline; }
+      text-decoration: none; }
 
 /*---------------------------------*\
    Fullscreen Style
