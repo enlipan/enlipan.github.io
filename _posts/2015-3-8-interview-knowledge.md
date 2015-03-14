@@ -9,7 +9,21 @@ category: others
 
 《数据结构（C语言版）》Or《数据结构（Java语言版）》
 
+《Effective Java》
+
+《Thinking in Java》：重点章节挑选细读
+
+《深入理解Java虚拟机》：第二部分内存管理最重要
+
+《编写刻度代码的艺术》：训练代码规范好书
+
 《深入理解计算机系统》：强赞！
+
+《现代操作系统》：核心进程线程文件系统章节
+
+《Head First 设计模式》：重点研读几个常用模式
+
+《算法（第四版）》：Java实现很好
 
 《算法导论》：算法圣经。
 
@@ -40,5 +54,14 @@ category: others
 
 5.[Java面试问题及答案](http://www.journaldev.com/java-interview-questions "java-interview-questions")
 
+6.[Programming tutorials and source code examples](http://www.java2s.com/ "编程资源大全")
+
+7.[USACO Training](http://www.nocow.cn/index.php/USACO_Training#Section_1.0)
+
+8.[Design  Patterns](http://www.oodesign.com/ "Design  Patterns")
+
+9.[journaldev-一个讲的很透彻的ava博客](http://www.journaldev.com/  )
+
+10.[Java  Code Geeks](http://www.javacodegeeks.com/category/career/  "Career ")
 - - -
 *更新*
