@@ -5,6 +5,8 @@ category: others
 ---
 ##针对2014年笔试面试资料的整理  
 
+---
+
 ###书籍整理    
 
 
@@ -36,13 +38,15 @@ category: others
 
 《剑指offer：名企面试官精讲典型编程题》：推荐。
 
-《程序员面试笔试宝典（何昊著）》：一般，知识梳理级别
+《程序员面试笔试宝典（何昊著）》：书很一般，知识梳理适当看，不浪费过多时间
 
 《鸟哥的Linux私房菜》和《Unix高级环境编程》：linux相关知识，加分项。
 
+---
+
 ###网络上值得参考的资源       
 
-1.[结构之法算法之道](http://blog.csdn.net/v_july_v)，全而广
+1.[结构之法算法之道](http://blog.csdn.net/v_july_v)——全而广
 
 
 2.[设计模式的总结](http://blog.csdn.net/xtwolf008/article/details/8807006)
@@ -67,4 +71,4 @@ category: others
 10.[Java  Code Geeks](http://www.javacodegeeks.com/category/career/  "Career ")      
 
 - - -
-*更新*
+**持续更新**
