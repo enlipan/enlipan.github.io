@@ -2,10 +2,11 @@
 
 [itlipan.info ](http://itlipan.info/  "ITlipan ")
 
-**模版来源**
-3-Jekyll Theme[Github](https://github.com/P233/3-Jekyll)
-
 ---
+
+**模版来源**
+
+3-Jekyll Theme——[Github](https://github.com/P233/3-Jekyll)
 
 **Copyright & License**
 
