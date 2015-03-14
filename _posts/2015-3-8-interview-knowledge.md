@@ -42,7 +42,7 @@ category: others
 
 ###网络上值得参考的资源       
 
-1.全而广，[结构之法算法之道](http://blog.csdn.net/v_july_v)，赞
+1.[结构之法算法之道](http://blog.csdn.net/v_july_v)，全而广
 
 
 2.[设计模式的总结](http://blog.csdn.net/xtwolf008/article/details/8807006)
