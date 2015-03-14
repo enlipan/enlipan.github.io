@@ -3,9 +3,10 @@ layout: post
 title: Interview Questions
 category: others
 ---
-针对2014年笔试面试资料的整理  
+##针对2014年笔试面试资料的整理  
 
-####书籍整理
+###书籍整理    
+
 
 《数据结构（C语言版）》Or《数据结构（Java语言版）》
 
@@ -39,7 +40,8 @@ category: others
 
 《鸟哥的Linux私房菜》和《Unix高级环境编程》：linux相关知识，加分项。
 
-####网络上值得参考的资源
+###网络上值得参考的资源       
+
 1.全而广，[结构之法算法之道](http://blog.csdn.net/v_july_v)，赞
 
 
