@@ -1,12 +1,14 @@
 ---
-#Blog[itlipan.info ](http://itlipan.info/  "ITlipan ")
+**Blog**
+
+[itlipan.info ](http://itlipan.info/  "ITlipan ")
 
 
-#模版来源
-# 3-Jekyll Theme[Github](https://github.com/P233/3-Jekyll)
+**模版来源**
+**3-Jekyll Theme[Github](https://github.com/P233/3-Jekyll)**
 ---
 
-## Copyright & License
+**Copyright & License**
 
 >Copyright (c) 2013 Peiwen Lu - Released under The MIT License.
 
