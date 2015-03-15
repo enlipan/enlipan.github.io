@@ -1,10 +1,8 @@
 ---
 layout: index
-title: Welcome
+title: About Here
 category: others
 ---
-
-# Welcom
 
 ------
 
@@ -19,4 +17,4 @@ category: others
 
 ------
 
-# [Github](https://github.com/itlipan/itlipan.github.com)
+### [Github](https://github.com/itlipan/itlipan.github.com)

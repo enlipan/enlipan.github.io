@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Interview Questions
-category: others
+category: Java
 ---
 ##针对2014年笔试面试资料的整理  
 
