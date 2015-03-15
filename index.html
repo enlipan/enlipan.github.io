@@ -1,36 +1,17 @@
 ---
-layout: index 
+layout: index
 title: 首页
 ---
 
-<br>
-<div class="row">
-  <div class="col-md-12">
-    <div class="panel panel-primary">
-      <div class="panel-heading">{{ site.locals.newest }}</div>
-      {% for post in paginator.posts %}
-        <a  href='{{ post.url }}' class="list-group-item pjaxlink clearfix">
-          {{post.title}}
-          <span class="badge">{{ post.date | date:"%Y年%m月%d日" }}</span>
-        </a>
-      {% endfor %}
-    </div>
-  </div>
-  {% for cate in site.cates %}
-    <div class="col-md-12">
-      <div class="panel panel-primary">
-        <div class="panel-heading">{{ cate }}</div>
-        {% for tag in site.tags %} 
-          {% if tag[0] == cate %}
-            {% for post in tag[1] %}
-              <a  href='{{ post.url }}' class="list-group-item pjaxlink clearfix">
-                {{post.title}}
-                <span class="badge">{{ post.date | date:"%Y年%m月%d日" }}</span>
-              </a>
-            {% endfor %}
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-  {% endfor %}
-</div>
+<article id="post__content">
+  <h1 id="post__title" align="center">Get it</h1>
+  <blockquote>
+  <p> So,Let's talk something about me.</p>
+  <p>辛未年生，卒于未知</p>
+  <p>通信人</p>
+  <p>从业互联网</p>
+  <p>程序猿一枚</p>
+  <p><a href="http://itlipan.info/others/2014/12/01/Welcom.html"  target ="_self">About Here</a></p>
+</blockquote>
+</article>
+ <!-- end #post__content -->
