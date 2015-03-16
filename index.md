@@ -23,6 +23,8 @@ title: 首页
 ------
 
 #### See [Github](https://github.com/itlipan/itlipan.github.com)
-#### Email Here 
-#### Weibo Here 
+
+#### Email [Here] (itlipan@foxmail.com )
+
+#### Weibo [Here](http://weibo.com/u/1928091817/home) 
 
