@@ -21,6 +21,7 @@ category: others
 这点是在输出之后发现的：[参考链接](http://www.tuicool.com/articles/INBnMz)
 
 {% highlight javascript %}
+
 {% for category in site.categories %}
 <h2>{{ category | first }}</h2>
 </span>{{ category | last | size }}</span>
@@ -30,6 +31,7 @@ category: others
     {% endfor %}
 </ul>
 {% endfor %}
+
 {% endhighlight  %}
 
 <p>也就是全部小写转换，而如果在js代码中设定的是对于Java或者JAVA的匹配，文章将无法正确聚类；</p>
