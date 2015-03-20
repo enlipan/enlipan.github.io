@@ -56,4 +56,4 @@ $(document).ready(function(){
 
 #####3.显示效果
 
-！[效果图](/assets/img/concern_compete.png)
+![效果图](/assets/img/concern_compete.png)
