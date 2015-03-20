@@ -38,7 +38,7 @@
           <input id="search-input" type="text" placeholder="Search..."  />
           	</form>
          -->
-
+        <span class="pl__circle"></span><span class="pl__title"><font style="font-family:Geek Victoria">Mind's Eye</font></span>
         <nav id="pl__container">
         {% for post in site.posts %}
           <a class="{{ post.categories }} pl__all" href="{{ post.url }}"><span class="pl__circle"></span><span class="pl__title">{{ post.title }}</span><span class="pl__date">{{ post.date | date: "%d %b %Y" }}</span></a>
