@@ -27,9 +27,9 @@ category | first
 category | last | size
 <ul class="arc-list">
 for post in category.last 
-    post.date | date:"%d/%m/%Y"<a href="{{ post.url }}">{{ post.title }}</a>
+    post.date | date:"%d/%m/%Y"
+        href=" post.url "  post.title 
   endfor 
-</ul>
 endfor 
 
 {% endhighlight  %}
