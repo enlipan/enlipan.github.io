@@ -54,6 +54,6 @@ $(document).ready(function(){
             嵌入数据name和list           
 {% endhighlight %}  
 
- #####3.显示效果
+#####3.显示效果
 
-！[效果图](../assets/img/concern_compete.png)
+！[效果图](/assets/img/concern_compete.png)
