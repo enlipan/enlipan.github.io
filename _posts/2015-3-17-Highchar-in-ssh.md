@@ -1,8 +1,10 @@
 ---
 layout: post
-title: HighChart SSH整合
+title: HighChart In SSH
 category: java
 ---
+
+###Highchart与SSH框架整合
 
 ###Highchart
 
