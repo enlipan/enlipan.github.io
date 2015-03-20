@@ -57,3 +57,5 @@ $(document).ready(function(){
 #####3.显示效果
 
 ![效果图](/assets/img/concern_compete.png)
+
+>顺便看了下jekyll插入图片的方法，并实践成功，Got it
