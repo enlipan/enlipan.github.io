@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 关于Jekyll-category大小写问题的探究探究
+title: 解决Jekyll-category大小写问题
 category: others
 ---
 
