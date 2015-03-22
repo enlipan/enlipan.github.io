@@ -78,11 +78,15 @@ Python中数据类型分为两类：
 >>
 >>rmdir()方法
 
-Python模块：Import语句自动搜索“当前搜索路径”的该模块，如果该模块不在搜索路径中需要指定PYTHONPATH,PYTHONPATH环境变量的內容會被读取，成為sys.path陣列中的字串元素，而这个字串所代表的路徑，正是模組寻找的根據；可以使用dir()函数查询模組中的属性性，关于__name__屬性。如果你使用python指令直接执行某个.py模块，則__name__屬性會被設定為"__main__"名稱，如果是import語句汇入模組，则__name__被设定為模组名。
+Python模块：Import语句自动搜索“当前搜索路径”的该模块，如果该模块不在搜索路径中需要指定PYTHONPATH,PYTHONPATH环境变量的內容會被读取，成為sys.path陣列中的字串元素，而这个字串所代表的路徑，正是模組寻找的根據；
+
+可以使用dir()函数查询模組中的属性性，关于__name__屬性。如果你使用python指令直接执行某个.py模块，則__name__屬性會被設定為"__main__"名稱，如果是import語句汇入模組，则__name__被设定為模组名。
 
 >作为环境变量，PYTHONPATH由装在一个列表里的许多目录组成。
 >
 >>例如：set PYTHONPATH=c:\python20\lib;
+>>
+>>或者import sys;sys.path.append(path);
 >
 >包的概念：__init__.py文件的添加，建包
 
