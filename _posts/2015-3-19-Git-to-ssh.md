@@ -32,3 +32,20 @@ ror=<fetch|push>] <name> <url>
     -v, --verbose         be verbose; must be placed before a subcommand
 
 {% endhighlight %}
+
+>$ git remote rm origin
+>
+>$ git remote   add  origin git@github.com:itlipan/itlipan.github.com
+>
+>$ git push origin
+
+{% highlight Bash %}
+
+$ git remote  -v
+origin  git@github.com:itlipan/itlipan.github.com (fetch)
+origin  git@github.com:itlipan/itlipan.github.com (push)
+
+{% endhighlight %}
+
+更改完毕，再次Push测试，无需再次输入用户名密码。
+
