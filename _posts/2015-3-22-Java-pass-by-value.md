@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java/_Pass/_By_Value
+title: Java_Pass_By_Value
 category: java
 ---
 ###关于Java的值传递特性
