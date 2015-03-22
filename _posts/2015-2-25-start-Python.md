@@ -64,6 +64,28 @@ Python中数据类型分为两类：
 
 数据传输（IO 、File）：
 
+>raw_input函数与input函数
+>
+>open函数打开文件-open(file_name [, access_mode][, buffering])
+>
+>File对象
+>
+>Python中的目录
+>
+>>mkdir()方法
+>>
+>>chdir()方法与getcwd()方法：
+>>
+>>rmdir()方法
+
+Python模块：Import语句自动搜索“当前搜索路径”的该模块，如果该模块不在搜索路径中需要指定PYTHONPATH
+
+>作为环境变量，PYTHONPATH由装在一个列表里的许多目录组成。
+>
+>>例如：set PYTHONPATH=c:\python20\lib;
+>
+>包的概念：__init__.py文件的添加，建包
+
 ---
 
 **待更新**
