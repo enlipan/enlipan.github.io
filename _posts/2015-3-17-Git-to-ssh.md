@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 解决GitPush用户名登录问题
-category: python
+category: others
 ---
 
 最近突然发现Push要登录用户名与密码，操作体验下降得很厉害，Google之发现是Git采用了Https的方式登录了，原先的SSH也不知道哪里去了，遂在此更改回SSH验证方式：
@@ -11,7 +11,7 @@ category: python
 >git remote
 
 
-{% highlight  %}
+{% highlight Bash %}
 
 $ git remote -help
 usage: git remote [-v | --verbose]
