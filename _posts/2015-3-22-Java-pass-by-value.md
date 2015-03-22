@@ -5,6 +5,10 @@ category: java
 ---
 ###关于Java的值传递特性
 
+写东西的时候利用橡皮鸭原理，自己对自己说话，梳理知识其实感觉也挺好的，其实是代码评审的一个借用：
+
+>原理是“Once a problem is described in sufficient detail, its solution is obvious.”（一旦一个问题被充分地描述了他的细节，那么解决方法也是显而易见的。） 
+
 突然回忆起这个点，就做个小的回顾，记录一下：
 
 {% highlight java %}
@@ -80,22 +84,6 @@ o1与o2变量不过是Qi变量与Lee变量的Copy副本，只是指向堆空间�
 紧接着，新建了一个同样名称为Jack的Man对象存在于堆空间中，如图，虽然名一样但已经不是同一个对象了；
 
 ![foo对象更换](/assets/img/20150322/foo_over.PNG)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
