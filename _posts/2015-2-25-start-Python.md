@@ -46,7 +46,7 @@ Python中数据类型分为两类：
 >>
 >>Tuple:元组用"()"标识。内部元素用逗号隔开。但是元素不能二次赋值，相当于只读列表。
 >>
->>dictionary：key-value
+>>dictionary：key:value键值对，字典用"{ }"标识。
 >
 >数据类型转换 :Operator（value）
 
