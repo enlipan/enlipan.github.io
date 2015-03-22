@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 解决GitPush用户名登录问题
+title: 解决Git每次Push需要用户名登录问题
 category: others
 ---
 
@@ -47,5 +47,5 @@ origin  git@github.com:itlipan/itlipan.github.com (push)
 
 {% endhighlight %}
 
-更改完毕，再次Push测试，无需再次输入用户名密码。
+更改完毕，再次Push测试，无需再次输入用户名密码
 
