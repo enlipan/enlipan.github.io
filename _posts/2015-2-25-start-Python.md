@@ -43,7 +43,7 @@ Python中数据类型分为两类：
 >>>>'helloworld'[::-1]   实际就是逆序输出，从基准（负数的步长代表了基准是右边开始计数）开始每次读取下一个-1个字符
 >
 
-表达式（Expressions）：\<Object\> \<Oprator\> \<Object\>
+表达式（Expressions）：\<Object\> \<Operator\> \<Object\>
 
 操作符（Operator）：操作符优先级与操作符重载（Overload）
 
