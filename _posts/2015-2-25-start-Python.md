@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Python小试
+title: 我的Python开端
 category: python
 ---
-### Python初体验
+### Python初识
 利用2月过年休息的一段时间，啃完了英文版Python Hard Way，下一步继续啃Dive into Python，进一步fork 源码阅读，学习框架、爬虫等知识区域，活学活用。
 
 Python属于动态语言、强类型语言。 
@@ -41,13 +41,22 @@ Python中数据类型分为两类：
 >>>Slice 切片，取子串，指定索引，注意边界情况以及步长问题
 >>>
 >>>>'helloworld'[::-1]   实际就是逆序输出，从基准（负数的步长代表了基准是右边开始计数）开始每次读取下一个-1个字符
+>>
+>>List:列表用[ ]标识,从左到右索引默认0开始的，从右到左索引默认-1开始
+>>
+>>Tuple:元组用"()"标识。内部元素用逗号隔开。但是元素不能二次赋值，相当于只读列表。
+>>
+>>dictionary：key-value
 >
+>数据类型转换 :Operator（value）
 
 表达式（Expressions）：\<Object\> \<Operator\> \<Object\>
 
 操作符（Operator）：操作符优先级与操作符重载（Overload）
 
-流程控制：
+语言关键字与语法：主要指函数以及对象定义和Python代码块利用“:”缩进的语法，以及保留字符
+
+流程控制：顺序执行，循环执行，选择执行
 
 数据传输（IO 、File）：
 
