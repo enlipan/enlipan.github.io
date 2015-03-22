@@ -25,13 +25,13 @@ Python属于动态语言、强类型语言。
 Python中数据类型分为两类：
 
 >标量数据类型（Scalar）
->>
+>
 >>Int
 >>
 >>Float
 >>
 >>Bool
->>
+>
 >非标量数据(No Scalar)
 
 ---
