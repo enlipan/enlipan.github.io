@@ -72,3 +72,8 @@ Process finished with exit code 0
 3.27  update 可指定路径   可匹配中文 可输出中文路径
 
 感觉代码的编写思维Python抽象思维还不够，代码还能够更精简，待续
+
+乱码技术核心参考
+
+[Solving Unicode Problems in Python 2.7](http://www.azavea.com/blogs/labs/2014/03/solving-unicode-problems-in-python-2-7/   "Solving Unicode Problems in Python 2.7")
+
