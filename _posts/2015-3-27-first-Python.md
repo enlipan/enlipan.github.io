@@ -18,7 +18,6 @@ category: python
 # -*- coding: utf-8 -*-
 __author__ = 'Lee'
 import  os
-import  codecs
 
 def search( path,strInFilNname):
     parentpath = [x for x in os.listdir(path) if  os.path.isdir(os.path.join(path,x))]  # get all dirpath
@@ -38,8 +37,9 @@ if __name__ == '__main__':
     #print os.environ
     #print os.getenv("PATH")
     print os.path.abspath('.')
-    strInFilNname = raw_input("input filename:").decode('utf-8')
-    pathName =unicode(raw_input("input path:"))#use unicode() function to handle chinese path
+    strInFilNname = u'%s' % raw_input("input filename:").decode('utf-8')
+    print  type(strInFilNname)
+    pathName = u'%s'% raw_input("input path:").decode('utf-8')#use unicode() function to handle chinese path
     #search(os.path.abspath('.'),strInFilNname)
     search(pathName,strInFilNname)
 
@@ -69,6 +69,6 @@ Process finished with exit code 0
 **Binggo**
 
 ---
-3.27  update 可指定路径   可匹配中文 可输出中文路径
+3.28  update 可指定路径   可匹配中文 可输出中文路径
 
 感觉代码的编写思维Python抽象思维还不够，代码还能够更精简，待续
