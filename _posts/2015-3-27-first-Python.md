@@ -14,15 +14,18 @@ category: python
 3.代码编写
 
 {% highlight python %}
+
+# -*- coding: utf-8 -*-
 __author__ = 'Lee'
 import  os
+import  codecs
 
 def search( path,strInFilNname):
     parentpath = [x for x in os.listdir(path) if  os.path.isdir(os.path.join(path,x))]  # get all dirpath
     printfilepath(path,strInFilNname)
     for x in parentpath:
-        innerpath = os.path.join(path,x)
-        search(os.path.abspath(innerpath),strInFilNname)
+        inpath = unicode(os.path.join(path,x))
+        search(os.path.abspath(inpath),strInFilNname)
 
 
 def printfilepath(path,filename):
@@ -35,8 +38,10 @@ if __name__ == '__main__':
     #print os.environ
     #print os.getenv("PATH")
     print os.path.abspath('.')
-    strInFilNname = raw_input("Please input stringInFilename:")
-    search(os.path.abspath('.'),strInFilNname)
+    strInFilNname = raw_input("input filename:").decode('utf-8')
+    pathName =unicode(raw_input("input path:"))#use unicode() function to handle chinese path
+    #search(os.path.abspath('.'),strInFilNname)
+    search(pathName,strInFilNname)
 
 {% endhighlight %}
 
@@ -62,5 +67,8 @@ Process finished with exit code 0
 ---
 
 **Binggo**
+
+---
+3.27  update 可指定路径   可匹配中文 可输出中文路径
 
 感觉代码的编写思维Python抽象思维还不够，代码还能够更精简，待续
