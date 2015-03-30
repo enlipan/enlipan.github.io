@@ -91,4 +91,8 @@ o1与o2变量不过是Qi变量与Lee变量的Copy副本，只是指向堆空间�
 
 参考文章：
 
+>[site]({{ site.url }})
+>
+>[post]({{ post.url }})
+>
 >[Java is Pass by Value and Not Pass by Reference](http://www.journaldev.com/3884/java-is-pass-by-value-and-not-pass-by-reference )
