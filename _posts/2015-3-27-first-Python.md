@@ -41,8 +41,8 @@ if __name__ == '__main__':
     #strInFilNname = u'%s' % raw_input("input filename:").decode('utf-8')
     strInFilNname = raw_input("input filename:").decode(sys.stdin.encoding)
     print  type(strInFilNname)
-    #pathName = u'%s'% raw_input("input path:").decode('utf-8')#use unicode() 
-    function to handle chinese path
+    #pathName = u'%s'% raw_input("input path:").decode('utf-8')
+    #use unicode() function to handle chinese path
     pathName = raw_input("input path:").decode(sys.stdin.encoding)
     #search(os.path.abspath('.'),strInFilNname)
     search(pathName,strInFilNname)
