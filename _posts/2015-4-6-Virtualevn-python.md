@@ -26,6 +26,7 @@ Virtualevn的安装相关很简单利用`Scripts`文件夹下`Easy_install`工�
 ---
 
 更多参考参数：
+
 [virtualenv中文文档](http://virtualenv-chinese-docs.readthedocs.org/en/latest/#id29)
 
 [How to use Python virtualenv](http://www.pythonforbeginners.com/basics/how-to-use-python-virtualenv)
