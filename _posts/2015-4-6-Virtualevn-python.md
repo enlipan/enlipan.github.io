@@ -7,12 +7,12 @@ Python虚拟环境使用：
 
 Virtualevn的安装相关很简单利用`Scripts`文件夹下`Easy_install`工具
 
->*python  ez_setup.py
->*easy_install virtualevn
+* python  ez_setup.py
+* easy_install virtualevn
 
 安装完成，在相应文件夹下创建虚拟环境，每个文件夹可以创建对应环境
 
->*virtualenv   envname
+>virtualenv   envname
 >
 >>此处可选择相应参数指定python环境，windows下使用`virtualenv  --python="path\python.exe" envname`
 >>
