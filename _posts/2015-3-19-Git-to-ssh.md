@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 解决Git每次Push需要用户名登录问题
+title: 解决Git每次Push需用户名登录问题
 category: others
 ---
 
