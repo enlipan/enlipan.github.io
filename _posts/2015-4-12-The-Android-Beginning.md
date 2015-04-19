@@ -43,11 +43,11 @@ ScrollView滚动，在屏幕滚动过程中如何平衡性能与展示效果，�
 
 视图的创建流程一般是先前端界面XML文件处理，在完成数据的处理问题，向前端View控件填充数据，而数据的填充要尤其注意擅用Adapter去完成ListView数据填充问题。**Adapter与ListView**关联，互相之间请求反馈。
 
-![AdapterDataUpdate](/asset/img/20150418/AdapterDataupdate.jpg)
+![AdapterDataUpdate](/assets/img/20150418/AdapterDataupdate.jpg)
 
 另一个重要方法是`FindViewById()`,需要注意的是在视图Layout嵌套中，不要时时每次都去遍历整个XML文件构建资源树去获取View，我们知道XML的文件读取树的构建是非常消耗资源的。
 
-![FindViewById](/asset/img/20150418/Findviewbyid.jpg)
+![FindViewById](/assets/img/20150418/Findviewbyid.jpg)
 
 整个完整的树中嵌套了一个子树，当我们已经获取子树之后，可以使用`Contain.findviewbyid(R.id.imgview)`去完成View控件的获取，而无需每次使用`Root.findviewbyid()`每次遍历根资源树去获取。
 
