@@ -53,14 +53,35 @@ ScrollView滚动，在屏幕滚动过程中如何平衡性能与展示效果，�
 
 ![FindViewById](/assets/img/20150418/Findviewbyid.jpg)
 
-整个完整的树中嵌套了一个子树，当我们已经获取子树之后，可以使用`Contain.findviewbyid(R.id.imgview)`去完成View控件的获取，而无需每次使用`Root.findviewbyid()`每次遍历根资源树去获取。
+整个完整的树中嵌套了一个子树，当我们已经获取子树之后，可以使用`Contain.findviewbyid(R.id.imgview)`去完成View控件的获取，而无需每次使用`Root.findviewbyid()`每次遍历根资源树去获取。另外有一种方式是利用View Holder的模式，减少在Adapter中getView()方法中调用findViewById()次数。
 
+
+{% highlight java %}
+
+public View getView(int position, View convertView, ViewGroup parent) {
+    ViewHolder holder;
+    if (convertView == null) {
+        convertView = mInflater.inflate(R.layout.your_layout, null);
+        holder = new ViewHolder();
+        holder.text = (TextView) convertView.findViewById(R.id.text);
+        convertView.setTag(holder);
+    } else {
+        holder = convertView.getTag();
+    }
+    holder.text.setText("Position " + position);
+    return convertView;
+}
+private static class ViewHolder {
+    public TextView text;
+}
+
+{% endhighlight %}
 
 ---
 
 ### 补充说明：
 
-**Lession 1 ————Lauching on a Device **
+**Lession 1 ————Lauching on a Device**
 
 Command Line Tool Commands
 
