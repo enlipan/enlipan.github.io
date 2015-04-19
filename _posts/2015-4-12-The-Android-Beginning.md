@@ -41,6 +41,8 @@ Android屏幕适配：
 
 ScrollView滚动，在屏幕滚动过程中如何平衡性能与展示效果，一般情况下在单屏幕无法显示完的情况下，我们设定**屏幕上下方各多准备好一个显示Item**，一方面滚动视图闪烁，显示效果好。同时为处理性能过度消耗问题，设定视图的循环更新处理。
 
+![ScrollView](/assets/img/20150418/listviewscroll.png)
+
 视图的创建流程一般是先前端界面XML文件处理，在完成数据的处理问题，向前端View控件填充数据，而数据的填充要尤其注意擅用Adapter去完成ListView数据填充问题。**Adapter与ListView**关联，互相之间请求反馈。
 
 ![AdapterDataUpdate](/assets/img/20150418/AdapterDataupdate.jpg)
@@ -50,7 +52,6 @@ ScrollView滚动，在屏幕滚动过程中如何平衡性能与展示效果，�
 ![FindViewById](/assets/img/20150418/Findviewbyid.jpg)
 
 整个完整的树中嵌套了一个子树，当我们已经获取子树之后，可以使用`Contain.findviewbyid(R.id.imgview)`去完成View控件的获取，而无需每次使用`Root.findviewbyid()`每次遍历根资源树去获取。
-
 
 
 ---
