@@ -6,6 +6,8 @@ category: android
 
 不久就要去上海入职了，虽说入职的是`Android`开发，但是自己对于`Andriod`并没有入门，当初拿到Offer也是凭着比较过硬的`Java`基础以及`Java Web`开发的经验成功转行到移动开发的，对于自己的成功转移动开发也比较满意，转眼硕士论文也基本完工，只等待答辩。在这个时间节点，很有必要把自己的理论知识补充起来，知识的补充选择网络`MOOC`辅助结合`Android编程权威指南`，两线并发利用这20天左右的时间完成课程。
 
+看的过程中用记录本，随想随记记录了主要的学习要点，在这里整理下这些要点知识，顺便做知识的回顾
+
 ##Developing Android Apps——UDACITY课程学习记录
 
 1. Android Studio安装与使用，尽量强迫自己适应快捷键的使用，使用熟练可加快自己思维的连贯性以及开发效率。
@@ -94,3 +96,5 @@ Adapters are a little unusual compared to similar mechanisms in other frameworks
 **MainThread vs. Background Thread**
 
 In Android there is a concept of the Main Thread or UI Thread. If you’re not sure what a thread is in computer science, check out this wikipedia article. The main thread is responsible for keeping the UI running smoothly and responding to user input. It can only execute one task at a time. If you start a process on the Main Thread which is very long, such as a complex calculation or loading process, this process will try to complete. While it is completing, though, your UI and responsiveness to user input will hang.
+
+[Performance Tips for Android’s ListView](http://lucasr.org/2012/04/05/performance-tips-for-androids-listview/   "提升Android ListView性能的几个技巧")
