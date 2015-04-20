@@ -1,6 +1,6 @@
 ---
 layout: post
-title: First Python Programme
+title: First Python Program
 category: python
 ---
 ###第一个Python试炼小代码
