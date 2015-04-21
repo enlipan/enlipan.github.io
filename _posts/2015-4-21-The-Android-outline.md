@@ -3,8 +3,7 @@ layout: post
 title: Android知识路线要点
 category: android
 ---
-
-<img src="/assets/img/20150421/Android学习知识要点.png" alt="Android学习知识要点" width="100%" height="220%">
+![Android学习知识要点](/assets/img/20150421/Android学习知识要点.pdf)
 
 结合要点知识路线，以及目前的已有的知识结构情况，进一步明确自己的学习路线。
 
