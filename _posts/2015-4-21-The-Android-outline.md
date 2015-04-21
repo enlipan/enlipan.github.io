@@ -3,7 +3,7 @@ layout: post
 title: Android知识路线要点
 category: android
 ---
-![Android学习知识要点](/assets/img/20150421/Android学习知识要点.pdf)
+![Android学习知识要点](http://img.blog.csdn.net/20141123154112649?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHl6X2xtbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 结合要点知识路线，以及目前的已有的知识结构情况，进一步明确自己的学习路线。
 
