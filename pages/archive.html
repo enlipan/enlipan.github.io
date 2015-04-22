@@ -10,7 +10,7 @@ title: 时光档案
     {% capture next_month %}{{ post.previous.date | date: "%m" }}{% endcapture %}
   
     {% if forloop.first %}
-      <legend id="{{this_year}}-{{this_month}}" ><font style="font-family:Cursive">{{this_year}}年-{{this_month}}月</font></legend>
+      <legend id="{{this_year}}-{{this_month}}" ><font style="font-family:Cursive">{{this_year}}Y-{{this_month}}M</font></legend>
       <ul>
     {% endif %}
     <li><span class="pl__date">{{ post.date | date: "%Y-%m-%d" }}</span>  
@@ -22,12 +22,12 @@ title: 时光档案
     {% else %}
       {% if this_year != next_year %}
         </ul>
-        <legend id="{{next_year}}-{{next_month}}" ><font style="font-family:Cursive">{{this_year}}年-{{this_month}}月</font></legend>
+        <legend id="{{next_year}}-{{next_month}}" ><font style="font-family:Cursive">{{next_year}}Y-{{next_month}}M</font></legend>
         <ul>
       {% else %}    
         {% if this_month != next_month %}
         </ul>
-        <legend id="{{next_year}}-{{next_month}}" ><font style="font-family:Cursive">{{this_year}}年-{{this_month}}月</font></legend>
+        <legend id="{{next_year}}-{{next_month}}" ><font style="font-family:Cursive">{{next_year}}Y-{{next_month}}M</font></legend>
         <ul>
         {% endif %}
       {% endif %}
