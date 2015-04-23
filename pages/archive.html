@@ -14,9 +14,10 @@ title: 时光档案
       <ul>
     {% endif %}
     <li><span class="pl__date">{{ post.date | date: "%Y-%m-%d" }}</span>  
+       <!--在其他文章中引用之前的文章，要在盒子里面打开——不打开新窗口，只需要指定超链接 a class="pl__title"-->
       <a class="pl__title" href="{{ post.url }}">{{ post.title }}</a>
     </li>
-  
+
     {% if forloop.last %}
       </ul>
     {% else %}
