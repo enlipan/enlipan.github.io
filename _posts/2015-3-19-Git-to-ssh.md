@@ -4,7 +4,7 @@ title: 解决Git每次Push需用户名登录问题
 category: others
 ---
 
-最近突然发现Push要登录用户名与密码，操作体验下降得很厉害，Google之发现是Git采用了Https的方式登录了，原先的SSH也不知道哪里去了，遂在此更改回SSH验证方式：
+最近突然发现Push要登录用户名与密码，操作体验下降得很厉害，Google之发现是Git采用了Https的方式登录了，应该是自己把原来的项目删除了然后采用了`git clone https`在直接在克隆文件下操作提交，导致原先的SSH失效了，遂在此更改回SSH验证方式：
 
 主要操作指令：
 
