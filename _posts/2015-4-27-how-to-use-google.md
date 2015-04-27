@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Google搜索奇淫巧技
+title: Google搜索高级技巧
 category: others
 ---
 **最常用部分**
