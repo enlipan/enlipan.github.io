@@ -46,4 +46,7 @@ adb shell am start -a android.intent.action.DIAL \
 
 [Settings Design](http://developer.android.com/guide/topics/ui/settings.html#Overview)
 
+### 引用说明
+
+文中截图均出自于UDAcity课程[Developing Android Apps-Android Fundamentals](https://www.udacity.com/course/developing-android-apps--ud853   "Developing Android Apps课程链接")的视频截图
 

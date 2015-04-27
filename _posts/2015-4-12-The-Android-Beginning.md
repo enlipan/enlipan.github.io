@@ -79,7 +79,7 @@ private static class ViewHolder {
 
 ---
 
-### 补充说明：
+### 补充说明
 
 **Lession 1 ————Lauching on a Device**
 
@@ -119,3 +119,7 @@ Adapters are a little unusual compared to similar mechanisms in other frameworks
 In Android there is a concept of the Main Thread or UI Thread. If you’re not sure what a thread is in computer science, check out this wikipedia article. The main thread is responsible for keeping the UI running smoothly and responding to user input. It can only execute one task at a time. If you start a process on the Main Thread which is very long, such as a complex calculation or loading process, this process will try to complete. While it is completing, though, your UI and responsiveness to user input will hang.
 
 [Performance Tips for Android’s ListView](http://lucasr.org/2012/04/05/performance-tips-for-androids-listview/   "提升Android ListView性能的几个技巧")
+
+### 引用说明
+
+文中截图均出自于UDAcity课程[Developing Android Apps-Android Fundamentals](https://www.udacity.com/course/developing-android-apps--ud853   "Developing Android Apps课程链接")的视频截图

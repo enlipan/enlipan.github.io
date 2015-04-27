@@ -85,6 +85,10 @@ AsyncTask应该存在于整个应用生命周期中，不应该绑定在相关Ac
 
 最后的问题就是国际化问题，利用string.xml文件去完成，相关控件指定利用string/values
 
+### 引用说明
+
+文中截图均出自于UDAcity课程[Developing Android Apps-Android Fundamentals](https://www.udacity.com/course/developing-android-apps--ud853   "Developing Android Apps课程链接")的视频截图
+
 
 
 
