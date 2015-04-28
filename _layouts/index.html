@@ -45,6 +45,7 @@
         <span class="pl__circle"></span><span class="pl__title"><font style="font-family:Cursive">Mind's Eye</font></span>
         </center>
         </form> -->
+	<form id="search-form">
 	<script>
 	  (function() {
 	    var cx = '000162964897817420817:ff0blhvhxru';
@@ -57,7 +58,8 @@
 	    s.parentNode.insertBefore(gcse, s);
 	  })();
 	</script>
-	<gcse:searchbox-only  id="search-form"></gcse:searchbox-only>
+	<gcse:searchbox-only></gcse:searchbox-only>
+	</form>
         <nav id="pl__container">          
         {% for post in site.posts %}
           <a class="{{ post.categories }} pl__all" href="{{ post.url }}" ><span class="pl__circle"></span><span class="pl__title">{{ post.title }}</span><span class="pl__date" >{{ post.date | date: "%d %b %Y" }}</span></a>
