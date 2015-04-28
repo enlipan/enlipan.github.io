@@ -39,11 +39,26 @@
           <input id="search-input" type="text" placeholder="Search..."  />
           	</form>
          -->
-         <form id="search-form">
+<!--          <form id="search-form">
           <center>
             <br>
         <span class="pl__circle"></span><span class="pl__title"><font style="font-family:Cursive">Mind's Eye</font></span>
         </center>
+        </form> -->
+      <form action="" id="search-form">       
+        <script>
+        (function() {
+          var cx = '000162964897817420817:ff0blhvhxru';
+          var gcse = document.createElement('script');
+          gcse.type = 'text/javascript';
+          gcse.async = true;
+          gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+              '//cse.google.com/cse.js?cx=' + cx;
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(gcse, s);
+        })();
+        </script>
+        <gcse:searchresults-only></gcse:searchresults-only>
         </form>
         <nav id="pl__container">          
         {% for post in site.posts %}
