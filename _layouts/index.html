@@ -33,34 +33,17 @@
       </nav> <!-- end #tags -->
 
 		  <div id="posts-list">
-        <!-- NOTE: input field is disabled by default
+       
         <form action="" id="search-form">
           <a href="/index.html" id="mobile-avatar"></a> 
-          <input id="search-input" type="text" placeholder="Search..."  />
-          	</form>
-         -->
+          <input id="search-input" type="text" name="word" baiduSug="2" />
+         </form>
 	<!-- <form id="search-form">
           <center>
             <br>
         <span class="pl__circle"></span><span class="pl__title"><font style="font-family:Cursive">Mind's Eye</font></span>
         </center>
         </form> -->
-	<form id="search-form">
-	<script>
-	  (function() {
-	    var cx = '000162964897817420817:ff0blhvhxru';
-	    var gcse = document.createElement('script');
-	    gcse.type = 'text/javascript';
-	    gcse.async = true;
-	    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-	        '//cse.google.com/cse.js?cx=' + cx;
-	    var s = document.getElementsByTagName('script')[0];
-	    s.parentNode.insertBefore(gcse, s);
-	  })();
-	</script>
-	 <br>
-	<gcse:searchbox-only></gcse:searchbox-only>
-	</form>
         <nav id="pl__container">          
         {% for post in site.posts %}
           <a class="{{ post.categories }} pl__all" href="{{ post.url }}" ><span class="pl__circle"></span><span class="pl__title">{{ post.title }}</span><span class="pl__date" >{{ post.date | date: "%d %b %Y" }}</span></a>
@@ -88,5 +71,6 @@
     <script src="/assets/js/jquery.pjax.js"></script>
     <script src="/assets/js/nprogress.js"></script>
     <script src="/assets/js/script.js"></script>
+    <script charset="gbk" src="http://www.baidu.com/js/opensug.js"></script>
   </body>
 </html>
