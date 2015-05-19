@@ -25,9 +25,6 @@ category: java
 
 
 
-
-
-
 ---
 
 [Build Script Basics](https://gradle.org/docs/current/userguide/tutorial_using_tasks.html)
