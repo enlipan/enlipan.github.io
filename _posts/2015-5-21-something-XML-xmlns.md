@@ -47,7 +47,7 @@ Schema如同DTD一样是负责定义和描述XML文档的结构和内容模式�
 
 [XML基础](http://210.34.136.253:8488/WebProg/webchpt20.htm)
 
-[Oracle XML 模式：了解命名空间 (http://www.oracle.com/technetwork/cn/articles/srivastava-namespaces-098626-zhs.html)
+[Oracle XML 模式：了解命名空间](http://www.oracle.com/technetwork/cn/articles/srivastava-namespaces-098626-zhs.html)
 
 [XML 命名空间以及它们如何影响 XPath 和 XSLT (Extreme XML)](https://msdn.microsoft.com/zh-cn/library/ms950779.aspx)
 
