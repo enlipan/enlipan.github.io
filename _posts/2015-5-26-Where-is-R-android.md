@@ -8,21 +8,14 @@ category: android
 
 一种常规的方法是调整层次为`Project`(默认层次是`Android`)，在目录中一层层寻找，依次是:
 
-> `Project` 
-> 
-> > `app`  
-> >          
-> > > `build`
-> > >  
-> > > > `generated` 
-> > > >        
-> > > > > `source` 
-> > > > >  
-> > > > > > `r`
-> > > > > > 
-> > > > > > > `debug`
-> > > > > > >    
-> > > > > > > > `R`           
+>  `Project`                 
+> >  `app`                
+> > >  `build`          
+> > > >  `generated`             
+> > > > >  `source`           
+> > > > > >  `r`            
+> > > > > > >  `debug`             
+> > > > > > > >  `R`                      
 
 ![效果图](/assets/img/20150526/project.png)
 
