@@ -23,4 +23,7 @@ category: android
 
 另一种发现的简单方法是调整层次为`Packages`
 
-![效果图](/assets/img/20150526/packeges.png)
+![效果图](/assets/img/20150526/packeges.jpg)
+
+
+这里注意不要找到兼容包里面的R文件中去了
