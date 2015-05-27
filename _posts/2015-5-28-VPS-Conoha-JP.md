@@ -51,6 +51,9 @@ ssserver -c /etc/shadowsocks.json
 ssserver -c /etc/shadowsocks.json -d start
 ssserver -c /etc/shadowsocks.json -d stop
 
+vi  /etc/rc.local
+//添加开机启动脚本，将ssserver -c /etc/shadowsocks.json -d start加到exit 0之前
+
 {% endhighlight %}
 
 配置完成，测试Google成功
