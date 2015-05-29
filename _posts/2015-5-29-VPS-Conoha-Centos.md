@@ -1,7 +1,7 @@
 ---
 layout: post
 title: VPS Conoha Centos
-category: others
+category: network
 ---
 
 昨晚本来是想用Centos加锐速的组合套装去完成这个Vps的第一个翻阅长城的任务，结果Centos7在防火墙一块狠狠坑了我一晚上，没搞明白，又累又困就不了了之，选了个Ubuntu，结果Ubuntu又没有对应的锐速版本。今天想了想还是不甘心，继续折腾Centos，大概的流程是由于Centos7防火墙改版，主要开启端口的方法如下：

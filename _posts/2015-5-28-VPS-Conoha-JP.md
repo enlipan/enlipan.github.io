@@ -1,7 +1,7 @@
 ---
 layout: post
 title: VPS Conoha
-category: others
+category: network
 ---
 
 最近对VPS很有折腾的兴趣，一来是自己的用着放心，同时也是好奇心作祟，想学习学习。看了看形势研究了研究，就入手了Conoha的VPS，速度不是很满意，一来不稳定，而来问题有点多，但是方便的是，各种VPS管理工具。
