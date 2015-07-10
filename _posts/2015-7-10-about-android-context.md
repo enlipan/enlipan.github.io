@@ -41,3 +41,5 @@ category: android
 [What is Context in Android?-SOF](http://stackoverflow.com/questions/3572463/what-is-context-in-android)
 
 [全面理解Context](http://www.cnblogs.com/android100/p/Android-Context.html)
+
+[你所不知道的Context](http://blog.csdn.net/qinjuning/article/details/7310620)
