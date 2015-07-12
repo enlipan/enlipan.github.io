@@ -33,9 +33,14 @@ In general, specifying a layout width and height using absolute units such as pi
 
 **不带layout**的参数：代表控制参数，用于控制组件本身的状态，如`android:padding`参数就是控制组件本身的边缘距离内容的填充边距
 
-6.layout_weight：       
-按准确比例显示LinearLayout内各个**子控件**：如果想个权重值对于子控件正常的发挥作用,水平方向需设置android:layout\_width="0dp";竖直方向需设置android:layout\_height="0dp";      
+6.layout_weight：             
+按准确比例显示LinearLayout内各个**子控件**：
+如果想个权重值对于子控件正常的发挥作用,水平方向需设置android:layout\_width="0dp";竖直方向需设置android:layout\_height="0dp";      
 在这种情况下某子个控件占用LinearLayout的比例为：本控件weight值 / LinearLayout内所有控件的weight值的和。
+
+按照Google官方文档的说法是：提升显示性能，因为既然指定了layoutweight，系统必然进行相关的UI显示权重计算。而你却设定wrap\_content或者match\_content,这是明显会与权重计算结果相矛盾的。同时设定成wrap\_content之后，系统必然又要进行一次计算，而这次计算明显是不必要的。
+
+> To improve the layout efficiency when you specify the weight, you should change the width of the EditText to be zero (0dp). Setting the width to zero improves layout performance because using "wrap_content" as the width requires the system to calculate a width that is ultimately irrelevant because the weight value requires another width calculation to fill the remaining space.
 
 7.Selector 状态问题：
 [Selector-Google](http://developer.android.com/guide/topics/resources/color-list-resource.html)
