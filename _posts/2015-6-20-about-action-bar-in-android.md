@@ -33,7 +33,7 @@ A logo should usually be wider than the icon, but should not include unnecessary
 
 ####异常问题
 
-{% highlight java %}
+{% highlight Java %}
 
 getActionBar Return NUll
 

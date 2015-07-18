@@ -57,14 +57,15 @@ Fragment的使用主要有动、静两种方式：
 
 静态使用其完整流程如下:
 
-{% highlight java%}
+{% highlight Java %}
+
 Activity
 setContentView(R.layout.activity)
 layout.activity.xml文件中指定了Fragment实例
 Fragment类利用LayoutInflater装载
 Inflater.inflate(fragment.xml)
 
-{% end highlight%}
+{% endhighlight%}
 
 
 
@@ -82,7 +83,8 @@ Inflater.inflate(fragment.xml)
 
 为了让fragment与activity交互，一般是在Fragment 类中定义一个接口Callback，并在activity中予以实现。Fragment在生命周期的`onAttach(Activity activity)`方法中获取接口的实现，然后调用接口的方法来与Activity交互。
 
-{% highlight java%}
+{% highlight Java %}
+
 //Fragment onAttach
 public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -96,7 +98,7 @@ public void onAttach(Activity activity) {
         }
     }
 
-{% end highlight%}
+{% endhighlight %}
 
 只要管理Fragment的Activity实现了相关的接口，同时借由了Attach生命周期方法，可以在Fragment中回调相应的Callback接口中的事件方法，保证了Fragment的独立性，委托Activity其托管Fragment任务，Fragment的独立性得以体现
 
@@ -104,7 +106,7 @@ public void onAttach(Activity activity) {
 
 其托管Activity通过findFragmentById()方法获取fragment的实例，然后直接调用Fragment的public方法来向fragment传递消息。同时也可以在Fragment开启实例之初绑定Bundle参数，然后再Fragment生命周期方法中获取绑定传输的数据。
 
-{% highlight java%}
+{% highlight Java %}
 
 ArticleFragment articleFrag = (ArticleFragment)
                 getSupportFragmentManager().findFragmentById(R.id.article_fragment);
@@ -134,13 +136,13 @@ ArticleFragment articleFrag = (ArticleFragment)
             transaction.commit();
         }
 
-{% end highlight%}
+{% endhighlight %}
 
 ###大屏Fragment灵活适配
 
 核心是利用对Layout资源文件起别名的方式：思想是利用系统的大小屏适配查找，对不同资源layout文件其同一别名，在代码中加载别名，完成系统的适配。
 
-{% highlight xml%}
+{% highlight XML %}
 
 res/values/refs.xml    
 <item name="activity_masterdetail"  type ="layout" >@layout/activity_fragment</itme>
@@ -148,7 +150,7 @@ res/values/refs.xml
 res/values/refs-xlarge.xml   OR   res/values/refs-sw800dp.xml 
 <item name="activity_masterdetail"  type ="layout" >@layout/activity_twofragment</itme>
 
-{% end highlight%}
+{% endhighlight %}
 
 资源别名文件的type属性决定了资源ID属于什么内部类，即使存放在values文件中也依然属于R.layout内部类
 
