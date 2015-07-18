@@ -1,6 +1,6 @@
 **Blog**
 
-[itlipan.info ](http://itlipan.info/  "ITlipan ")
+[www.itlipan.info ](http://www.itlipan.info/  "ITlipan ")
 
 ---
 
