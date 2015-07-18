@@ -3,7 +3,8 @@ layout: post
 title: Android Context小结
 category: android
 ---
-`Context`究竟是什么：
+
+###`Context`究竟是什么：
 
 以下内容翻译自`Stackoverflow`：          
 
@@ -30,9 +31,19 @@ category: android
 
 在网上经常看到有人问怎么随时随地的获取`Context`构建工具类，个人认为工具类一般可以自己重新利用构造函数注入，在`Activity`等控制器中直接构造注入Context，而不是写蹩脚的单例等获取方式，一般情况下构造器注入已经足够用了，而且很轻便灵活。
 
+###Google定义
 
+> Interface to global information about an application environment. This is an abstract class whose implementation is provided by the Android system. It allows access to application-specific resources and classes, as well as up-calls for application-level operations such as launching activities, broadcasting and receiving intents, etc 
+> 
+> > Context提供上下文应用环境，Android系统提供了具体的Context实现。Context提供了一种获取Android系统指定资源的通道，同时能够调用应用(application-level)级别的操作，例如启动Activity等。
 
+> Consider for example how this interacts with registerReceiver(BroadcastReceiver, IntentFilter):
 
+> If used from an Activity context, the receiver is being registered within that activity. This means that you are expected to unregister before the activity is done being destroyed; in fact if you do not do so, the framework will clean up your leaked registration as it removes the activity and log an error. Thus, if you use the Activity context to register a receiver that is static (global to the process, not associated with an Activity instance) then that registration will be removed on you at whatever point the activity you used is destroyed.
+
+> If used from the Context returned here, the receiver is being registered with the global state associated with your application. Thus it will never be unregistered for you. This is necessary if the receiver is associated with static data, not a particular component. However using the ApplicationContext elsewhere can easily lead to serious leaks if you forget to unregister, unbind, etc.
+
+简答的说就是在注册BroadcastReceiver的时候，如果利用的是ActivityContext，那么当Activity被销毁的时候Receiver也会被自动销毁回收，也就是执行Unregister，但是如果利用ApplicationContext(getApplicationContext ())注册，则不会自动回收，必须手动回收，否则会导致严重的内存泄漏问题。
 
 
 

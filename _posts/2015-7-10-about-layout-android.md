@@ -14,7 +14,7 @@ category: android
 
 > Defining IDs for view objects is important when creating a RelativeLayout. In a relative layout, sibling views can define their layout relative to another sibling view, which is referenced by the unique ID.
 
-3. Layout Parameters:Every ViewGroup class implements a nested class that extends ViewGroup.LayoutParams. This subclass contains property types that define the size and position for each child view, as appropriate for the view group. As you can see in figure 1, the parent view group defines layout parameters for each child view (including the child view group).--
+3. Layout Parameters:Every ViewGroup class implements a nested class that extends ViewGroup.LayoutParams. This subclass contains property types that define the size and position for each child view, as appropriate for the view group. As you can see in figure 1, the parent view group defines layout parameters for each child view (including the child view group).
 
 In general, specifying a layout width and height using absolute units such as pixels is not recommended. Instead, using relative measurements such as density-independent pixel units (dp), wrap_content, or match_parent, is a better approach, because it helps ensure that your application will display properly across a variety of device screen sizes.  
 
@@ -48,4 +48,18 @@ In general, specifying a layout width and height using absolute units such as pi
 8.A RelativeLayout is a very powerful utility for designing a user interface because it can eliminate nested view groups and keep your layout hierarchy flat, which improves performance. If you find yourself using several nested LinearLayout groups, you may be able to replace them with a single RelativeLayout.
 
 9.视图解析机制：pull/sax/dom:pull机制比Sax机制更加灵活，控制的灵活性更强。
+
+###FrameLayout
+
+>FrameLayout is designed to block out an area on the screen to display a single item. Generally, FrameLayout should be used to hold a single child view, because it can be difficult to organize child views in a way that's scalable to different screen sizes without the children overlapping each other. You can, however, add multiple children to a FrameLayout and control their position within the FrameLayout by assigning gravity to each child, using the android:layout_gravity attribute.
+
+>Child views are drawn in a stack, with the most recently added child on top. The size of the FrameLayout is the size of its largest child (plus padding), visible or not (if the FrameLayout's parent permits). 
+
+帧布局的大小由子控件中最大的子控件决定,如果都组件都一样大的话,同一时刻就只能能看到最上面的那个组件了.当然我们也可以为组件添加layout_gravity属性,制定子组件的对其方式。同时绘制的子View都在栈中，最后绘制显示的在栈顶。
+
+同时有两个属性可以设定Frame的前景图像：也就是永远处于帧布局的栈顶，不会被覆盖的图片。
+
+* android:foreground:设置该帧布局容器的前景图像
+* 
+* android:foregroundGravity:设置前景图像显示的位置
 

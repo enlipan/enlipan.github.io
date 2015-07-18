@@ -43,7 +43,116 @@ Fragment的使用主要有动、静两种方式：
 
 ###Fragment间的通信：
 
-由于Fragment是依存于Activity，可以利用`getActivity()`去获取顶层Activity上下文环境，进而获取到其他依存于该Activity的Fragment中的子类参数，也就达到了Fragment之间的数据传递。
+*  由于Fragment是依存于Activity，可以利用`getActivity()`去获取顶层Activity上下文环境，进而获取到其他依存于该Activity的Fragment中的子类参数，也就达到了Fragment之间的数据传递。
+
+*  Fregment通过定义内部回调接口，而容器Activity实现该回调接口方法。同样可以完成行为交互，以保证Fragment的独立性，把操作都丢给Activity。
+
+*  设置Bundle——args绑定
+
+---
+
+总结一下：Fragment的控制方式主要包含动态与静态使用；
+
+###静态使用
+
+静态使用其完整流程如下:
+
+{% highlight java%}
+Activity
+setContentView(R.layout.activity)
+layout.activity.xml文件中指定了Fragment实例
+Fragment类利用LayoutInflater装载
+Inflater.inflate(fragment.xml)
+
+{% end highlight%}
+
+
+
+###动态替换Fragment
+
+动态方法核心是利用`FragmentManager`,开启事务管理，增添或者替换fragment实例到相应的activity容器中。
+
+替换fragment的过程类似于添加过程，只需要将add()方法替换为 replace()方法。
+记住在执行fragment事务时，如移除或者替换，我们经常要适当地让用户可以向后导航与"撤销"这次改变。为了让用户向后导航fragment事务，我们必须在FragmentTransaction提交前调用addToBackStack()方法。
+
+> Note：当移除或者替换一个fragment并把它放入返回栈中时，被移除的fragment的生命周期是stopped(不是destoryed).当用户返回重新恢复这个fragment,它的生命周期是restarts。如果没有把fragment放入返回栈中，那么当它被移除或者替换时，其生命周期是destoryed。
+> 
+
+###Fragment消息交互
+
+为了让fragment与activity交互，一般是在Fragment 类中定义一个接口Callback，并在activity中予以实现。Fragment在生命周期的`onAttach(Activity activity)`方法中获取接口的实现，然后调用接口的方法来与Activity交互。
+
+{% highlight java%}
+//Fragment onAttach
+public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (OnHeadlineSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
+
+{% end highlight%}
+
+只要管理Fragment的Activity实现了相关的接口，同时借由了Attach生命周期方法，可以在Fragment中回调相应的Callback接口中的事件方法，保证了Fragment的独立性，委托Activity其托管Fragment任务，Fragment的独立性得以体现
+
+那么Activity如何传递消息给Fragment？
+
+其托管Activity通过findFragmentById()方法获取fragment的实例，然后直接调用Fragment的public方法来向fragment传递消息。同时也可以在Fragment开启实例之初绑定Bundle参数，然后再Fragment生命周期方法中获取绑定传输的数据。
+
+{% highlight java%}
+
+ArticleFragment articleFrag = (ArticleFragment)
+                getSupportFragmentManager().findFragmentById(R.id.article_fragment);
+
+        if (articleFrag != null) {
+            // If article frag is available, we're in two-pane layout...
+
+            // Call a method in the ArticleFragment to update its content
+            articleFrag.updateArticleView(position);
+        } else {
+            // Otherwise, we're in the one-pane layout and must swap frags...
+
+            // Create fragment and give it an argument for the selected article
+            ArticleFragment newFragment = new ArticleFragment();
+            Bundle args = new Bundle();
+            args.putInt(ArticleFragment.ARG_POSITION, position);
+            newFragment.setArguments(args);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            transaction.replace(R.id.fragment_container, newFragment);
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
+        }
+
+{% end highlight%}
+
+###大屏Fragment灵活适配
+
+核心是利用对Layout资源文件起别名的方式：思想是利用系统的大小屏适配查找，对不同资源layout文件其同一别名，在代码中加载别名，完成系统的适配。
+
+{% highlight xml%}
+
+res/values/refs.xml    
+<item name="activity_masterdetail"  type ="layout" >@layout/activity_fragment</itme>
+
+res/values/refs-xlarge.xml   OR   res/values/refs-sw800dp.xml 
+<item name="activity_masterdetail"  type ="layout" >@layout/activity_twofragment</itme>
+
+{% end highlight%}
+
+资源别名文件的type属性决定了资源ID属于什么内部类，即使存放在values文件中也依然属于R.layout内部类
+
+系统根据大小屏幕自动映射到相应的@layout/activity\_fragmen 或者  @layout/activity\_twofragment,但是系统加载统一加载R.layout.activity\_masterdetail.
 
 
 
@@ -52,3 +161,5 @@ Fragment的使用主要有动、静两种方式：
 [使用Fragment建立动态UI](http://hukai.me/android-training-course-in-chinese/basics/fragments/index.html)
 
 [Fragment-Google](http://developer.android.com/guide/components/fragments.html)
+
+[Fragment交互](http://hukai.me/android-training-course-in-chinese/basics/fragments/communicating.html)
