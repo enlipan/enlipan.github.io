@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android权威指南Flickr-Connection-Error
+title: Flickr Demo-Connection-Error
 category: android
 ---
 
@@ -8,8 +8,8 @@ category: android
 
 Android权威指南的第26章节是获取Flickr应用数据，也就是Http的链接问题，当科学上网之后申请了Flickr账号以及key之后，怎么都链接不上，显示Error是：
 
-> java.io.FileNotFoundException: http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=
-> 
+`java.io.FileNotFoundException: http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=……`
+
 
 定位Error显示在于`InputStream in = connection.getInputStream();`失败。于是考虑到手机是否科学上网成功的问题，于是将Url获取之后再自行输入PC，得到数据：
 
