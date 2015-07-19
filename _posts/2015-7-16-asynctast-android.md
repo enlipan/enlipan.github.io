@@ -74,6 +74,8 @@ new Handler(HandlerThread.getLooper)
 
 
 
+![UIThread](/assets/img/20150717/UIThread.png)
+
 
 ---
 
