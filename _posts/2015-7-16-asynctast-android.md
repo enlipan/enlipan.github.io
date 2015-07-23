@@ -56,6 +56,12 @@ AsyncTask使用几条必须遵守的准则：
 
 Android UI是线程不安全的，如果在子线程中尝试进行UI操作，程序就有可能会崩溃。异步消息处理线程完成。
 
+Message是消息，是传输的数据，可以绑定Bundle传输。
+
+Handler是管理Message的工具，负责消息的收发管理。每个Handler有着对应的一个Looper，可以理解为Handler是专门负责处理这个邮箱(Looper)里面所有信件的邮差。
+
+Looper是容器，对应着消息队列，负责将消息存入Message Queue，由Handler一一提取。
+
 ##HandlerThread
 
 HandlerThread继承自Thread,线程同时创建了一个含有消息队列的Looper,维护自身的一套循环事务逻辑，自有Looper，HandlerThread在自己线程内处理自己线程发出的消息，独立循环接收并处理Message消息。
