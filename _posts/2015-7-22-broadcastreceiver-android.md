@@ -1,5 +1,8 @@
-BroadcastReceiver
-===
+---
+layout: post
+title: BroadcastReceiver
+category: android
+---
 
 
 
