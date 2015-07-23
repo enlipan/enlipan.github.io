@@ -81,6 +81,8 @@ Inflater.inflate(fragment.xml)
 
 ###Fragment消息交互
 
+Activity在动态添加Fragment之时，可以设定Bundle数据参数，传递进入Fragment，在Fragment中可以获取到该Arg数据参数，并且解析获得相应的传递数据。
+
 为了让fragment与activity交互，一般是在Fragment 类中定义一个接口Callback，并在activity中予以实现。Fragment在生命周期的`onAttach(Activity activity)`方法中获取接口的实现，然后调用接口的方法来与Activity交互。
 
 {% highlight Java %}
@@ -156,6 +158,15 @@ res/values/refs-xlarge.xml   OR   res/values/refs-sw800dp.xml
 
 系统根据大小屏幕自动映射到相应的@layout/activity\_fragmen 或者  @layout/activity\_twofragment,但是系统加载统一加载R.layout.activity\_masterdetail.
 
+###Activity的启动模式
+
+> Standard
+> 
+> SingleTop
+> 
+> SingleTask
+> 
+> SingleInstance
 
 
 ---
