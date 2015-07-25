@@ -57,6 +57,13 @@ vi  /etc/rc.local
 netstat   -anp
 //检测端口使用开启情况
 
+DigtalOcean 配置阻塞优化算法：
+//启用hybla算法
+vim /etc/sysctl.conf
+net.ipv4.tcp_congestion_control = hybla
+//刷新启用
+sysctl -p
+
 {% endhighlight %}
 
 配置完成，测试Google成功

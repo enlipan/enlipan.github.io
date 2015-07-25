@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AsyncTask 与 Handler小结
+title: ContentProvider小结
 category: android
 ---
 
