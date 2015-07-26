@@ -1,4 +1,4 @@
-Action---
+---
 layout: post
 title: BroadcastReceiver
 category: android
