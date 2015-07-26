@@ -44,6 +44,8 @@ Service的启动需要在组件中注册使用，经过测试，不注册不会�
 
 ![Service Lifecycle](\assets\img\20150721\service_lifecycle.png)
 
+Service高级使用一般用于混合Activity、Service、BroadcastReceiver使用建立高级任务链。
+
 ###IntentService
 
 一种更加高效常用的Service，启动会自动启动后台线程完成逻辑任务而不会阻塞UI线程。

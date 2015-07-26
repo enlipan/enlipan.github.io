@@ -1,6 +1,6 @@
 ---
 layout: post
-title: View小结
+title: View绘制与事件分发小结
 category: android
 ---
 
