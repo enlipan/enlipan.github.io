@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ；关于深入浅出的一点疑惑
+title: 关于深入浅出的一点疑惑
 category: others
 ---
 
