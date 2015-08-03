@@ -40,6 +40,10 @@ In general, specifying a layout width and height using absolute units such as pi
 
 按照Google官方文档的说法是：提升显示性能，因为既然指定了layoutweight，系统必然进行相关的UI显示权重计算。而你却设定wrap\_content或者match\_content,这是明显会与权重计算结果相矛盾的。同时设定成wrap\_content之后，系统必然又要进行一次计算，而这次计算明显是不必要的。
 
+事实上，weight的真正含义是为子控件分配父控件空余空间，也就是当子控件都是`wrap\_content`时，weight指定的是子控件按照比例分配他们各自包含自身内容之后的父控件空余空间（注意这里的这个减法很重要——父控件宽减去子控件的wrap\_content之和），当子控件的wrap_content就直接占满父控件之后，weight也就不生效了。
+
+这也是为什么为了更好的分配空间要设置相关方向上0dp的原因了，一旦设置了0dp，那么子控件本身就不再占用空间，整个父控件的相关方向上的宽或者高对于子空间的0dp就全部是空余空间，这时候的分配是绝对按照比例分配的，因而必定生效。
+
 > To improve the layout efficiency when you specify the weight, you should change the width of the EditText to be zero (0dp). Setting the width to zero improves layout performance because using "wrap_content" as the width requires the system to calculate a width that is ultimately irrelevant because the weight value requires another width calculation to fill the remaining space.
 
 7.Selector 状态问题：
