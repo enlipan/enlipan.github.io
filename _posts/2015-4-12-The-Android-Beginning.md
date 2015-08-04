@@ -42,9 +42,7 @@ MainActivity是App启动展示界面——在AndroidManifest文件中由<Intent-
 
 > 除非程序在onCreate()方法里面就调用了finish()方法，系统通常是在执行了onPause()与onStop() 之后再调用onDestroy() 。在某些情况下，例如我们的activity只是做了一个临时的逻辑跳转的功能，它只是用来决定跳转到哪一个activity，这样的话，需要在onCreate里面调用finish方法，这样系统会直接调用onDestory，跳过生命周期中的其他方法。
 
->　当activity调用onStop()方法, activity不再可见，并且应该释放那些不再需要的所有资源。一旦activity停止了，系统会在需要内存空间时摧毁它的实例(和栈结构有关，通常back操作会导致前一个activity被销毁)。极端情况下，系统会直接杀死我们的app进程，并不执行activity的onDestroy()回调方法, 因此我们需要使用onStop()来释放资源，从而避免内存泄漏。(这点需要注意)
-
-也就是OnDestroy()方法的执行与否并不确定，而是由系统状态自动决定。
+>　当activity调用onStop()方法, activity不再可见，并且应该释放那些不再需要的所有资源。一旦activity停止了，系统会在需要内存空间时摧毁它的实例(和栈结构有关，通常back操作会导致前一个activity被销毁)。极端情况下，系统会直接杀死我们的app进程，并不执行activity的onDestroy()回调方法, 因此我们需要使用onStop()来释放资源，从而避免内存泄漏。(这点需要注意)也就是**OnDestroy()方法的执行与否并不确定，而是由系统状态自动决定。**
 
 > 因为onStop()方法应该做清除所有activity资源的操作，我们需要在重启activtiy时重新实例化那些被清除的资源，同样, 我们也需要在activity第一次创建时实例化那些资源。介于上面的原因，应该使用onStart()作为onStop()所对应方法。因为系统会在创建activity与从停止状态重启activity时都会调用onStart()。也就是说，我们在onStop里面做了哪些清除的操作，就该在onStart里面重新把那些清除掉的资源重新创建出来。onStart()方法是一个比较好的地方来验证某些必须的系统特性是否可用。
 
