@@ -17,12 +17,14 @@ category: android
 > > > > > > >  `debug`             
 > > > > > > > >  `R`                      
 
+{:.center}
 ![效果图](/assets/img/20150526/project.png)
 
 
 
 另一种发现的简单方法是调整层次为`Packages`
 
+{:.center}
 ![效果图](/assets/img/20150526/packeges.jpg)
 
 
