@@ -57,4 +57,5 @@ category: others
 
 **Happy nice day**
 
+{:.center}
 ![我的工作环境](/assets/img/20150315/MyIBM.PNG)
