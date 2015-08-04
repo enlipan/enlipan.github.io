@@ -73,7 +73,7 @@ HandlerThread继承自Thread,线程同时创建了一个含有消息队列的Loo
 
 new Handler(HandlerThread.getLooper)
 
-
+{:.center}
 ![UIThread](/assets/img/20150717/UIThread.png)
 
 
