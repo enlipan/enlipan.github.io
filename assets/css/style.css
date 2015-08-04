@@ -1246,3 +1246,15 @@ pre > code {
   color: #2aa198; }
 
 /* Literal.Number.Integer.Long */
+
+.center {
+  text-align: center;
+  margin: 0 auto;
+}
+/*set the img align center   
+eg:
+{:.center}
+![cardinal](/img/2012/cardinal.jpg)  
+This is an image
+*/
+
