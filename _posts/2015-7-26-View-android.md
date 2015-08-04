@@ -5,9 +5,10 @@ category: android
 ---
 
 
-
+{:.center}
 ![view_mechanism_flow](/assets/img/20150726/view_mechanism_flow.png)
 
+{:.center}
 ![view_draw_method_chain](/assets/img/20150726/view_draw_method_chain.png)
 
 ---
