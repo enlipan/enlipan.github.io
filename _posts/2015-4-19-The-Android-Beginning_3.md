@@ -17,6 +17,7 @@ Intent分为隐式Intent与显示Intent，其中显示Intent明确指定intent�
 
 要擅用隐式请求，充分的利用系统资源，不要事事亲历亲为自行开发实现，要适当的拿来主义，一方面提高开发效率，另一方面做的越少错的就越少。
 
+{:.center}
 ![Intent传递](/assets/img/20150418/Intenttransfer.jpg)
 
 值得注意的是： If there are no apps on the device that can receive the implicit intent, your app will crash when it calls startActivity(). 所以通常我们要确定系统中存在该Intent接收对象，也就是[Verify Intents with the Android Debug Bridge](https://developer.android.com/guide/components/intents-common.html#AdbIntents)，系统中利用查找匹配的<Intent-filter>，App中活用Intent过滤器定义该App能处理的操作与活动，以及该App可以操纵的数据与活动类别
