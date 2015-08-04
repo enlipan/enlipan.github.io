@@ -86,16 +86,18 @@ Entity指代实体类，第一个要生成的实体类是 Restaurant.java，同�
 {:.center}
 ![RunGenerator](/assets/img/20150804/generator.png)
 
-这一步刚开始接触可能有点麻烦，切换到Project视图比较好操作，导入Jar包，写Build.gradle文件，注意是写子Module的Gradle文件，指定MainClass运行类，写入Apply，导入jar包之后增添依赖，也可以导入后直接右键点击Jar包As Lib，依赖会自动写上，然后Gradle同步，这时候就可以开始创建新的Java Generator文件，创建Shema语句，创建完成之后由于是一个JavaMain函数文件，可以直接运行，运行成功在指定位置生成JavaBean， "D:\\mygithub\\WantToEatWhat\\app\\src\\main\\java"，位置一定要指定正确，可以在App的MainActivity.java文件右键，Copy Path，然后复制过来。
+这一步刚开始接触可能有点麻烦，切换到Project视图比较好操作.
+
+导入Jar包，写Build.gradle文件，注意是写子Module的Gradle文件，指定MainClass运行类，写入Apply，导入jar包之后增添依赖，也可以导入后直接右键点击Jar包As Lib，依赖会自动写上，然后Gradle同步.
+
+这时候就可以开始创建新的Java Generator文件，创建Shema语句，创建完成之后由于是一个JavaMain函数文件，可以直接运行，运行成功在指定位置生成JavaBean.
+
+ 注意一点："D:\\mygithub\\WantToEatWhat\\app\\src\\main\\java"，位置一定要指定正确，可以在App的MainActivity.java文件右键，Copy Path，然后复制过来。
 
 附带说一句：Android Studio真的太好用的，做Android开发如果还坚守Eclipse真的难以理解。
 
 
 其余实例化DaoMaster，创建数据库之类的就不说了，Easy，忘了就看官方文档，简洁易懂，可能需要注意的就是查询操作的使用，但也不难，一看就会。
-
-
-
-
 
 
 ---
