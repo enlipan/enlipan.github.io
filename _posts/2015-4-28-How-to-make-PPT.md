@@ -29,12 +29,17 @@ category: others
 
 随便展示几张图片：
 
+{:.center}
 ![ShowPPT01](\assets\img\20150501\PPT01.png)
 
+{:.center}
 ![ShowPPT02](\assets\img\20150501\PPT02.png)
 
+{:.center}
 ![ShowPPT03](\assets\img\20150501\PPT03.png)
 
+{:.center}
 ![ShowPPT04](\assets\img\20150501\PPT04.png)
 
+{:.center}
 ![ShowPPT05](\assets\img\20150501\PPT05.png)
