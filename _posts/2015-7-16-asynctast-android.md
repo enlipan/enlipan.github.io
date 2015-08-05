@@ -302,7 +302,11 @@ public class POISearchUtil extends HandlerThread {
 
 利用自己发送接收Handler消息维护一套调用逻辑,而如果循环调用`mPoiSearchClient.searchNearby(option);`方法是不能良好的触发百度回调方法`onGetPoiResult`，获取百度Poi回调数据，利用Handler的回调机制就能够比较好的完成，同时维护一个比较好的业务数据逻辑循环。
 
-new Handler(HandlerThread.getLooper)利用该方法获取绑定指定Looper的Handler，不指定参数则指定绑定当前线程的Handler，同时需要注意的是，如果子线程获取Handler，子线程没有继承HandlerThread，则子线程需要`Prepare.Looper();`构建自身的Looper，用于Handler绑定。
+`new Handler(HandlerThread.getLooper)`利用该方法获取绑定指定Looper的Handler，若不指定参数（也就是默认无参构造函数）默认绑定当前线程的Looper。
+
+这里需要注意的是，如果子线程获取Handler，子线程没有继承HandlerThread，则子线程需要`Prepare.Looper();`构建自身的Looper，用于Handler绑定。这是由于只有UI线程以及HandlerThread会提供自身线程的默认Looper，也就是天生就带Looper，优势所在。
+
+HandlerThread开启后注意要在业务完成之后适时停止：利用`HandlerThread.getLooper.quit()`，去发送空消息终止线程，防止线程一直开启等待消息。
 
 {:.center}
 ![UIThread](/assets/img/20150717/UIThread.png)
