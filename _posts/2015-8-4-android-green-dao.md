@@ -102,6 +102,6 @@ Entity指代实体类，第一个要生成的实体类是 Restaurant.java，同�
 
 ---
 
-[GreenDao官方文档]（http://greendao-orm.com/documentation/）
+[GreenDao官方文档](http://greendao-orm.com/documentation/)
 
 [GreenDao学习心得及使用总结](http://www.it165.net/pro/html/201401/9026.html)
