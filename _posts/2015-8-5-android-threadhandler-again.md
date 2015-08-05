@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android ThreadHandler 真的停止了吗？
+title: ThreadHandler 真的停止了吗？
 category: android
 ---
 
@@ -19,6 +19,7 @@ category: android
 先看HandlerThread.quit（）,发现这货就是调用的getLooper().quit();
 
 {%  highlight java  %}
+
     public boolean quit() {
         Looper looper = getLooper();
         if (looper != null) {
@@ -161,8 +162,16 @@ Ok,开始找成员变量mQueue，这货是在这里被初始化的：
 
 
 
+* 附带的总结一下Handler.post()，简单的说是将线程当作消息CallBack发送出去，进入Handler所绑定的消息队列，并在那个线程中执行回调。
+
+* View.post()是将Runnable发送到UI线程的消息队列之中，类似的执行，所以可以表现的更新UI
+。
 
 
 
 ---
 [HandlerThread Start Second Time](http://stackoverflow.com/questions/31833963/got-illegalthreadstateexception-when-invoking-handlerthread-start-second-time/31835834#31835834)
+
+[Android 异步消息处理机制 让你深入理解 Looper、Handler、Message三者关系](http://blog.csdn.net/lmj623565791/article/details/38377229)
+
+[]()
