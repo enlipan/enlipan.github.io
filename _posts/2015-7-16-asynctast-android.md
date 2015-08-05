@@ -70,8 +70,239 @@ HandlerThread继承自Thread,线程同时创建了一个含有消息队列的Loo
 
 同时开发中如果多次使用类似`new Thread(){...}.start()`这种方式开启一个子线程，会创建多个匿名线程，使得程序运行起来越来越慢，而HandlerThread自带Looper使他可以通过消息来多次重复使用当前线程，节省开支.
 
+上代码示例-自己写的获取百度SDK定位数据的demo：
 
-new Handler(HandlerThread.getLooper)
+{%  highlight java %}
+public class CurrentLocationUtil extends HandlerThread {
+    public static final int  WHATCODE = 1;
+    private static final String TAG = "CurrentLocationUtil";
+    private Context mContext;
+    private LocationClient mLocationClient;
+    private Handler mResponseHandler;
+    private Handler mHandler;
+    private OnReceiverLatLngListener mOnReceiverLatLngListener;
+
+    private LatLng mCurrentLatLng;
+
+    /**
+     * @param context the context must be getApplicationContext();
+     * */
+    public CurrentLocationUtil( Context context, Handler responseHandler) {
+        super(TAG);
+        mContext = context;
+        mResponseHandler = responseHandler;
+    }
+
+    @Override
+    protected void onLooperPrepared() {
+        mHandler = new Handler(this.getLooper()){
+            @Override
+            public void handleMessage(Message msg) {
+                Message resMessage = mResponseHandler.obtainMessage();
+                resMessage.what = WHATCODE;
+                resMessage.obj = msg.obj;
+                resMessage.sendToTarget();
+                this.getLooper().quit();
+            }
+        };
+        fetchBaiduLatLng();
+    }
+
+    public void setOnReceiverLatLngListener(OnReceiverLatLngListener onReceiverLatLngListener) {
+        mOnReceiverLatLngListener = onReceiverLatLngListener;
+    }
+
+    /**
+     * this Listener can option the View's status of the UI
+     */
+    public interface OnReceiverLatLngListener {
+        public void fetchCurrentBaiduCoord();
+    }
+
+
+    public void fetchBaiduLatLng() {
+        mLocationClient = new LocationClient(mContext);
+        locationConfig();
+        if (!mLocationClient.isStarted()) mLocationClient.start();
+    }
+
+    private void locationConfig() {
+        // 设置mLocationClient数据,如是否打开GPS,使用LocationClientOption类.
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);// 设置定位模式
+        option.setCoorType("bd09ll");// 返回的定位结果是百度经纬度,默认值gcj02
+        option.setScanSpan(5000);// 设置发起定位请求的间隔时间为5000ms
+        option.setIsNeedAddress(true);// 返回的定位结果包含地址信息
+        option.setNeedDeviceDirect(true);// 返回的定位结果包含手机机头的方向
+        option.setOpenGps(true);// 打开GPS
+        mLocationClient.setLocOption(option);
+        mLocationClient.registerLocationListener(new BDLocationListener() {
+            /** 
+             * @param bdLocation when mLocationClient.start() is opened,get this location Latlng
+             *                   asynchronous,the BaiduLocation use Hander
+             *                   Return this Latlng
+             */
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                // mapView 销毁后不在处理新接收的位置
+                if (bdLocation == null) return;
+                //获取服务器回传的当前经纬度
+                mCurrentLatLng = new LatLng(bdLocation.getLatitude(),
+                        bdLocation.getLongitude());
+
+                Message msg = mHandler.obtainMessage();
+                if (msg!=null) {
+
+                    msg.obj = mCurrentLatLng;
+                    msg.sendToTarget();
+                }
+                Log.d("BaiduCurrentLocation", "Done!!!! " + mCurrentLatLng);
+            }
+        });
+    }
+}
+
+{%  endhighlight  %}
+
+UI线程传递一个绑定其Looper的Handler给后台HandlerThread线程，该Handler消息发送Target其实是UI线程，其缘由在于Handler绑定Looper，消息也就发送给这个Looper，不论这个Handler在哪个线程。
+
+HandlerThread线程中绑定其其自身的Looper的Handler维护自身的一套业务逻辑回调循环。注意回调循环与While循环是有差异的，为说明这个再上一段代码--获取百度地图SDK周边POI数据：
+
+{%  highlight java %}
+
+/**
+ * Created by pan_li on 2015/8/3.
+ */
+public class POISearchUtil extends HandlerThread {
+    private static final String TAG = "POISearchUtil";
+    public static final int WHAT_TOTAL_PAGE_CODE = 0;
+    public static final int WHAT_END_CODE = 1;
+    private static final int PAGE_NUMS = 50;
+    private static final int SEARCH_RIDIUS = 1500;
+    private PoiSearch mPoiSearchClient;
+    private LatLng mSearchLatLng;
+    //    private List<PoiInfo> mPoiInfoList;
+    private int mFirstPageNum = 0;
+    private Handler mHandler;
+    private Context mContext;
+    private SqlDateBaseUtil mSqlDateBaseUtil;
+    SimpleDateFormat mFormat = new java.text.SimpleDateFormat("yyyy:MM:dd HH:mm:ss:SSS");
+
+
+    /**
+     * @param searchLatlng the Place Latlng Where you want to Fetch nearby  data
+     *                     Which get from the UI Thread
+     */
+    public POISearchUtil(LatLng searchLatlng, Context context) {
+        super(TAG);
+        mContext = context;
+        mSearchLatLng = searchLatlng;
+    }
+
+    @Override
+    protected void onLooperPrepared() {
+        mPoiSearchClient = PoiSearch.newInstance();
+        mPoiSearchClient.setOnGetPoiSearchResultListener(poiListener);
+//        mPoiInfoList = new ArrayList<PoiInfo>();
+        mSqlDateBaseUtil = new SqlDateBaseUtil(mContext);
+        fetchNearBySearchData(mFirstPageNum);
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                //sometimes baidu poiresult doesnot Match the actual number
+                //that means the resultpages on the behind can't get result
+                //eg,the result.getTotalPoiNum() show 2300,but behind 760
+                //the result is null ,the handler is send null result
+                //so we should finish this bring forward;
+                if (msg.what == WHAT_TOTAL_PAGE_CODE) {
+                    int page = (int) msg.obj;
+                    fetchNearBySearchData(page);
+                } else if (mPoiSearchClient != null && msg.what == WHAT_END_CODE) {
+                    mSqlDateBaseUtil.closeDataBase();
+                    mPoiSearchClient.destroy();
+                    this.getLooper().quit();
+                }
+            }
+        };
+
+    }
+
+    //the register Listener to this mPoiSearchClient to set the Callback
+    //when get POI Result
+    OnGetPoiSearchResultListener poiListener = new OnGetPoiSearchResultListener() {
+        /**
+         * the first time get the totalpages the use message send to handleMessage()
+         *handleMessage use the totalpages and first pageNum  then launch another
+         *to getAll PoiResult
+         */
+        public void onGetPoiResult(PoiResult result) {
+
+            if (result.getAllPoi() != null) {
+//                mPoiInfoList.addAll(result.getAllPoi());
+                insertDataBySqlUtil(result.getAllPoi());
+                Message msg = mHandler.obtainMessage();
+                msg.what = WHAT_TOTAL_PAGE_CODE;
+                mFirstPageNum++;
+                msg.obj = mFirstPageNum;
+                msg.sendToTarget();
+            } else {
+                Message msg = mHandler.obtainMessage();
+                msg.what = WHAT_END_CODE;
+                msg.sendToTarget();
+            }
+
+        }
+
+        public void onGetPoiDetailResult(PoiDetailResult result) {
+            //获取Place详情页检索结果
+//            Log.d(TAG, "onGetPoiDetailResult: "+result.toString());
+
+        }
+    };
+
+    /**
+     * @param pageNum pageNumbers to getPoiResult
+     * @OverLoading when get the TotalPages through the onLooperPrepared
+     * default method fetchNearBySearchData()
+     */
+    public boolean fetchNearBySearchData(int pageNum) {
+        Log.d(TAG, "fetchNearBySearchData  PageNum:" + pageNum + " Time:"
+                + mFormat.format(System.currentTimeMillis()));
+        PoiNearbySearchOption option = new PoiNearbySearchOption();
+        option.pageNum(pageNum);
+        option.pageCapacity(PAGE_NUMS);
+        option.location(mSearchLatLng);
+        option.keyword("美食");
+        option.radius(SEARCH_RIDIUS);
+        boolean isSearchOk = mPoiSearchClient.searchNearby(option);
+        if (isSearchOk) {
+            return true;
+        } else {
+            Log.e(TAG, "fetchNearBySearchData Error");
+            return false;
+        }
+    }
+
+    public void insertDataBySqlUtil(List<PoiInfo> infos){
+        Log.d(TAG,"Insert Beginning at time:"+mFormat.format(System.currentTimeMillis()));
+
+        if (mSqlDateBaseUtil.initDataBaseUtil()) {
+            if (mSqlDateBaseUtil.insertPoiData(infos)){
+                Log.d(TAG,"Insert Ok at time:"+mFormat.format(System.currentTimeMillis()));
+            }
+        }else {
+            Log.d(TAG,"SqlDataBaseUtil Client Init False"+mFormat.format(System.currentTimeMillis()));
+        }
+    }
+}
+
+
+{%  endhighlight  %}
+
+利用自己发送接收Handler消息维护一套调用逻辑,而如果循环调用`mPoiSearchClient.searchNearby(option);`方法是不能良好的触发百度回调方法`onGetPoiResult`，获取百度Poi回调数据，利用Handler的回调机制就能够比较好的完成，同时维护一个比较好的业务数据逻辑循环。
+
+new Handler(HandlerThread.getLooper)利用该方法获取绑定指定Looper的Handler，不指定参数则指定绑定当前线程的Handler，同时需要注意的是，如果子线程获取Handler，子线程没有继承HandlerThread，则子线程需要`Prepare.Looper();`构建自身的Looper，用于Handler绑定。
 
 {:.center}
 ![UIThread](/assets/img/20150717/UIThread.png)
