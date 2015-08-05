@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ThreadHandler 真的停止了吗？
+title: HandlerThread 真的停止了吗？
 category: android
 ---
 
