@@ -18,9 +18,13 @@ category: android
 
 [Android View绘制机制](http://blog.csdn.net/xushuaic/article/details/42638111)
 
+[ Android LayoutInflater原理分析，带你一步步深入了解View(一)--guo神](http://blog.csdn.net/guolin_blog/article/details/12921889)
+
 [How Android Draws Views](https://developer.android.com/intl/ja/guide/topics/ui/how-android-draws.html)
 
 [知乎简报](http://zhuanlan.zhihu.com/andlib/19958187)
+
+[Android事件分发机制完全解析，带你从源码的角度彻底理解(上)--guo神](http://blog.csdn.net/guolin_blog/article/details/9097463)
 
 [Android中的dispatchTouchEvent()、onInterceptTouchEvent()和onTouchEvent()](http://blog.csdn.net/xyz_lmn/article/details/12517911)
 
@@ -28,3 +32,4 @@ category: android
 
 [Mastering the Android Touch System--Youku](http://v.youku.com/v_show/id_XODQ1MjI2MDQ0.html)
 
+[Tutorial Enhancing Android UI with Custom Views](http://v.youku.com/v_show/id_XODM4NzA3ODMy.html)
