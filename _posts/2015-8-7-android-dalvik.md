@@ -30,12 +30,14 @@ Dalvik虚拟机是google针对移动设备特征而对于JVM的改进型，使�
 
 GingerBread之前，Dalvik虚拟使用的垃圾收集机制有以下特点：
 
-*Stop-the-word，也就是垃圾收集线程在执行的时候，其它的线程都停止； Full heap collection，也就是一次收集完全部的垃圾；                         
+* Stop-the-word，也就是垃圾收集线程在执行的时候，其它的线程都停止；              
+* Full heap collection，也就是一次收集完全部的垃圾；                           
 * 一次垃圾收集造成的程序中止时间通常都大于100ms。
 
 在GingerBread以及更高的版本中，Dalvik虚拟使用的垃圾收集机制得到了改进，如下所示：
 
-* Cocurrent，也就是大多数情况下，垃圾收集线程与其它线程是并发执行的；Partial collection，也就是一次可能只收集一部分垃圾；也就是会新开一个线程执行GC操作，但是依旧会很占用内存，过多的GC灰造成卡顿。                 
+* Cocurrent，也就是大多数情况下，垃圾收集线程与其它线程是并发执行的；     
+* Partial collection，也就是一次可能只收集一部分垃圾；也就是会新开一个线程执行GC操作，但是依旧会很占用内存，过多的GC灰造成卡顿。                 
 * 一次垃圾收集造成的程序中止时间通常都小于5ms。
 
 
