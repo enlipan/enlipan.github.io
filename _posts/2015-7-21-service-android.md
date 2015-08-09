@@ -42,6 +42,7 @@ Service的启动需要在组件中注册使用，经过测试，不注册不会�
 
 注意从StartService启动与bindService启动的差异问题
 
+{:.center}
 ![Service Lifecycle](\assets\img\20150721\service_lifecycle.png)
 
 Service高级使用一般用于混合Activity、Service、BroadcastReceiver使用建立高级任务链。
