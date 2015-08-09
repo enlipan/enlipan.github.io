@@ -30,7 +30,7 @@ Dalvik虚拟机是google针对移动设备特征而对于JVM的改进型，使�
 {:.center}
 ![stack-vs-registers](\assets\img\20150808\zygote.png)
 
-* 基于Trace，针对项目中Hot Method所占程序全部代码比例较低的情况进行优化，只讲那些最常使用的Mehod加载进虚拟机中。
+* 基于Trace，针对项目中Hot Method所占程序全部代码比例较低的情况进行优化，只讲那些最常使用的Mehod加载进虚拟机中。这里与普通JVM有一定的差异，采用基于Trace可以更加简单有效的获取到涉及到热代码的执行路径，传统的基于方法单位的优化措施，很可能将在该热方法的冷路径上浪费编译资源而并不能提升较大的执行速度的提升。相反直接最终热路径却更能精准的定位。
 
 
  
@@ -78,8 +78,14 @@ GingerBread之前，Dalvik虚拟使用的垃圾收集机制有以下特点：
 
 [ART (AOT) vs DALVIK (JIT)](http://www.slideshare.net/limaniBhavik/artaot-vs-dalvikjit)
 
+[Just-in-time compilation--WIKI](https://en.wikipedia.org/wiki/Just-in-time_compilation)
+
 [rednaxelafx-基于栈和基于寄存器虚拟机](http://rednaxelafx.iteye.com/blog/492667)
+
+[rednaxelafx-[Dalvik VM] Dalvik VM的JIT编译器的资料堆积(dumping...work in progress)](http://hllvm.group.iteye.com/group/topic/17798)
 
 [程序的编译与解释有什么区别](http://www.zhihu.com/question/21486706)
 
 [Real-time Java--IBM](http://www.ibm.com/developerworks/views/java/libraryview.jsp?search_by=Real+time+Java+Part)
+
+
