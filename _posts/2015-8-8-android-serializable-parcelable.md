@@ -5,7 +5,9 @@ category: android
 ---
 **前言：对于细节的掌控程度代表着专业与否。**
 
-Serializable：对象序列化机制，用于将对象写入流中，并能在之后从流中读回。
+####Serializable：
+
+对象序列化机制，用于将对象写入流中，并能在之后从流中读回。
 
 序列号：适用于对象网络保存，在流中，对于多个对象互相引用的对象网络，对象之间当然无法保存对象的地址，所以采用每个对象在流中所独有的序列号引用机制。
 
@@ -26,7 +28,7 @@ private void writeObject(ObjectOutputStream out)throws IOException,ClassNotFound
 
 数据域在序列化时将不再自动序列化，转而会通过调用自定义方法实现对象到数据流，以及流到对象的序列化过程，进而实现自定义序列化过程。
 
-Parcelable：
+####Parcelable：
 
 可用于进程间通信（IPC）以及Activity之间对象信息传输交互。
 
@@ -38,7 +40,7 @@ Parcle除了可以放入基本数据类型外，还能放入实现了Parclable�
 
 同时在写入以及恢复对象属性时，均需要按照统一的顺序一一封装属性数据负责将不能正确的获取或者恢复对象。也就是怎么设定顺序封装进入，就设定什么顺序读取出来。
 
-Parcle：
+####Parcle：
 
 首先引用Google文档：
 
@@ -50,6 +52,6 @@ Android借助于IBinder传递包含了数据或者对象引用的数据信息，
 
 Parcle对象主要适用于高性能的IPC数据传输，而不使用于数据持久化情形。
 
-关于IBinder：
+####IBinder与Parcle：
 
-其核心Api是transact()；而与此同时在IBinder中The data sent through transact() is a `**Parcel**`, a generic buffer of data that also maintains some meta-data about its contents. The meta data is used to manage IBinder object references in the buffer, so that those references can be maintained as the buffer moves across processes. This mechanism ensures that when an IBinder is written into a Parcel and sent to another process, if that other process sends a reference to that same IBinder back to the original process, then the original process will receive the same IBinder object back. These semantics allow IBinder/Binder objects to be used as a unique identity (to serve as a token or for other purposes) that can be managed across processes.
+IBinder核心Api是transact()；而与此同时在IBinder中Google文档中指出：The data sent through transact() is a **`Parcel`**, a generic buffer of data that also maintains some meta-data about its contents. The meta data is used to manage IBinder object references in the buffer, so that those references can be maintained as the buffer moves across processes. This mechanism ensures that when an IBinder is written into a Parcel and sent to another process, if that other process sends a reference to that same IBinder back to the original process, then the original process will receive the same IBinder object back. These semantics allow IBinder/Binder objects to be used as a unique identity (to serve as a token or for other purposes) that can be managed across processes.
