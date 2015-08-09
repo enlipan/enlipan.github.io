@@ -20,9 +20,15 @@ Dalvik虚拟机是google针对移动设备特征而对于JVM的改进型，使�
 
 * .dex格式文件为利用dx工具合并链接.class文件生成，.class文件实际属于编译过程中间件，整合过程中去除冗余信息，进而减小文件尺寸.提高IO速度，而odex是为了在运行过程中进一步提高性能，对dex文件的进一步优化。 
 
+{:.center}
+![stack-vs-registers](\assets\img\20150808\dexfile.png)
+
 * 合并常量池，将各个类中常量用一个常量池管理。
 
 * 特殊的虚拟机进程zygote，虚拟机实例的孵化器。如果系统需要一个新的虚拟机实例，它会迅速复制自身，以最快的数据提供给系统。同时对于一些只读的系统库，所有虚拟机实例都和Zygote共享一块内存区域。（copy on write share）共享区间提升跨进程数据共享。
+
+{:.center}
+![stack-vs-registers](\assets\img\20150808\zygote.png)
 
 * 基于Trace，针对项目中Hot Method所占程序全部代码比例较低的情况进行优化，只讲那些最常使用的Mehod加载进虚拟机中。
 
@@ -61,6 +67,8 @@ ART虚拟机，其采用更加彻底的方式，采用AOT（Ahead of time），�
 
 
 ---
+
+参考引用：
 
 [Dalvik虚拟机的启动过程分析](http://blog.csdn.net/luoshengyang/article/details/8885792)
 
