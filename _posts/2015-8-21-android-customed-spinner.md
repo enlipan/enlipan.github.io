@@ -11,6 +11,7 @@ category: android
 * Spinner     
 * Adapter
 * RelativeLayout       
+* ViewStub                  
 * ActionBar       
 * SharePreference        
 
@@ -138,5 +139,16 @@ public class TyeDataSpinnerAdapter<TypeItem> extends ArrayAdapter {
 
 UI的构建，无他，唯手熟尔！
 
+ViewStub：ViewStub在XML中定义的id只在一开始有效，一旦ViewStub中指定的布局加载Inflate之后，这个id将失效，防止二次Inflate，那么此时如果再次进行对于ViewStub的findViewById()得到的值将会是null；换句话说就是ViewStub只能Inflate一次，之后ViewStub对象会被置空。在具体使用中，某个Layout布局被ViewStub被Inflate后，就不能够再通过ViewStub来控制它了。故而ViewStub不适用于需要动态按需切换显示隐藏的复杂情况；
+
+如：展开详情界面/隐藏详情界面  的动态多次切换情景--在此就不适用。
+
+`View stubView = ViewStub.inflate()`
+
+可以获取ViewStub中指定的嵌套视图树结构，然后通过`stubView.findViewById()可以一一获取ViewStub包含的子View，进行操作。`
+
+
+
 
 对于SharePreference中getPreference构造针对Activity的私有Preference，以及利用PreferenceManager构造默认Preference的使用情况有了深刻的理解。
+
