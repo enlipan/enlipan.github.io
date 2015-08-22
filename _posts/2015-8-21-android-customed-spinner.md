@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Android Spinner自定义
+title: Spinner自定义及周总结
 category: android
-------
+---
 
 
 最近写了一部分界面，以前做Web全栈就不是很喜欢写前端，现在做Android依旧不是很喜欢，不过最近写了一部分界面，感觉其实也没那么坏，不过UI控件的坑还是挺多的，自己对于UI部分的练习还是要注重。
