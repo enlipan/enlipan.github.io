@@ -130,6 +130,11 @@ public class TyeDataSpinnerAdapter<TypeItem> extends ArrayAdapter {
 
 基本情况下，到此一般就完成了相关的自定义，对于下拉列表的自定义显示，我们同样可以覆盖自定义Adapter中getDropDownView方法，具体实现类似于getView(),很多情况下，我们基本可以直接使用getView()相同代码,使下拉列表和展示框完全相同。
 
+{:.center}
+![下拉框](/assets/img/20150821/device-2015-08-22-192021.png)
+
+{:.center}
+![展示框](/assets/img/20150821/device-2015-08-22-192111.png)
 
 ---
 
