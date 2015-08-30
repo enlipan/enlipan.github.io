@@ -1,8 +1,9 @@
-s---
+---
 layout: post
 title: Android 数据发送与共享接收
 category: android
 ---
+
 关于应用之间分享数据的一点接触与了解：
 
 之前最开始自己学习ActionBar的时候学习了`ShareActionProvider`,其核心应用
