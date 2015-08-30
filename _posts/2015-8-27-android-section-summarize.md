@@ -11,7 +11,7 @@ category: android
 ![image](/assets/img/20150827/Screenshot_2015-08-29-00-07-50.png)
 
 {:.center}
-![image](/assets/img/20150827/Screenshot_2015-08-29-00-07-48.png)
+![image](/assets/img/20150827/Screenshot_2015-08-29-02-55-48.png)
 
 {:.center}
 ![image](/assets/img/20150827/Screenshot_2015-08-29-00-07-44.png)
