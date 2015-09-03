@@ -22,7 +22,68 @@ Volly:是来源于GoogleTeem的一种网络通信框架。是对于Http请求的
 
 **使用方式：**
 
-Volley采用请求队列管理并发请求，队列缓存所有Http请求，按照一定的内部实现算法并发处理发出。因而我们无需针对每一个Http请求去建立单独的RequestQueue队列，以免浪费过多的系统资源，比较好的做法是针对每一个需要网络交互的Activity建立一个队列处理其所涉及到的所有请求，甚至对于多网络请求的情况可以更加极端的封装静态请求队列到全局Application，处理应用中的所有Request。
+Volley采用请求队列管理并发请求，队列缓存所有Http请求，按照一定的内部实现算法并发处理发出。因而我们无需针对每一个Http请求去建立单独的RequestQueue队列，以免浪费过多的系统资源，按照郭神推荐的做法是针对每一个需要网络交互的Activity建立一个队列处理其所涉及到的所有请求，但是我们必须知道的是（From Google）：
+
+> A key concept is that the RequestQueue must be instantiated with the Application context, not an Activity context. This ensures that the RequestQueue will last for the lifetime of your app, instead of being recreated every time the activity is recreated (for example, when the user rotates the device).
+
+对于应用多网络请求的情况可以更加好的的封装静态请求队列到全局Application，也就是在Application.onCreate()中建立相应队列，生命周期随着整个应用，处理应用中的所有Request。或者使用官方推荐的全局单例模式。
+
+{%  highlight java  %}
+
+public class MySingleton { 
+    private static MySingleton mInstance;
+    private RequestQueue mRequestQueue;
+    private ImageLoader mImageLoader;
+    private static Context mCtx;
+ 
+    private MySingleton(Context context) {
+        mCtx = context;
+        mRequestQueue = getRequestQueue();
+ 
+        mImageLoader = new ImageLoader(mRequestQueue,
+                new ImageLoader.ImageCache() {
+            private final LruCache<String, Bitmap>
+                    cache = new LruCache<String, Bitmap>(20);
+ 
+            @Override 
+            public Bitmap getBitmap(String url) {
+                return cache.get(url);
+            } 
+ 
+            @Override 
+            public void putBitmap(String url, Bitmap bitmap) {
+                cache.put(url, bitmap);
+            } 
+        }); 
+    } 
+ 
+    public static synchronized MySingleton getInstance(Context context) {
+        if (mInstance == null) {
+            mInstance = new MySingleton(context);
+        } 
+        return mInstance;
+    } 
+ 
+    public RequestQueue getRequestQueue() {
+        if (mRequestQueue == null) {
+            // getApplicationContext() is key, it keeps you from leaking the 
+            // Activity or BroadcastReceiver if someone passes one in. 
+            mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
+        } 
+        return mRequestQueue;
+    } 
+ 
+    public <T> void addToRequestQueue(Request<T> req) { 
+        getRequestQueue().add(req);
+    } 
+ 
+    public ImageLoader getImageLoader() {
+        return mImageLoader;
+    } 
+} 
+
+{% endhighlight %}
+
 
 Volley的三种请求对象：StringRequest/JsonObjectRequst/JsonArrayObjRequest
 
@@ -107,9 +168,16 @@ Volley的三种请求对象：StringRequest/JsonObjectRequst/JsonArrayObjRequest
 其中T代表着Response返回类型的结果泛型，在ResponseListener中接受到结果之后，我们进行相应的数据解析处理，解析成我们需要的类型格式，进行相关的UI展示。
 
 
+**Volley**
+
+{:.center}
+![volley-request](\assets\img\20150720\volley-request.png)
+
 ---
 
 Quote：
+
+[Volley-google](https://developer.android.com/training/volley/index.html)
 
 [Android-Volley详解](http://www.imooc.com/learn/468)
 
