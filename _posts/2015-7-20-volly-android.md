@@ -30,7 +30,7 @@ Volley的三种请求对象：StringRequest/JsonObjectRequst/JsonArrayObjRequest
 
 注意：在使用中，若是应用全局请求队列，我们要额外注意请求与Activity生命周期的联动，防止Activity被销毁而后台请求依然进行的情况。具体使用取消操作时一般采用对于相应的Requst设定相应Tag，在onstop中将对应tag的request移除队列。
 
-
+{%  highlight java  %}
 
  StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -58,6 +58,7 @@ Volley的三种请求对象：StringRequest/JsonObjectRequst/JsonArrayObjRequest
         DemoApplication.getHttpQueues().cancelAll("baiduGet");
     }
 
+{% endhighlight %}
 
 **对于带参数的Post请求的处理方法**
 
@@ -72,6 +73,8 @@ Volley的三种请求对象：StringRequest/JsonObjectRequst/JsonArrayObjRequest
 * NerWorkImageView + ImageLoader + LruCache     
 
 第一种过于简单，这里主要实践第二种和第三种方式：
+
+{%  highlight java  %}
 
  ImageLoader loader = new ImageLoader(DemoApplication.getHttpQueues(), new ImageLoader.ImageCache() {
             @Override
@@ -90,6 +93,7 @@ Volley的三种请求对象：StringRequest/JsonObjectRequst/JsonArrayObjRequest
         loader.get(url,listener);
     }
 
+{% endhighlight %}
 
 第三种方式与第二种类似，其差异在于使用了自定义UI控件NetworkImageView，其将对于图片根据自身设定大小自动处理图片加载的宽高大小，依据情况确定是否需要进行压缩。最大程度上的简化了图片的加载处理。
 
