@@ -17,6 +17,7 @@ android:weightSum结合子View中的android:weight使用，对于界面的展示
 View的延迟加载与代码重用
 
 Include覆盖问题：
+
 > The problem  is  that  the  <include  /> tag  must  specify  both  android:layout_width and 
 android:layout_heightif we want to override any android:layout_*attributes. 
 > 
@@ -40,8 +41,13 @@ ViewStub.inflate ()返回填充视图的引用，inflatedId代表被填充View�
 
 格式化文本：设定特殊功能或样式的文本
 
-*  SpannableString      
+*  SpannableString 这玩意最近做点赞特效用到过，简洁易用     
 *  Html.fromHtml()
+
+Quote：
+
+[Android SpannableString Example](http://androidcocktail.blogspot.jp/2014/03/android-spannablestring-example.html)
+
 
 
 
