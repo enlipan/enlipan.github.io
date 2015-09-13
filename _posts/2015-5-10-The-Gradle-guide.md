@@ -23,11 +23,37 @@ category: java
 > > 
 > > testRuntime
 
+> 一个product flavor定义了从项目中构建了一个应用的自定义版本。一个单一的项目可以同时定义多个不同的flavor来改变应用的输出。
+> 
+> 每一个\_Build Type\_都会生成一个新的APK。
 
+{%   highlight  xml  %}
+
+android {
+    ...
+    defaultConfig { ... }
+    signingConfigs { ... }
+    buildTypes { ... }
+    productFlavors {
+        demo {
+            applicationId "com.buildsystemexample.app.demo"
+            versionName "1.0-demo"
+        }
+        full {
+            applicationId "com.buildsystemexample.app.full"
+            versionName "1.0-full"
+        }
+    }
+}
+
+
+{%  endhighlight  %}
 
 ---
 
 [Build Script Basics](https://gradle.org/docs/current/userguide/tutorial_using_tasks.html)
+
+[构建变种版本 - Build Variants](http://wiki.jikexueyuan.com/project/android-gradle-guide/build-variants.html)
 
 [Java Plugin](https://gradle.org/docs/current/userguide/tutorial_java_projects.html)
 
