@@ -9,6 +9,7 @@ category: java
 enum 
 
 ####枚举常量简化冗余的static final 静态关键字：
+
 {% highlight Java %}
 
 enum  Number{

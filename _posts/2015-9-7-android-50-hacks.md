@@ -29,11 +29,45 @@ ViewStub.inflate ()返回填充视图的引用，inflatedId代表被填充View�
 
 一般情形我们可能对于ViewStub的性能提升观察不明显，但是当视图层次较深的时候，ViewStub的威力就开始显现出来。  
 
+####Hack 3：
+
+ViewGroup自定义
+
+* 自定义视图组在复用时，更易维护          
+* 布局文件精简化      
+
+通过ViewGroup层层遍历，Measure测量子View尺寸信息，层层传递保存，第二过程由Layout层层遍历从上至下传递定位位置信息。最后在Onlayout中利用前期所得尺寸位置信息，布局子视图。
+
+
+
+####Hack 4：
+
+PreferenceActivity
+
+
+
+###Hack 5:
+
+文本与图片切换的动画效果
+
+TextSwitcher
+
+ImageSwitcher
+
+改变动画切换效果
 
 
 
 
+####Hack 9：
 
+不在EditText中验证日期
+
+将Button设定为类似EditText背景情况下，联动DatePicker
+
+button  xml:
+
+android:background = "@android:drawable/edit_text"
 
 
 
