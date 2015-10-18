@@ -50,6 +50,20 @@ category: java
 IO重定向：System.SetIn();System.SetOut();System.SetErr();
 
 
+###IO使用是考虑要点
+
+1. 按照数据来源：文件？字节数组？字符串？网络数据？       
+2. 格式化输出亦或输出重定向？        
+3. 缓冲？Buffer？                        
+4. 数据格式？               
+5. 输入（InputStream Reader）？ 输出（OutPutStream Writer）？            
+6. 数据格式？确定纯文本的字符流？亦或无法确定的字节流？         
+7. 特殊使用场景的对象流以及进程间管道流                           
+
+       
+
+
+
 ####NIO相关
 
 ####序列化：序列化结合Android实现Paceable接口查看

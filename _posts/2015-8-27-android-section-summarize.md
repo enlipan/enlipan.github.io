@@ -32,6 +32,10 @@ category: android
 
 {% endhighlight %}
 
+关于设置了Spinner背景之后，在5.0版本以上DropDown模式下，下拉能拓展至整个页面，但是5.0以下需要设定`popupBackGround`,否则将会造成下拉左侧始终存在一个边距，实在是强迫症不能忍啊。
+
+这个细节反而是耗时间最长的。导致浪费大量时间，一个视觉方案必然有相关的技术解决方案只是需要我们去探索而已。
+
 第二个在于GridLayout的应用，同样不做过多说明。
 
 第三个在于对于实现后台任务的选择方法，具体使用New Thread还是AsyncTask，具体情况可以具体分析，一般来说对于有界面交互的，比如弹出ProgressDialog之类的情况，可以选用Asynctask，充分利用其生命周期方法。而当程序与用户并没有交互时，我们则推荐选用New Thread，后台线程与UI线程的消息传递利用Handler完成。
