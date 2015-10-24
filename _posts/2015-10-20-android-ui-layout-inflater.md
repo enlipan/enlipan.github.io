@@ -184,6 +184,8 @@ public View inflate(XmlPullParser parser, ViewGroup root, boolean attachToRoot) 
 
 2.  root非空，attachToRoot为false，构建的子View最外层布局参数会被添加到View中，参数有效，但View不会绑定parent ViewGroup，需要后期自己手动添加进入parent，父布局才能接受event等事件传递与监听             
 3.  root为空，可以看到连最外层布局参数都不会被加入进入构建View
+
+
 ---
 
 Quot：
