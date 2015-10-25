@@ -10,8 +10,21 @@ category: android
 一个问题既可以用数据库解决也可以用文件缓存解决，如何取舍需要慎重，数据库在代码中使用会觉得很方便，文件的缓存看起来更加复杂，但是考虑到对于性能的影响，数据的使用属于重量级应用，需要慎重。
 
 
-文件路径的设定应该避免使用硬编码，就如同幻数一样的存在，尽量利用超级Contex获取。
+文件路径的设定应该避免使用硬编码，就如同幻数一样的存在，尽量利用超级Contex获取。但是需要注意的是个别情况下如外部存储被占用的情况可能无法利用Context获取，需要手动硬编码防止获取的路径为空造成程序异常的情况。
 
+{%  highlight java %}
+
+      // In some case, even the sd card is mounted,
+      // getExternalCacheDir will return null
+      // may be it is nearly full.
+      if (file != null) {
+           sb.append(file.getAbsolutePath()).append(File.separator);
+      } else {
+           sb.append(Environment.getExternalStorageDirectory().getPath()).append("/Android/data/").append(context.getPackageName())
+                     .append("/cache/").append(File.separator).toString();
+      }
+
+{% endhighlight %}
 
 ###Android存储使用
 
@@ -49,6 +62,8 @@ getExternalStorageDirectory ()：获取外部存储根目录节点
 
 getExternalStorageState():查看外部存储是否存在被其他终端挂载占用情况
 
+{%  highlight java %}
+
 void updateExternalStorageState() {
     String state = Environment.getExternalStorageState();
     if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -63,12 +78,15 @@ void updateExternalStorageState() {
             mExternalStorageWriteable);
 }
 
+{% endhighlight %}
 
 getExternalStoragePublicDirectory (String type)：外部公开目录
 
 getExternalFilesDir(String):获取外部存储Andorid/data/com.packagename/files
 
 getExternalCacheDir():获取Andorid/data/com.packagename/cache
+
+
 
 ---
 
