@@ -20,7 +20,7 @@ ObjectAnimator:对任意对象的任意属性进行属性动画操作
     }
 
 
-{%  endhightlight  %}
+{%  endhighlight  %}
 
 
 属性动画针对对象的某个属性进行赋值，对象根据属性值的更改自行决定该属性的展示。上面的核心代码:`ObjectAnimator animator = ObjectAnimator.ofFloat(view, "rotation", 0f, 360f);`
@@ -48,7 +48,7 @@ ObjectAnimator:对任意对象的任意属性进行属性动画操作
     }
 
 
-{%  endhightlight  %}
+{%  highlight  %}
 
 该函数帮我们沿着一定的轨迹改变View(Target)的rotation属性值，View根据属性的更改刷新界面的显示，进而展示出动画效果。
 
@@ -74,3 +74,19 @@ Animator监听器:用于监听动画的执行过程。
 动画Xml加载：`AnimatorInflater.loadAnimator`
 
 
+TypeEvaluator接口的evaluate()函数：完成值的动画变更，其中fraction为动画完成度，通过与初值、结束值的结合运算
+构造完成当前动画的该动画属性值
+
+
+ObjectAnimator的高级用法：通过构造对象的特定属性的Getter与Setter封装完成当前动画值的获取与值的更新。
+
+
+---
+
+Quote：
+
+[Android属性动画--Property Animation（一）](http://www.jcodecraeer.com/a/anzhuokaifa/developer/2013/0312/1006.html)
+
+[ Android属性动画完全解析(上)，初识属性动画的基本用法](http://blog.csdn.net/guolin_blog/article/details/43816093)
+
+[Android 属性动画（Property Animation） 完全解析 （上）](http://blog.csdn.net/lmj623565791/article/details/38067475)
