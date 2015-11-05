@@ -10,7 +10,7 @@ ValueAnimator:对某个值进行动画过度
 
 ObjectAnimator:对任意对象的任意属性进行属性动画操作
 
-{%  highlight java  %}
+{% highlight Java %}
 
 
     private void startObjAnimator(View view){
@@ -20,12 +20,13 @@ ObjectAnimator:对任意对象的任意属性进行属性动画操作
     }
 
 
-{%  endhighlight  %}
+{%  endhighlight %}
 
 
 属性动画针对对象的某个属性进行赋值，对象根据属性值的更改自行决定该属性的展示。上面的核心代码:`ObjectAnimator animator = ObjectAnimator.ofFloat(view, "rotation", 0f, 360f);`
 
-{%  highlight java  %}
+
+{% highlight Java %}
 
     /**
      * Constructs and returns an ObjectAnimator that animates between float values. A single
@@ -47,8 +48,7 @@ ObjectAnimator:对任意对象的任意属性进行属性动画操作
         return anim;
     }
 
-
-{%  endhighlight  %}
+{%  endhighlight %}
 
 该函数帮我们沿着一定的轨迹改变View(Target)的rotation属性值，View根据属性的更改刷新界面的显示，进而展示出动画效果。
 
