@@ -48,7 +48,7 @@ ObjectAnimator:对任意对象的任意属性进行属性动画操作
     }
 
 
-{%  highlight  %}
+{%  endhighlight  %}
 
 该函数帮我们沿着一定的轨迹改变View(Target)的rotation属性值，View根据属性的更改刷新界面的显示，进而展示出动画效果。
 
