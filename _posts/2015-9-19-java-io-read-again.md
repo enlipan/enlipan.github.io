@@ -33,13 +33,22 @@ category: java
 ####OutputStream
 
 
+
+
+####中间转换包装类
+
+数据的存储是字节形式，而数据的展示是字符，二者在使用时的中间转换流为：inputStreamReader、outputStreamWriter.
+
+
 ####输入输出流的经典使用：
 
 
 
 
+####数据流：
 
-利用DataOutputStream与DataOutinputStream用合适的方式分别处理输出与输入，可以无视平台特性而保证数据的准确读取。
+
+利用DataOutputStream与DataOutinputStream用合适的方式分别处理输出与输入，可以无视平台特性而保证数据的准确读取，允许应用程序按照与机器无关的风格读取java原始数据。其通过对于流功能的拓展，可更加方便的直接读写 int、long、char等类型数据。而不关心其底层字节占用情况，其本质是一种抽象。
 
 ####标准IO与IO重定向
 

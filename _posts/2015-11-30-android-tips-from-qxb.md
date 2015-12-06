@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android Tip 总结
+title: Android Tips Part(1)
 category: android
 ---
 
