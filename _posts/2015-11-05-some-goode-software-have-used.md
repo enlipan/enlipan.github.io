@@ -39,6 +39,8 @@ StartUML
 
 ShadowSocket
 
+Putty
+
 Chrome：
 
 *  远方          
