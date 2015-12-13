@@ -17,6 +17,8 @@ SublimeText2:
 * Terminal               
 * ImeSupport
 
+Source Insight
+
 Direct Folders
 
 Wox
