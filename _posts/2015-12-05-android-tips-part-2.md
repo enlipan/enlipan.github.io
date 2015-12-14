@@ -43,8 +43,9 @@ BroadcastReceiver监听：Intent.ACTION_LOCALE_CHANGED
 onSaveInstanceState()不属于生命周期函数，其在系统将要销毁Activity实例时系统自动调用，用于保存键值数据。
 
 
+* Android Assets 文件夹：
 
-
+\{ProjectName\}/app/src/main/assets/
 
 
 
