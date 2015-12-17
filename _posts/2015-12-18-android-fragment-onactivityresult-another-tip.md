@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Fragment.OnActivityResult 再补充
+title: 嵌套Fragment.OnActivityResult Tip-2
 category: android
 ---
 
@@ -50,6 +50,8 @@ category: android
 
 当然在分发时依旧使用这种分发方式：
 
+{% highlight java %}
+
 /**
     *在嵌套Fragment的父级Fragment中重写onActivityResult();
     */
@@ -68,6 +70,6 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
         } 
     }
 
-
+{% endhighlight %}
 
 以上就是嵌套Fragment startActivityForResult()完整解决方案；
