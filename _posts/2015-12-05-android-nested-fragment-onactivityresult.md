@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 嵌套Fragment.OnActivityResult Tip-1
+title: 嵌套Fragment Tip-1
 category: android
 ---
 StartActivityForResult作为Android中最常用的界面交互函数，其实并没有所想的那么简单，简单的说就是稍不注意就会自己给自己挖坑，后期填坑时还很恶心。

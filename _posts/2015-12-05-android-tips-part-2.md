@@ -48,6 +48,9 @@ onSaveInstanceState()不属于生命周期函数，其在系统将要销毁Activ
 \{ProjectName\}/app/src/main/assets/
 
 
+* AndroidStudio 关闭Svn：
+
+Setting --Version Control ：删除 之前指定的 版本管理工具  "Project"  "none"
 
 
 

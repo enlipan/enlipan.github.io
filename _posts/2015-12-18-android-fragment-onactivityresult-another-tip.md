@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 嵌套Fragment.OnActivityResult Tip-2
+title: 嵌套Fragment Tip-2
 category: android
 ---
 
@@ -73,3 +73,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 {% endhighlight %}
 
 以上就是嵌套Fragment startActivityForResult()完整解决方案；
+
+以上：需要知道的是利用getFragmentManager 与 getChildFragmentManager 启用Fragment是有严格的差异的：
+
+FragmentManager是挂载在Activity index索引目录下，而后者则是挂载在Fragment子Fragment索引目录下；
