@@ -18,6 +18,7 @@ ViewHolder：
 
 需要注意的是：ViewHolder最佳设定为静态内部类，使其与其他缓存无关，由于非静态内部类将持有外部类的引用，这点需要尤其注意；
 
+{% highlight java %}
 
 ListView  ChoiceMode：
 
@@ -30,6 +31,8 @@ ListView  ChoiceMode：
                 child.setActivated(mCheckStates.get(position));
             }
         }
+
+{%  endhighlight %}
 
 对于Item中含有CheckBox的项目，如IM中的每一条消息，我们需要复写其Checkable接口自定义实现View；
 
