@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android-tips-part-3
+title: Android Tips part (3)
 category: android
 ---
 
@@ -73,6 +73,40 @@ onCreate()：服务创建时调用
 
 onStartCommand():每次StartService（intent）都会触发，无论该Service存在与否；
 
+
+9. Java 字符串常量的优化：
+
+编译器所谓的常量折叠：编译期常量运算的折叠合并优化，对于编译期可以确认其值的常量一般指常量或final 字段的基本类型或字符串类型。
+
+典型应用是：字符串连接：
+
+{% highlight java %}
+
+情形一：
+
+"ab" + "c"
+
+"abc"
+
+==
+
+情形二：
+
+String a = "ab"
+
+String b = a + "c"
+
+a != b
+
+情形三：
+
+final String a = "ab"
+
+String b= a + "c"; 
+
+b == "abc"
+
+{%  endhighlight %}
 
 ---
 
