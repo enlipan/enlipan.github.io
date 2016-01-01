@@ -4,7 +4,8 @@ title: AndroidStudio Gradle Tips (1)
 category: android
 ---
 
-* set minSdk in build.gradle (★★★)              
+* set minSdk in build.gradle (★★★)     
+
 android {
   productFlavors {
     dev {
@@ -15,6 +16,7 @@ android {
     }
   }
 }
+
 Packaging process is two step. one is class to dex. other is merging dex. but after api 21 (Lollipop) is based on ART. so It doesn’t do merging dex. It is keypoint to save building time.
 but Be careful. after changing minsdk value, AS wouldn’t warn api level.
 

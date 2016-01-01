@@ -12,13 +12,26 @@ category: android
 
 就算是静态内部类也需要注意，一些集合类的引用传递也可能导致内存泄漏；
 
+Handler内存泄漏：
+
+handler一般多用于创建内部类实例并重写其handleMessage()函数；
+
+利用Handler发送消息到MsgQueue中，并转交到对应的Looper，Looper收到的消息中其实携带了一个Handler引用，以便于Looper通过Handler来分发处理消息。
+
+主线程ActivityThread中的Looper会与应用生命一起存在，Looper持有Handler，造成以Handler为内部类而所在的Activity无法回收，内存泄漏由此产生。
+
+解决这一问题一般是将内部类转换为静态内部类，并且慎用Context引用，可以将Context引用利用弱引用，防止内存泄漏；
+
 
 3.Java 的值传递类型：
 
 很多人认为Java只有值传递是将Java的对象引用传递，回归本质的指针传递，进而划分到地址传递，也就是值传递；当然计算机底层也无法区分引用还是值，只有地址码值才是永恒，所以如果进一步说，如果是复制传递，如Java栈区中基本类型值复制传递，就是一般意义上的值传递，而如果是共享传递，如Java中的引用对象传递，通过传递地址值进行内存共享，一般是指针地址值传递，所以根本上Java只有值传递；
 
-4. SingleTask SingleInstance 中的 onActivityResult问题：
+4. SingleTask SingleInstance 中的 onActivityResult 问题：
 
+5.0以下的系统中：如果startActivityForResult()启动的Activity 属于 SingleTask类型，onActivityResult()会立即得到Cancle的结果，也就无法收到正确的SetResult()返回结果；
+
+改成SingleTop 模式可以正确启动；
 
 
 
@@ -114,5 +127,8 @@ b == "abc"
 Quote：
 
 [Java内存泄露的理解与解决 ](http://www.blogjava.net/zh-weir/archive/2011/02/23/345007.html)
+
+[Handlers & Inner Classes](http://www.androiddesignpatterns.com/2013/01/inner-class-handler-memory-leak.html)
+
 
 [说说PendingIntent的内部机制](http://my.oschina.net/youranhongcha/blog/196933)
