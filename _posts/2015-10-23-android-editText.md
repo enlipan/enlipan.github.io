@@ -6,11 +6,11 @@ category: android
 
 需要注意的是Activity，软键盘设定的几种设置方式：
 
-1. 设置为“可见”或者“不可见”
+*   设置为“可见”或者“不可见”
 
 stateUnchanged、stateHidden、stateAlwaysHidden、stateVisible、stateAlwaysVisible  
 
-2. 软键盘的展示方式会影响主界面的布局，例如可以是屏幕原有布局改变尺寸，留给软键盘足够的空间。也可能是，原有布局不变，软键盘覆盖在布局上面。
+*  软键盘的展示方式会影响主界面的布局，例如可以是屏幕原有布局改变尺寸，留给软键盘足够的空间。也可能是，原有布局不变，软键盘覆盖在布局上面。
 
 adjustUnspecified、adjustResize、adjustPan、adjustNothing
 
