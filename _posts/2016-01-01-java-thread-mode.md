@@ -20,12 +20,68 @@ category: Java
 
 针对这一情况记录最近遇到的一个优化实例：保存数据时，利用的一个SynTask操作保存全部数据状态，UI线程利用ShowDialog阻塞等待状态，在针对大数据量下Dialog时间过长的问题优化时，分析发现 有部分大时间操作 大概在 1000ms 实在等待数据保存到系统的状态返回，但是在获取返回数据之后，并没有立即使用，而是在获取之后又执行了大量其他保存操作，最后综合这部分其他操作和结果进行业务逻辑判定，我得解决方案是将这部分阻塞操作独立出来，利用FutureTask方式，将系统保存操作抛出（此处注意内存泄漏问题），从而将那些其他操作的运行时间提前，在最后状态综合阶段再阻塞等待状态集合做后续业务逻辑操作；最后发现这样的方式缩短了 超过40%的等待时间，效果很满意；
 
+
 **生产消费者模式：**
 
 这估计是最常见的多线程协同作业模式；其核心是将生产线程与消费线程通过共享内存缓冲区进行逻辑分离解耦，二者各自只关心自己的状态，生产者搜集工作提交到缓存区，消费者从缓存区获取处理工作；同时通过缓存区缓解二者性能与执行时间差距；可以一定程度缓解系统并行状态的性能瓶颈；
 
 
+{% highlight java %}
 
+public static class WaitNotifyBuffer{
+
+        ArrayList<Integer>  mIntBuffer = new ArrayList<>(SIZE);
+        static final int SIZE = 10;
+
+        private int getRandomIntInRange(){
+            final int max = 20;
+            final int min = 10;
+            Random random = new Random();
+            // max - min 之间的随机数
+            return random.nextInt((max - min) + 1) + min;
+        }
+
+        public  synchronized void addIntToBuffer(int num) throws InterruptedException {
+            while (mIntBuffer.size() == SIZE){
+                wait();
+            }
+            mIntBuffer.add(num);
+            notifyAll();
+        }
+
+
+        public synchronized int offerInt() throws InterruptedException {
+            while (mIntBuffer.size() == 0){
+                wait();
+            }
+            int result = mIntBuffer.get(0);
+            mIntBuffer.remove(0);
+            notifyAll();
+            return result;
+        }
+
+        public synchronized int getSize(){
+            return mIntBuffer.size();
+        }
+
+    }
+
+    
+    public static class BlockingQueueBuffer{
+
+    ArrayBlockingQueue<Integer> mIntBuffer = new ArrayBlockingQueue<>(10);
+
+        public void addIntToBuffer(int num) throws InterruptedException {
+            mIntBuffer.put(num);
+        }
+
+        public int offerInt() throws InterruptedException {
+            return mIntBuffer.take();
+        }
+
+    }
+
+{%  endhighlight %}
 
 顺带提一个**不变模式**;
 
@@ -87,20 +143,11 @@ category: Java
 
 
 
-
-
-
-
-
-
-
-
-
----
-
-顺带提一个遇到的小Tip：
+顺带提一个遇到的小**Tip**：
 
 关于Collections.copy();函数的OutOfIndex问题； 
+
+destination List 内容长度要大于 src List，而不是容量大于，所以 new ArrayList(src.size())是错误的，正确方式是: new ArrayList(src);
 
 
 ---
@@ -108,6 +155,12 @@ category: Java
 Quote：
 
 [剖析Android中进程与线程调度之nice](http://droidyue.com/blog/2015/09/05/android-process-and-thread-schedule-nice/)
+
+[Java中的阻塞队列](http://www.infoq.com/cn/articles/java-blocking-queue)
+
+[Java Thread: notify() and wait() examples](http://www.programcreek.com/2009/02/notify-and-wait-example/)
+
+[如何在 Java 中正确使用 wait, notify 和 notifyAll](http://www.codeceo.com/article/java-wait-notify-notifyall-2.html)
 
 Effective Java
 
