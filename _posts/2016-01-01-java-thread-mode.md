@@ -43,6 +43,7 @@ public static class WaitNotifyBuffer{
 
         public  synchronized void addIntToBuffer(int num) throws InterruptedException {
             while (mIntBuffer.size() == SIZE){
+                //wait() tells the calling thread to give up the monitor and go to sleep until some other thread enters the same monitor and calls notify( ).
                 wait();
             }
             mIntBuffer.add(num);
@@ -56,6 +57,8 @@ public static class WaitNotifyBuffer{
             }
             int result = mIntBuffer.get(0);
             mIntBuffer.remove(0);
+            //notify() wakes up the first thread that called wait() on the same object.
+            //notify();
             notifyAll();
             return result;
         }
