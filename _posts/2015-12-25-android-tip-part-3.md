@@ -132,3 +132,5 @@ Quote：
 
 
 [说说PendingIntent的内部机制](http://my.oschina.net/youranhongcha/blog/196933)
+
+[内存泄露从入门到精通三部曲之常见原因与用户实践](https://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&mid=401107957&idx=2&sn=4b95bcfedd762b987ec57f60f80b1f94&scene=2&srcid=1119lGAlbzG5LrX1QJlJxGQR&from=timeline&isappinstalled=0&key=d72a47206eca0ea9275336a5898eb5b7cccb5719c45d7e237e6f910d5a56194f2e06a1fea3cded1d025abf1c2d756f22&ascene=2&uin=NjUyNDAxMDU%3D&devicetype=android-19&version=26030735&nettype=cmnet&pass_ticket=t3IpxDHKJY3VFttEo2ECvy2Oyaw%2B1gIqzaJHXlKneBE%3D)
