@@ -6,7 +6,7 @@ layout: index
   <h1 id="post__title" data-identifier="{{ page.date | date: "%Y%m%d" }}">{{ page.title }}</h1>
   {{ content }}
 
- <div class="pagination pull-right">
+ <div class="pl__title">
       <ul>
         {% if page.previous %}
         <li class="pl__title"><a href="{{ BASE_PATH }}{{ page.previous.url }} " title="{{ page.previous.title }}" class="pl__title">上一篇</a></li>
