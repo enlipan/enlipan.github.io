@@ -9,11 +9,11 @@ layout: index
  <div class="pagination pull-right">
       <ul>
         {% if page.previous %}
-        <li class="prev"><a href="{{ BASE_PATH }}{{ page.previous.url }} " title="{{ page.previous.title }}" class="forward" target="_self" id="goto_previous_page">&larr; 上一篇</a></li>
+        <li class="pl__title"><a href="{{ BASE_PATH }}{{ page.previous.url }} " title="{{ page.previous.title }}" class="pl__title">上一篇</a></li>
         {% else %}
         {% endif %}
         {% if page.next %}
-        <li class="next"><a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}" target="_self" class="forward" id="goto_next_page">下一篇 &rarr;</a></li>
+        <li class="pl__title"><a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}"  class="pl__title">下一篇</a></li>
         {% else %}
         {% endif %}
       </ul>
