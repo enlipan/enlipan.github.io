@@ -5,20 +5,19 @@ layout: index
 <article id="post__content">
   <h1 id="post__title" data-identifier="{{ page.date | date: "%Y%m%d" }}">{{ page.title }}</h1>
   {{ content }}
-
- <div class="pl__title">
-      <div id = "post_pre_a_pre">
+ <div>
+  	<div id = "post_pre_a_pre">
         {% if page.previous %}
         <a href="{{ BASE_PATH }}{{ page.previous.url }} " title="{{ page.previous.title }}" class="pl__title">上一篇</a>
         {% else %}
         {% endif %}
-        </div>
-        <div id = "post_next_a_next">
+	</div>
+	<div id = "post_next_a_next">
         {% if page.next %}
         <a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}"  class="pl__title">下一篇</a>
         {% else %}
         {% endif %}
-       </div>     
+   	</div>     
 </div>
 
 </article> <!-- end #post__content -->
