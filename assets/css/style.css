@@ -423,7 +423,6 @@ h1, h2, h3, h4, h5, h6 {
   text-align:left;    
    width: 40%;
 }
-
 #post_next_a_next{
   display: inline-block;
   text-align:right;    
@@ -432,7 +431,7 @@ h1, h2, h3, h4, h5, h6 {
 #post_midle{
   display: inline-block;
   text-align:center;    
-   width: 18%;
+   width: 15%;
 }
 
 strong {
