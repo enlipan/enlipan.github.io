@@ -7,17 +7,19 @@ layout: index
   {{ content }}
 
  <div class="pl__title">
-      <ul>
+      <div id = "post_pre_a_pre">
         {% if page.previous %}
-        <li class="pl__title"><a href="{{ BASE_PATH }}{{ page.previous.url }} " title="{{ page.previous.title }}" class="pl__title">上一篇</a></li>
+        <a href="{{ BASE_PATH }}{{ page.previous.url }} " title="{{ page.previous.title }}" class="pl__title">上一篇</a>
         {% else %}
         {% endif %}
+        </div>
+        <div id = "post_next_a_next">
         {% if page.next %}
-        <li class="pl__title"><a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}"  class="pl__title">下一篇</a></li>
+        <a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}"  class="pl__title">下一篇</a>
         {% else %}
         {% endif %}
-      </ul>
-    </div>
+       </div>     
+</div>
 
 </article> <!-- end #post__content -->
 
