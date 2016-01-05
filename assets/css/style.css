@@ -419,13 +419,15 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 5px; }
 
 #post_pre_a_pre{
-  font-family:Cursive;
+  font-size: 14px;
+  font-family:FangSong;
   display: inline-block;
   text-align:left;    
    width: 49%;
 }
 #post_next_a_next{
-  font-family:Cursive;
+  font-size: 14px;
+  font-family:FangSong;
   display: inline-block;
   text-align:right;    
    width: 49%;
