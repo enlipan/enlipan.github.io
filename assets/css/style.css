@@ -419,11 +419,13 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 5px; }
 
 #post_pre_a_pre{
+  font-family:Cursive;
   display: inline-block;
   text-align:left;    
    width: 49%;
 }
 #post_next_a_next{
+  font-family:Cursive;
   display: inline-block;
   text-align:right;    
    width: 49%;
