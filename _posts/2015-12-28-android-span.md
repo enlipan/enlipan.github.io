@@ -4,8 +4,31 @@ title: Android Span
 category: android
 ---
 
+SpannableString
+
+SpannableStringBuilder
 
 
+Span Flags:
+
+Spanned.SPAN\_EXCLUSIVE\_EXCLUSIVE :不包含两端start和end所在的端点: (a,b)
+Spanned.SPAN\_EXCLUSIVE\_INCLUSIVE : 不包含端start，但包含end所在的端点:(a,b]
+Spanned.SPAN\_INCLUSIVE\_EXCLUSIVE : 包含两端start，但不包含end所在的端点: [a,b)
+Spanned.SPAN\_INCLUSIVE\_INCLUSIVE: 包含两端start和end所在的端点: [a,b]
+
+常用Span：
+
+BackgroundColorSpan
+
+ForegroundColorSpan
+
+ImageSpan
+
+DrawableMarginSpan
+
+MaskFilterSpan
+
+URLSpan
 
 ---
 

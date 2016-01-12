@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android Data Store
+title: Data Store and Share
 category: android
 ---
 SQLite命令行：
@@ -36,8 +36,16 @@ JavaBean让我们能以操纵Java对象的方式操纵底层数据库数据，�
 其实 Android系统提供了一些Provider来共享系统数据，当获取了相应权限之后，我们便可以方便的操纵系统内置相应功能如：系统联系人，系统相册，系统Video库等；
 
 
+
+
 * ...明日待续
-...
+
+{:.center}
+![created-provider](/assets/img/20160112/created-provider.PNG)
+
+{:.center}
+![content-provider-join](/assets/img/20160112/content-provider-join.PNG)
+
 
 
 
