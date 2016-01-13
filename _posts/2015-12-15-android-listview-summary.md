@@ -48,6 +48,13 @@ ListView setViewType：
 android:clipChildren：
 有时候1px，分割线被忽略可能是因为这个原因(含义：是否限制子View在其范围内)
 
+
+ListView中包含Header后的onItemClick position 问题：
+
+前段时间调试OnItemLick时，突然发现 position对应的 Entity 位置错误的问题：后来想了想源码中设置Header后，会在Adapter设置时重新包装产生新的Adapter，所以我们在使用时应该 利用`listView（parent）.getAdapter.getItem(position)`的方式，获取对应位置的entity，当然我们应该知道 getAdapter的方式获取的Adapter 是包装HeadView之后的Adapter，所以利用这种方式当然会获取到对应的 entity；
+
+
+
 ---
 
 Quote： 
@@ -57,3 +64,5 @@ Quote：
 [ListView Tips & Tricks #1: Handling Emptiness](http://cyrilmottier.com/2011/06/20/listview-tips-tricks-1-handle-emptiness/)
 
 [Android布局优化之ViewStub、include、merge使用与源码分析](http://www.androidchina.net/2485.html)
+
+[当ListView有Header时，onItemClick里的position不正确](http://blog.chengbo.net/2012/03/09/onitemclick-return-wrong-position-when-listview-has-headerview.html)

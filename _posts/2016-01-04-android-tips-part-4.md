@@ -100,7 +100,9 @@ ImageSpan 目前看来还是有些问题，网上的解决方案要么无法解�
 
 [String's Maximum length in Java - calling length() method](http://stackoverflow.com/questions/816142/strings-maximum-length-in-java-calling-length-method)
 
-理论上说：其长度极限应该是 Integer.MAX_VALUE;但需要注意的是当明文编写源码String:`String s = "ssssss"1`时,最大长度却只能有 65534个。
+理论上说：由于其长度是利用一个`int`型记录,其长度极限应该是 Integer.MAX_VALUE —— 这种情况属于程序中动态生成，添加设定String对象；
+
+但需要注意的是当明文编写源码String:`String s = "ssssss"1`时,最大长度却只能有 65534个。
 
 源于Class文件规范中，CONSTANT\_Utf8\_info表中使用一个16位的无符号整数来记录字符串的长度的，最多能表示 65536个字节，而class 文件是使用一种变体UTF-8格式来存放字符的，null值使用两个字节来表示，因此只剩下 65536－ 2 ＝ 65534个字节。也正是变体UTF-8的原因，如果字符串中含有中文等非ASCII字符，那么双引号中字符的数量会更少（一个中文字符占用三个字节(UTF-8下3字节，GBK下2字节)）。如果超出这个数量，在编译的时候编译器会报错。
 

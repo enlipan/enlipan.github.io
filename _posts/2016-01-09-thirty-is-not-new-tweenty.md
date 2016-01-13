@@ -4,6 +4,7 @@ title: 为什么30岁不是新的20岁
 category: other
 ---
 
+### 思维导图：
 
 {:.center}
 ![为什么30岁不是新的20岁](/assets/img/20160109/thirty-is-not-a-new-tweenty.PNG)
