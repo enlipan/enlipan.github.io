@@ -88,4 +88,26 @@ volatile 关键字用于多线程实例执行时，当 instance对象 null 状�
 
 一旦对象创建完成，由于volatile  的作用，后面的其他线程的 instance 状态都将是正确的，无需再进入锁区等候二轮校验；
 
+双重校验的使用必然是影响性能的，所以需要慎重使用；
+
+根据Effective Java一书中指出，枚举若是定义合适的构造函数就是最合适天然单例；
+
+枚举保证了绝对的防止多次实例化，并且由JVM从根本上提供保证：
+
+{% highlight java %}
+
+    enum Single{
+        INSTANCE("instance");
+
+        private String values;
+        Single(String str){
+            values = str;
+        }
+
+        public void singleOption(){
+            System.out.printf(values);
+        }
+    }
+{% endhighlight %}  
+
 这就是完整的单例模式思路；
