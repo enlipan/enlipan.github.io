@@ -107,7 +107,34 @@ ImageSpan 目前看来还是有些问题，网上的解决方案要么无法解�
 源于Class文件规范中，CONSTANT\_Utf8\_info表中使用一个16位的无符号整数来记录字符串的长度的，最多能表示 65536个字节，而class 文件是使用一种变体UTF-8格式来存放字符的，null值使用两个字节来表示，因此只剩下 65536－ 2 ＝ 65534个字节。也正是变体UTF-8的原因，如果字符串中含有中文等非ASCII字符，那么双引号中字符的数量会更少（一个中文字符占用三个字节(UTF-8下3字节，GBK下2字节)）。如果超出这个数量，在编译的时候编译器会报错。
 
 
+### StringTokenizer：
 
+了解一下即可，这是一个遗留类，目前有更高级的 String.splite()函数做字符分割，且支持表达式；
+
+Java 内置分词符解析类：
+
+构造函数：
+
+StringTokenizer(String str)； //默认 空格 分割
+
+public StringTokenizer(String str,String delim)
+
+
+
+
+### Android 国家地区
+
+{% highlight java %}
+
+//获取系统语言列表
+Locale.getAvailableLocales(); 
+//获取当前使用语言
+Locale.getDefault().getLanguage();
+//获取当前地区
+Locale.getDefault().getCountry();
+
+
+{% endhighlight %}  
 
 
 
