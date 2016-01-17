@@ -37,9 +37,6 @@ JavaBean让我们能以操纵Java对象的方式操纵底层数据库数据，�
 
 
 
-
-* ...明日待续
-
 {:.center}
 ![created-provider](/assets/img/20160112/created-provider.PNG)
 
