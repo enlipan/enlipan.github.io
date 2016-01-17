@@ -52,3 +52,5 @@ JavaBean让我们能以操纵Java对象的方式操纵底层数据库数据，�
 ---
 
 [Datatypes In SQLite Version 3](http://www.sqlite.org/datatype3.html)
+
+[How to develope Android---Google](https://www.udacity.com/course/viewer#!/c-ud853)
