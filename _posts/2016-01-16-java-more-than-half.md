@@ -59,12 +59,41 @@ category: algorithm
 
 杨氏矩阵：即行和列分别递增的矩阵，每行首元素最小，每列首元素最小是其特征；
 
+{% highlight java%}
 
+    int [] [] mMatrixNums = {{1,2,8,9},{2,4,9,12}, {4,7,10,13}, {6,8,11,15}};
+    @Test
+    public void findMatrixNum(){
+        SearchDemo.searchNumInMatrix(mMatrixNums,8);
+    }
+   /**
+     *
+     * @param nums 目标矩阵
+     * @param dst  目标数
+     */
+     public static void searchNumInMatrix(int [][] nums,int dst){
+         int rows = nums.length;//row nums   可以看出其本质是 每个元素都是一维数组的 一维数组
+         int columns = nums[0].length;// column
 
+         int r= 0,c = columns -1;
+         while (r < rows && c < columns && c >= 0){
+            if (dst > nums[r][c]){
+                r++;
+                continue;
+            }else if (dst < nums[r][c]){
+                c--;
+                continue;
+            }else {
+                System.out.println("Rows:" + (r + 1));
+                System.out.println("Columns:" + (c + 1));
+                c --;
+//                return;
+            }
+         }
 
+{% endhighlight %}
 
-
-
+若数组中数字单一，查找成功直接 return；但考虑到数组中数字有多个位置的情况，分析可以看出，若找到第一个之后，存在另一个的情况只可能在小于其的 列 大于其的行中；所以作出兼容；
 
 
 ###题目： 经典二分查找
@@ -110,11 +139,42 @@ category: algorithm
 
 ####二分查找树
 
+关于BST,是有序数据的存储结构，一个节点的左子节点比其小或等，右子节点比其大或等；
 
+二叉树的查找是典型的递归思想：
 
+{% highlight java%}
 
+ /**
+     * 二叉树 节点数据结构
+     */
+    static class BSTNode{
+        public int value;
+        public BSTNode leftNode;
+        public BSTNode rightNode;
+    }
 
+    /**
+     *
+     * @param root 传入的 节点 作为当前根节点
+     * @param dst 目标数
+     * @return 节点
+     */
+    BSTNode findNode(BSTNode root,int dst){
+        if (root == null) return null;
+        int currentValue = root.value;
+        if (currentValue < dst){
+            return findNode(root.rightNode,dst);
+        }else if (currentValue > dst){
+            return findNode(root.leftNode,dst);
+        }else {
+            return root;
+        }
+    }
 
+{% endhighlight %}
+
+一个很奇怪的事情，好像写习惯了Android 开始有点不习惯写Getter和Setter了；Getter与Setter的性能耗费在Android开发上确实不值当；
 
 
 ####哈希查找
