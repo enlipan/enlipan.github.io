@@ -135,7 +135,7 @@ function afterPjax() {
   var ds_loaded = false,
       top = $('#disqus_thread').offset().top;
       identifier = $('#post__title').data('identifier');
-  window.disqus_shortname = 'itlipancd';
+  window.disqus_shortname = 'itlee';
   window.disqus_identifier = identifier;
 
   function check() {
