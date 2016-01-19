@@ -182,5 +182,7 @@ public class CopyTxtFileDemo {
 }
 
 
-
 {%  endhighlight %}
+
+InputStreamReader 的优势在于能够 指定合适的字符集编码，如果不指定编码将使用平台默认编码，GBK中文等；InputStreamReader 将字节流转换为字符流，属于桥梁类，同时其也是Java中装饰器模式的典型使用；
+
