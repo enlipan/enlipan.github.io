@@ -59,7 +59,23 @@ public class ConcreteStrategy implements Strategy {
 
 另一种方式是依旧将全部的 属性参数放置在 Context对象中，这样做的好处就是 算法完全独立同一，结构清晰，弊端当然也存在，很多不需要那些属性参数的 算法 也将获取这些属性，当然可以利用多态继承实现，但是这样又进一步使类数量膨胀了；但是综合起来依旧是第二种方式比第一种方式更加适合；
 
+{% highlight java%}
 
+public class Context {
+
+    public String name;
+    Strategy strategy;
+
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
+
+    void doAlgorithm(){    
+        strategy.doAction(this);
+    }
+}
+
+{% endhighlight %}
 
 ---
 
