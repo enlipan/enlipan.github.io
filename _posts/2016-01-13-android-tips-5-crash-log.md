@@ -52,6 +52,9 @@ category: android
 >  
 
 
+为什么 /data/local/tmp/ 目录可以直接执行呢？ 当我们执行 ls -l 命令就可以发现，该目录属于 shell 用户组，也就是对应的 adb shell，因而得以解释；
+
+
 ### Fragment.getResource()
 
 前些天我已经提醒过，Fragment中的getString 函数，是依赖其所附属的Activity的，一旦Fragment与Activity无关联 此函数是会Crash的，感觉Fragment里面这类函数独立出来有点误导人，要是函数直接使用 getActivity().getResource()；我觉得大家反而会注意点；
