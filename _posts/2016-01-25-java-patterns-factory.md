@@ -6,16 +6,59 @@ category: java
 
 ### 简单工厂
 
-单纯的将多类型对象的创建分离出来，独立创建新的简单工厂类；将对象创建与对象相关业务逻辑分离；对象创建分离之后，明显的优势是一是逻辑更加清晰，同时更加有利于重用，当然，对象创建的混乱问题依旧存在；
+将多类型对象的创建分离出来，独立创建新的简单工厂类；将对象创建与对象相关业务逻辑分离；对象创建分离之后，明显的优势是一是逻辑更加清晰，同时更加有利于重用；
 
-所以这种方式并不能根本上解决问题；
+在接口编程中简单工厂被用于，分离接口与接口实现，也就是**提供一个具有弹性的对象创建功能，对象在创建时，无需关注其创建的实例类型**；
+工厂类；简单工厂的存在解决了 接口编程中，客户端 与接口实现无法解除依赖的问题，使客户端不再知道实例对象的实现类型，增加系统灵活性；
+
+{% highlight java%}
+
+public class SimpleFactory {
+
+    interface  Api{
+        void optionNetWork();
+    }
+
+    static class ImplApi implements Api{
+
+        @Override
+        public void optionNetWork() {
+
+        }
+    }
 
 
+    public static void main(String[] args) {
+        //before
+        Api api = new ImplApi();
 
+        //after
+        Api apiF = Factory.createApi(0x1);
 
+    }
 
+    static class Factory{
 
+        static final int TYPE_A = 0X1;
+        static final int TYPE_B = 0X2;
 
+        static Api createApi(int type){
+            if (type == TYPE_B){
+                return null;
+            }else if (type == TYPE_A){
+                return new ImplApi();
+            }
+            return  new ImplApi();
+        }
+
+    }
+}
+
+{% endhighlight %}
+
+可以看出，简单工厂让接口实现脱离了客户端，这就使得当有**多个不同的业务逻辑子类实现接口时**，客户端的调用逻辑更加精简，灵活；所以虽然看起来只是简单的将类的实例化移到工厂中，但却完成了真正意义上的接口编程的核心，封装行为隔离实现；客户端与具体实现脱离；
+
+简单工厂的本质是，根据业务逻辑需求选择实现合适的 实例对象；
 
 
 
