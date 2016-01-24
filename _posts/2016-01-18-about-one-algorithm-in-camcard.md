@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 关于一次实际算法优化
+title: 关于一次实际算法优化尝试
 category: algorithm
 ---
 

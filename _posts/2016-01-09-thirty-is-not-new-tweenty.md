@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 为什么30岁不是新的20岁
-category: other
+category: others
 ---
 
 ### 思维导图：
