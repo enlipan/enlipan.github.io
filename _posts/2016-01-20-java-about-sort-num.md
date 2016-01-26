@@ -4,6 +4,12 @@ title: 几种常见排序算法
 category: algorithm
 ---
 
+### 直接插入排序
+
+
+
+
+
 ### 快速排序 
 
 

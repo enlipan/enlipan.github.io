@@ -167,15 +167,84 @@ Builder构造器的使用，改善了程序对象创建的灵活性；当然一�
 
 
 
-可扩展情景下，对象创建与对象分离解耦；工厂模式定义了对象创建接口，并推迟了对象实例化时间点，让子类依照情形决定具体对象的创建；
+可扩展情景下，对象创建与对象分离解耦；
+
+对于复杂的业务逻辑，父类无法得知究竟是何种情况，应该创建哪种对应的业务逻辑对象，对于这类父类知晓行为，但无法得知具体行为如何实现的，我们选择推迟实例化的工厂模式，由继承子类决定如何实例化具体对象；
+
+工厂模式定义了对象创建接口，并推迟了对象实例化时间点，让子类依照情形决定具体对象的创建；
+
+工厂中定义的对象创建方法返回的对象交给客户端调用，完成具体的业务逻辑；
 
 
+{:.center}
+![foctorymethod pattern](/assets/img/20160126/foctorymethod.PNG)
 
-工厂模式混合枚举类使用：
+工厂方法模式针对接口编程，同时与接口的具体实现解耦，让实现创建工厂的子类去创建具体对象，依照其业务逻辑完成对象创建；可以看出，针对每一种情况都会需要创建两个类，一个具体的工厂创建类，一个实现产品功能逻辑的产品，类个数膨胀还是比较厉害的；
 
+
+{% highlight java%}
+
+public class FactoryMethod {
+
+
+    public static void main(String[] args) {
+        new ConcreteCreator().createProduct().doSomeThing();
+    }
+
+
+    abstract static class Creator {
+
+        void doSomeThing() {
+            createProduct().doSomeThing();
+        }
+
+        abstract Product createProduct();
+
+    }
+
+
+    interface Product {
+
+        void doSomeThing();
+
+    }
+
+    static class LightProduct implements Product {
+
+        @Override
+        public void doSomeThing() {
+            System.out.printf("light");
+        }
+    }
+
+
+    static class ConcreteCreator extends Creator {
+
+        @Override
+        Product createProduct() {
+            return new LightProduct();
+        }
+    }
+}
+
+{% endhighlight %}
+
+为什么这种模式叫工厂方法模式呢？因为实际上类的创建并没有交给客户端也就是调用者，对象的创建大部分情况还是在具体的工厂子类中完成具体实例的创建，也就是类的创建方法还是给自己写的，而不交给外部控制，通过自身的一个方法完成了具体实例对象的选择与创建
+
+
+工厂方法模式在本质上依旧与简单工厂一样是选择了已经设定好的具体的 实例对象创建，与之不同的是 简单工厂全部耦合在一起，而工厂方法模式却将抽象与具体分离开了，进一步提升了灵活性；
+
+其实可以看出，如果把创建的子类合并成一个创建类，根据创建参数去创建对象实例，工厂方法就退化成了简单工厂；
+
+
+**事实上，工厂模式的参数控制可以利用枚举来限制，但是考虑到枚举的浪费，在Android编程中需要慎重使用，用静态变量代替枚举节约内存；** 
+
+
+IOC依赖注入：完成属性注入，从直接主动的创建对象，变为了由容器创建对象之后，将属性注入到所需要的对象之中，解除了二者的耦合；也就是要依赖抽象，而不针对具体，进一步表诉就是说，高层次抽象组件不能反过来依赖底层对象实例；
 
 
 
 ### 抽象工厂
 
 针对抽象的抽象
+
