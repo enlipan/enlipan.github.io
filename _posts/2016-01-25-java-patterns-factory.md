@@ -248,3 +248,39 @@ IOC依赖注入：完成属性注入，从直接主动的创建对象，变为�
 
 针对抽象的抽象
 
+解决多个对象或者说是一系列相关对象创建时，如果依赖多个工厂，每个工厂创建对应的对象后，对象间依赖关系的保留的问题，源于每个简单工厂都只关心对应的产品的创建；
+
+抽象工厂定义虚拟的一系列对象的创建函数，也就是抽象方法，进而交给具体实例化子类去实现；
+
+抽象工厂中的对象创建并不是简单的堆砌而成，其对象创建往往是一系列产品组，彼此之间有着一些交互或联系，通过组合完成协同业务；
+
+
+{% highlight java%}
+
+public abstract class AbstractFactory {
+
+    interface ProductA{
+        void doActionA();
+    }
+
+    interface ProductB{
+        void doActionB();
+    }
+
+    abstract ProductA createA();
+
+    abstract ProductB createB();
+
+}
+
+{% endhighlight %}
+
+通过一个抽象工厂同时可以获取两个对象，完成对象交互；
+
+---
+
+Quote：
+
+《研磨设计模式》
+
+《HeadFirst 设计模式》
