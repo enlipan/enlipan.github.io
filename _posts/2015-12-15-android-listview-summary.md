@@ -42,11 +42,20 @@ ListView setViewType：
 
 
 
-
+ListView的三个属性：
 
 
 android:clipChildren：
-有时候1px，分割线被忽略可能是因为这个原因(含义：是否限制子View在其范围内)
+
+是否限制子View在其显示范围之内；
+
+android:clipToPadding：
+
+可以用于设定 “滑动后可消失的，顶部间距"
+
+android:descendantFocusability:
+
+用于处理 子 View 与 Item之间的聚焦冲突问题；
 
 
 ListView中包含Header后的onItemClick position 问题：
