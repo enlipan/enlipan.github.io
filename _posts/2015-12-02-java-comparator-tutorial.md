@@ -27,3 +27,7 @@ Sgn(num):
 Quote:
 
 [Java Sorting: Comparator vs Comparable Tutorial](http://fuxueliang.com/tech/2013/05/26/java-sorting-comparator-vs-comparable-tutorial/)
+
+[Comparable 和 Comparator比较](https://segmentfault.com/a/1190000002514187)
+
+[Difference between Comparator and Comparable in Java](http://www.javacodegeeks.com/2013/03/difference-between-comparator-and-comparable-in-java.html)
