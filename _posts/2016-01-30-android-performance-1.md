@@ -1,12 +1,39 @@
 ---
 layout: post
-title: Android性能优化 Tips（1）
+title: Android性能优化之缓存
 category: android
 ---
+* Tip 1：
+
+[HttpCache 网络缓存](https://www.youtube.com/watch?v=7lxVqqWwTb0&index=1&list=PLWz5rJ2EKKc9CBxr3BVjPTPoDPLdPIFCE)
+
+读取内存数据比从网络获取更加迅速，更加减少电量消耗，同时为用户节省流量；如果有些数据需要重复利用，而且同时对于时效更新频率性要求不高，你需要想到缓存这些数据，以便重复利用；
+
+[HttpResponseCache](http://developer.android.com/reference/android/net/http/HttpResponseCache.html?utm_campaign=android_series_#cachematters_for_networking_101315&utm_source=anddev&utm_medium=yt-annt)
+
+HttpCaching默认是关闭的，开启后将用于所有Http响应，以及绑定到应用中的Lib；
+
+缓存是一件复杂的事情，什么东西需要缓存，什么不能缓存，缓存在哪里，缓存多久？都是需要根据实际情况分析的 —— 缓存的管理归根结底是两点：
+
+缓存的管理 与 缓存的业务逻辑：前者解决缓存到哪里，缓存大小，缓存时间，后者解决 什么该缓存什么不该，具体部分的数据各自应该缓存的时间；
 
 
+缓存的管理一般有两种一种是利用形如：`Http Header —— Cache-Control: max-age = 3600,public`,  通过响应头定义HttpCache存在的有效时间，是否应该缓存；这些都可以由服务器进行控制，在一般的情况下，或者当服务器由你定义，可以与服务器端协调接口定义域缓存定义，完全交给服务器管理缓存是可行的；但当情况复杂起来或者服务器无法由你控制协调，那么就需要你自己定义需要有周密而复杂的缓存管理；
+
+工具：
+
+AS 之 Android NetWork Traffic Tool 
+
+ATT_APO tool 
 
 
+经典缓存管理 [LruCache](https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/core/java/android/util/LruCache.java)的实现：
+
+核心要点：
+
+* 缓存内部实现
+
+* 缓存大小空间控制
 
 
 
