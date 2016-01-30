@@ -3,6 +3,7 @@ layout: post
 title: Android Activity LaunchMode
 category: android
 ---
+
 ### Standard
 
 标准模式:对应每一个Intent，无论任务栈中有无实例，都生存一个新的实例，放入Task栈中；
