@@ -33,14 +33,140 @@ ATT_APO tool
 
 * 缓存内部实现
 
-* 缓存大小空间控制
+* 缓存占用空间大小控制
 
 
+{% highlight java%}
 
 
+    private final LinkedHashMap<K, V> map;
+
+    .....
+
+    public LruCache(int maxSize) {
+        if (maxSize <= 0) {
+            throw new IllegalArgumentException("maxSize <= 0");
+        }
+        this.maxSize = maxSize;
+        this.map = new LinkedHashMap<K, V>(0, 0.75f, true);
+    }
+
+    ...
+
+    public final V get(K key) {
+        if (key == null) {
+            throw new NullPointerException("key == null");
+        }
+        V mapValue;
+        synchronized (this) {
+            mapValue = map.get(key);
+            if (mapValue != null) {
+                hitCount++;
+                return mapValue;
+            }
+            missCount++;
+        }
+        V createdValue = create(key);
+        if (createdValue == null) {
+            return null;
+        }
+        synchronized (this) {
+            createCount++;
+            mapValue = map.put(key, createdValue);
+            if (mapValue != null) {
+                // There was a conflict so undo that last put
+                map.put(key, mapValue);
+            } else {
+                size += safeSizeOf(key, createdValue);
+            }
+        }
+        if (mapValue != null) {
+            entryRemoved(false, key, createdValue, mapValue);
+            return mapValue;
+        } else {
+            trimToSize(maxSize);
+            return createdValue;
+        }
+    }
+
+    ...
+
+    public final V put(K key, V value) {
+        if (key == null || value == null) {
+            throw new NullPointerException("key == null || value == null");
+        }
+        V previous;
+        synchronized (this) {
+            putCount++;
+            size += safeSizeOf(key, value);
+            previous = map.put(key, value);
+            if (previous != null) {
+                size -= safeSizeOf(key, previous);
+            }
+        }
+        if (previous != null) {
+            entryRemoved(false, key, previous, value);
+        }
+        trimToSize(maxSize);
+        return previous;
+    }
+
+    public void trimToSize(int maxSize) {
+        while (true) {
+            K key;
+            V value;
+            synchronized (this) {
+                if (size < 0 || (map.isEmpty() && size != 0)) {
+                    throw new IllegalStateException(getClass().getName()
+                            + ".sizeOf() is reporting inconsistent results!");
+                }
+                if (size <= maxSize) {
+                    break;
+                }
+                Map.Entry<K, V> toEvict = map.eldest();
+                if (toEvict == null) {
+                    break;
+                }
+                key = toEvict.getKey();
+                value = toEvict.getValue();
+                map.remove(key);
+                size -= safeSizeOf(key, value);
+                evictionCount++;
+            }
+            entryRemoved(true, key, value, null);
+        }
+    }
+
+    ...
+
+    protected V create(K key) {
+        return null;
+    }
+
+    protected int sizeOf(K key, V value) {
+        return 1;
+    }
+
+{% endhighlight %}
+
+数据结构： [LinkedHashMap](https://docs.oracle.com/javase/7/docs/api/java/util/LinkedHashMap.html)与HashMap的区别在于其利用链表保存了存入的顺序；且对于缓存需要不断在首尾切换添加，删除操作，链表结构实在是最好的是最好的实现方式；
+
+ * get(K key)
+
+  Hash结构的获取数据的方式，但是有一点不同就是当获取失败时，也就是并未存储对应的KeyValue时，会执行Create函数，也当Value与Key存在某些业务逻辑的对应关系时，可以通过复写Create函数完成未Put的Value的生成；
+
+ * create(K key)         
 
 
+ * sizeOf(K key, V value)      
 
+ 通过重写 sizeOf()函数，更加精细的指定 缓存大小的衡量方式，若不重写默认返回1，代表的其实是Entry的数量；
+
+ * put(K key, V value)    
+
+ * trimToSize(int maxSize)        
+     
+   移除尾部Entry，知道缓存size小于限制；
 
 
 
@@ -59,3 +185,7 @@ ATT_APO tool
 Quot：
 
 [Android Performance Patterns](https://www.youtube.com/playlist?list=PLWz5rJ2EKKc9CBxr3BVjPTPoDPLdPIFCE)
+
+[Android性能优化典范-4](http://hukai.me/android-performance-patterns-season-4/)
+
+[性能优化系列总篇](http://www.trinea.cn/android/performance/)
