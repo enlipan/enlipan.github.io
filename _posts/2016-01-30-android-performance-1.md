@@ -147,6 +147,9 @@ ATT_APO tool
         return 1;
     }
 
+        protected void entryRemoved(boolean evicted, K key, V oldValue, V newValue) {
+    }
+
 {% endhighlight %}
 
 数据结构： [LinkedHashMap](https://docs.oracle.com/javase/7/docs/api/java/util/LinkedHashMap.html)与HashMap的区别在于其利用链表保存了存入的顺序；且对于缓存需要不断在首尾切换添加，删除操作，链表结构实在是最好的是最好的实现方式；
@@ -169,10 +172,9 @@ ATT_APO tool
    移除尾部Entry，知道缓存size小于限制；
 
 
+ * entryRemoved(boolean evicted, K key, V oldValue, V newValue)
 
-
-
-
+删除Entry的时会执行的函数，若需要则可以重写；需要注意的是函数没有同步，也就是在多线程执行删除时，下一个线程已经进入缓存操作，但是上一个线程的删除回调依旧正在执行；
 
 
 
