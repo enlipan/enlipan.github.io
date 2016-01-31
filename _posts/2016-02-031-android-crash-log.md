@@ -4,7 +4,7 @@ title: Android App CrashLog 捕获
 category: android
 ---
 
-{% highlight java%}
+{%  highlight java %}
 
 public class CrashHandle implements Thread.UncaughtExceptionHandler {
 
@@ -91,10 +91,11 @@ public class CrashHandle implements Thread.UncaughtExceptionHandler {
 
 
     }
-
 }
 
 {% endhighlight %}
+
+
 
 
 **toto**
