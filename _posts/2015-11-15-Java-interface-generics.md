@@ -116,3 +116,5 @@ Quot：
 [Java泛型：泛型类、泛型接口和泛型方法](http://segmentfault.com/a/1190000002646193)
 
 [java中的泛型以及抽象类和接口的使用--学习笔记](http://www.imooc.com/wenda/detail/240886)
+
+[(String[]) Array.toArray()强转失败](http://stackoverflow.com/questions/5374311/convert-arrayliststring-to-string-array/17909134#17909134)

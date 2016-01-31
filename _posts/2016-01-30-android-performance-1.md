@@ -191,3 +191,5 @@ Quot：
 [Android性能优化典范-4](http://hukai.me/android-performance-patterns-season-4/)
 
 [性能优化系列总篇](http://www.trinea.cn/android/performance/)
+
+[详细解读LruCache类](http://www.cnblogs.com/tianzhijiexian/p/4248677.html)
