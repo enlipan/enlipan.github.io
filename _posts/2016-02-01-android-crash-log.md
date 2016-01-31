@@ -4,6 +4,7 @@ title: Android CrashLog
 category: android
 ---
 
+
 {% highlight java%}
 
 public class CrashHandle implements Thread.UncaughtExceptionHandler {
@@ -91,9 +92,7 @@ public class CrashHandle implements Thread.UncaughtExceptionHandler {
 
 
     }
-
 }
-
 {% endhighlight %}
 
 
