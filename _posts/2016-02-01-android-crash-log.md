@@ -1,10 +1,13 @@
 ---
 layout: post
-title: Android CrashLog 
+title: Android App CrashLog 捕获
 category: android
 ---
 
-{% highlight java%}
+认可Bug存在的必然性，故而需要捕获FC 问题Crash Log便于分析改进；
+
+
+{% highlight java %}
 
 public class CrashHandle implements Thread.UncaughtExceptionHandler {
 
