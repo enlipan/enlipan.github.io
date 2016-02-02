@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java 模式- 适配器
+title: Java 模式- 适配器与外观
 category: java
 ---
 
