@@ -49,7 +49,7 @@ public class ChinaAdapter implements IChinaPowerSource{
     }
 
     public void changeTwoOutletToThree(){
-
+        System.out.printf("Change Outlet ...");
     }
 
     @Override
