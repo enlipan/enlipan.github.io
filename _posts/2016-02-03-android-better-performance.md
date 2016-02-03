@@ -14,8 +14,11 @@ SparseArray其数据保存在一个对应的 Value数据中， 利用二分法�
 
 SparseArray 为什么节省内存？
 
+
 * SparseArray 内部数据省去了 装箱操作    
 * SparseArray 直接利用二分法存储数据对象到指定的 int 位置，不同于HashMap结构 存储 Entry<K,V>节点 —— Entry 存放到对应Hash值位置；
+
+
 
 ### [ArrayMap](https://android.googlesource.com/platform/frameworks/support/+/refs/heads/master/v4/java/android/support/v4/util/ArrayMap.java)
 
@@ -24,7 +27,9 @@ SparseArray 为什么节省内存？
 
 ### Sql 优化
 
+
 批量操作与事务操作:
+
 
 * ContentOptionBuilder    
 * SQLiteDatabase.beginTransaction()      
@@ -32,9 +37,6 @@ SparseArray 为什么节省内存？
 
 
 **todo**
-
-
-
 
 
 
