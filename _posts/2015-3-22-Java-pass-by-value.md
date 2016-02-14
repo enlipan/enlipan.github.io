@@ -3,7 +3,8 @@ layout: post
 title: Java Pass By Value
 category: java
 ---
-###关于Java的值传递特性
+
+### 关于Java的值传递特性
 
 写东西的时候利用橡皮鸭原理，自己对自己说话，梳理知识其实感觉也挺好的，其实是代码评审的一个借用：
 
