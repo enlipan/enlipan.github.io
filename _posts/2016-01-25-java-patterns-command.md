@@ -76,4 +76,20 @@ public class ConcreteCommandReceiver implements CommandReceiver {
 
 
 
-### 命令模式之批量
+### 命令模式之宏命令
+
+宏命令即命令组合，也就是将多个命令封装，像执行独立命令一样统一执行命令组合；
+
+
+
+##### 队列请求
+
+将命令对象组合排队，组成工作队列，依次执行，
+
+---
+
+Quote：
+
+《研磨设计模式》
+
+《HeadFirst 设计模式》
