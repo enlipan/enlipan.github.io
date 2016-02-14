@@ -9,12 +9,15 @@ category: java
 **Java编程思想——JavaIO系统**
 
 
-####File相关：处理文件目录
+
+#### File相关：处理文件目录
 
 * File与FilenameFilter    
 * 目录的检查与创建
 
-####输入输出
+
+#### 输入输出
+
 
 流的概念：流代表任何有能力产出数据的数据源对象或有能力接受数据的接收端，屏蔽数据处理细节问题。这里面需要明确输入与输出，这里只需要确定输入输出的针对对象就可以理解。
 
@@ -30,27 +33,27 @@ category: java
 * 其他数据源如网络数据        
 * FilterInputStream      
 
-####OutputStream
+#### OutputStream
 
 
 
 
-####中间转换包装类
+#### 中间转换包装类
 
 数据的存储是字节形式，而数据的展示是字符，二者在使用时的中间转换流为：inputStreamReader、outputStreamWriter.
 
 
-####输入输出流的经典使用：
+#### 输入输出流的经典使用：
 
 
 
 
-####数据流：
+#### 数据流：
 
 
 利用DataOutputStream与DataOutinputStream用合适的方式分别处理输出与输入，可以无视平台特性而保证数据的准确读取，允许应用程序按照与机器无关的风格读取java原始数据。其通过对于流功能的拓展，可更加方便的直接读写 int、long、char等类型数据。而不关心其底层字节占用情况，其本质是一种抽象。
 
-####标准IO与IO重定向
+#### 标准IO与IO重定向
 
 标准IO读取：利用InputStreamReader包装System.in
 
@@ -59,7 +62,8 @@ category: java
 IO重定向：System.SetIn();System.SetOut();System.SetErr();
 
 
-###IO使用是考虑要点
+### IO使用是考虑要点
+
 
 1. 按照数据来源：文件？字节数组？字符串？网络数据？       
 2. 格式化输出亦或输出重定向？        
@@ -73,9 +77,9 @@ IO重定向：System.SetIn();System.SetOut();System.SetErr();
 
 
 
-####NIO相关
+#### NIO相关
 
-####序列化：序列化结合Android实现Paceable接口查看
+#### 序列化：序列化结合Android实现Paceable接口查看
 
 序列化实现了Java对象的轻量级持久化
 
@@ -83,14 +87,14 @@ IO重定向：System.SetIn();System.SetOut();System.SetErr();
 
 合适的安全性可序列化机制：transient关键字，关闭字段的序列化，与Serializable接口配合使用。
 
-####压缩：Gzip与Zip高效压缩传输，Jar文件的使用
+#### 压缩：Gzip与Zip高效压缩传输，Jar文件的使用
 
 Gzip的数据压缩在Android中也经常使用，可以降低传输数据量，提升应用性能
 
 其应用便利，将输入或者输出流封装为GZIPOutPutStream/GZIPInputStream使用。
 
 
-####Preferences
+#### Preferences
 
 Preferences.userNodeForPackage同样结合AndroidSharePreference理解，键值对的存储方式
 
