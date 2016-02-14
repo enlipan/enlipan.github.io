@@ -19,7 +19,9 @@ SparseArray 为什么节省内存？
 
 ### [ArrayMap](https://android.googlesource.com/platform/frameworks/support/+/refs/heads/master/v4/java/android/support/v4/util/ArrayMap.java)
 
-利用二分法插入删除数据，推荐用于小数据量Map结构,与 SparseArray 所不一样的是其 Kay 并不限定为 int型数据，所以可以在更多情景下被用于替代 HaspMap结构；
+普通的ArrayMap是在 API19加入，Google提供了 V4 包兼容 ArrayMap；
+
+ArrayMap利用二分法插入删除数据，推荐用于小数据量Map结构,与 SparseArray 所不一样的是其 Kay 并不限定为 int型数据，所以可以在更多情景下被用于替代 HaspMap结构；
 
 
 ### Sql 优化

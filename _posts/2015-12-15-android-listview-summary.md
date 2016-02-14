@@ -45,23 +45,30 @@ ListView setViewType：
 ListView的三个属性：
 
 
-android:clipChildren：
+android:clipChildren：是否限制子View在其显示范围之内；
 
-是否限制子View在其显示范围之内；
 
-android:clipToPadding：
 
-可以用于设定 “滑动后可消失的，顶部间距"
+android:clipToPadding 混合 PaddingTop：可以用于设定 “滑动后可消失的，顶部间距",也就是那一段顶部间距可以用于显示Item，在Item上滑时，可以显示在Padding区域；
 
-android:descendantFocusability:
 
-用于处理 子 View 与 Item之间的聚焦冲突问题；
+
+android:descendantFocusability: 用于处理 子 View 与 Item之间的聚焦冲突问题；
+
+
 
 
 ListView中包含Header后的onItemClick position 问题：
 
-前段时间调试OnItemLick时，突然发现 position对应的 Entity 位置错误的问题：后来想了想源码中设置Header后，会在Adapter设置时重新包装产生新的Adapter，所以我们在使用时应该 利用`listView（parent）.getAdapter.getItem(position)`的方式，获取对应位置的entity，当然我们应该知道 getAdapter的方式获取的Adapter 是包装HeadView之后的Adapter，所以利用这种方式当然会获取到对应的 entity；
+前段时间调试OnItemLick时，突然发现 position对应的 Entity 位置错误的问题：后来想了想源码中设置Header后，会在Adapter设置时重新包装产生新的Adapter，所以我们在使用时应该 利用`listView（parent）.getAdapter.getItem(position)`的方式，获取对应位置的entity;
 
+当然我们应该知道 getAdapter的方式获取的Adapter 是包装HeadView之后的Adapter，所以利用这种方式当然会获取到对应的 entity；
+
+
+
+ListView 高度之 wrap\_content 与 match\_parent
+
+wrap_content 需要 多次计算 子Item 高度，会造成getView多次调用，甚至造成Item显示初始化问题；尤其是在快速滑动 FastScroll模式下，会造成getView 的 复用 item位置错误，造成所加载的资源错位，这时改为 match\_parent 可解决此问题； 
 
 
 ---
@@ -75,3 +82,5 @@ Quote：
 [Android布局优化之ViewStub、include、merge使用与源码分析](http://www.androidchina.net/2485.html)
 
 [当ListView有Header时，onItemClick里的position不正确](http://blog.chengbo.net/2012/03/09/onitemclick-return-wrong-position-when-listview-has-headerview.html)
+
+[ListView adapter getView() getting wrong item](http://stackoverflow.com/questions/16550721/listview-adapter-getview-getting-wrong-item)

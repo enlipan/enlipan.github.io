@@ -74,3 +74,4 @@ sysctl -p
 
 [github-Configuration via Config File](https://github.com/shadowsocks/shadowsocks/wiki/Configuration-via-Config-File)
 
+[PPTP Ubuntu搭建](http://yansu.org/2013/12/11/deploy-pptp-vpn-in-ubuntu.html)
