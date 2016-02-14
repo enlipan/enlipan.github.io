@@ -84,7 +84,12 @@ public class ConcreteCommandReceiver implements CommandReceiver {
 
 ##### 队列请求
 
-将命令对象组合排队，组成工作队列，依次执行，
+将命令对象组合排队，组成工作队列，依次执行，然后从队列中依次取出封装的命令对象执行，一般用于多线程进行命令对象的任务处理，在此任务的执行者与任务队列之间完全解耦，Android 中 Loader 的构造思想就来自于此；
+
+
+**todo**
+
+
 
 ---
 
