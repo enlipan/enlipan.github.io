@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android 优化Tip(1)
+title: Android 优化之内存
 category: android
 ---
 

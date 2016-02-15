@@ -164,3 +164,5 @@ Quote：
 《研磨设计模式》
 
 《HeadFirst 设计模式》
+
+[设计模式系列-命令模式](http://www.cnblogs.com/langtianya/archive/2013/02/28/2937778.html)
