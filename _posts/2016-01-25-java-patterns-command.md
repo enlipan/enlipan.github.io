@@ -86,12 +86,76 @@ public class ConcreteCommandReceiver implements CommandReceiver {
 
 将命令对象组合排队，组成工作队列，依次执行，然后从队列中依次取出封装的命令对象执行，一般用于多线程进行命令对象的任务处理，在此任务的执行者与任务队列之间完全解耦，也就是说 执行者不关心队列中的命令究竟是什么命令，只要是约定规范的可执行命令，它就会去取出一一执行；
 
-Android 中 Loader 的构造思想就来自于此；
+Android 中 Loader 的构造思想可以借鉴于此；
+
+{% highlight java %}
+
+public class CommandsQueue implements Command{
+
+    private CommandsQueue(){}
+
+    public static CommandsQueue sCommandsQueue = new CommandsQueue();
+
+    private ArrayList<Command> commands = new ArrayList<>();
+
+    public void addCommand(Command c){
+        commands.add(c);
+    }
+
+    public void removeCommand(Command c){
+        commands.remove(c);
+    }
+
+    public void clearCommand(){
+        commands.clear();
+    }
 
 
-**todo**
+    @Override
+    public void excute() {
+        for (Command c:commands){
+            c.excute();
+        }
+    }
+}
 
 
+    @Test
+    public void invokerCommandsQueue() {
+        Command command = new ConcreteCommand(new ConcreteCommandReceiver());
+        CommandsQueue.sCommandsQueue.addCommand(command);
+        CommandsQueue.sCommandsQueue.excute();
+        CommandsQueue.sCommandsQueue.clearCommand();
+    }
+
+
+{% endhighlight %}
+
+
+进一步，如果需要扩展实现更加复杂的异步消息队列，那么可以在 CommandsQueue 中实现 生产消费者模型，实现多线程命令执行；
+
+{% highlight java %}
+
+    public volatile boolean mWorkAlive = true;
+    private LinkedBlockingQueue<Command> mCommandsQueue = new LinkedBlockingQueue<>();
+    private Thread worker = new Thread(){
+        @Override
+        public void run() {
+            while (mWorkAlive){
+                Command c;
+                try {
+                    c = mCommandsQueue.take();
+                    c.excute();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }            
+        }
+    };
+
+{% endhighlight %}
+
+Loader 中更新UI 一般通过 传递 UI线程 Handler 利用Post消息机制去更新UI；
 
 ---
 
