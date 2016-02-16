@@ -48,3 +48,5 @@ ArrayMap利用二分法插入删除数据，推荐用于小数据量Map结构,�
 ---
 
 [性能优化之数据库优化](http://www.trinea.cn/android/database-performance/)
+
+[面向GC的Java编程](http://coolshell.cn/articles/11541.html)
