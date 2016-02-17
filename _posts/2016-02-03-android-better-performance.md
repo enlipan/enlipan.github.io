@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android 优化之内存
+title: 优化内存与性能 Tips
 category: android
 ---
 
@@ -38,9 +38,7 @@ ArrayMap利用二分法插入删除数据，推荐用于小数据量Map结构,�
 * ContentOptionBuilder    
 * SQLiteDatabase.beginTransaction()      
 
-
-
-**todo**
+利用批量更新可以解决监听数据库刷新界面时的界面闪现问题；
 
 
 
