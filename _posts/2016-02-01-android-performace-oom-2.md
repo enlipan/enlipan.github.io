@@ -31,7 +31,9 @@ Retained Heap
 
 List objects：
 with outgoing references  被该对象的引用对象列表                      
-with incoming references  引用该对象的对象列表                          
+with incoming references  引用该对象的对象列表 
+
+GC root                         
 
 
 
