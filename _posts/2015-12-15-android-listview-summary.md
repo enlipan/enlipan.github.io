@@ -71,6 +71,8 @@ ListView 高度之 wrap\_content 与 match\_parent
 wrap_content 需要 多次计算 子Item 高度，会造成getView多次调用，甚至造成Item显示初始化问题；尤其是在快速滑动 FastScroll模式下，会造成getView 的 复用 item位置错误，造成所加载的资源错位，这时改为 match\_parent 可解决此问题； 
 
 
+
+
 ---
 
 Quote： 
@@ -84,3 +86,5 @@ Quote：
 [当ListView有Header时，onItemClick里的position不正确](http://blog.chengbo.net/2012/03/09/onitemclick-return-wrong-position-when-listview-has-headerview.html)
 
 [ListView adapter getView() getting wrong item](http://stackoverflow.com/questions/16550721/listview-adapter-getview-getting-wrong-item)
+
+[ListView / GirdView Adpater的getView方法，首项多次调用](http://www.liaohuqiu.net/cn/posts/first-view-will-be-created-multi-times-in-list-view/)
