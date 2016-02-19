@@ -29,7 +29,7 @@ Google提供了大量的 内存分析工具，尤其是 AS之后，各种图形�
 
 Retained Heap 
 
-List objects：
+List objects：       
 with outgoing references  被该对象的引用对象列表                      
 with incoming references  引用该对象的对象列表 
 
