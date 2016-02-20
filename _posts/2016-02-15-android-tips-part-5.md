@@ -53,4 +53,9 @@ Dialog.show()函数调用后，后续的UI线程中操作挤占了
 
 ---
 
+
+Quote:
+
+
+
 [Difference between `initLoader` and `restartLoader` in `LoaderManager`](http://stackoverflow.com/questions/14445070/difference-between-initloader-and-restartloader-in-loadermanager)
