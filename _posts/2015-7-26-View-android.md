@@ -76,7 +76,11 @@ DOWN 事件必须返回 True 代表 该View 关心该事件，事件需要继续
 
 ### View 绘制
 
-
+* setContentView                  
+* Layoutinflater.inflate()                           
+* onMeasure()                 
+* onLayout()                   
+* draw()
 
 
 
@@ -102,6 +106,8 @@ DOWN 事件必须返回 True 代表 该View 关心该事件，事件需要继续
 
 
 [浅析Android的窗口](http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=555&fromuid=6)
+
+[Android应用层View绘制流程与源码分析](http://blog.csdn.net/yanbober/article/details/46128379)
 
 ---
 
