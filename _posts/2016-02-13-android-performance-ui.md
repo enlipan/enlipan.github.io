@@ -39,13 +39,70 @@ category: android
 
 #### onDraw 中的内存分配
 
+onDraw 函数在UI线程中，系统对于onDraw函数会多次调用，频率相当高，会造成短时间内大量对象被创建回收，引发GC：GC\_FOR\_ALLOC，进而引发各类问题
 
 
 ### Android图片加载
 
-trace 文件跟踪定位
+采样率 bitMapOptions 测量 
+
+图片格式 ARGB_8888  RGB565 等针对具体情况选择，进而可以节省内存占用
+
+
 
 ---
+
+常见UI性能优化工具有：
+
+*  开发者选项中 —— 调试GPU过度绘制  蓝绿粉红                 
+*  开发者选项中 ——  Profile GPU Rendering             
+*  Hierarchy Viewer 
+
+[开启 Hierarchy Viewer: ](https://developer.android.com/tools/performance/hierarchy-viewer/index.html) Set an **ANDROID\_HVPROTO** environment variable on the desktop machine
+
+[Profiling with Hierarchy Viewer](https://developer.android.com/intl/zh-cn/tools/performance/hierarchy-viewer/profiling.html#InterpretingResults)
+
+* 终极武器 TraceView 
+
+用于调试App中各个函数的占用时间，进而可以精准定位UI卡顿原因；
+
+
+### TraceView
+
+[Profiling with Traceview and dmtracedump](http://developer.android.com/intl/zh-cn/tools/debugging/debugging-tracing.html)
+
+* Debug.startMethodTracing() 与 Debug.stopMethodTracing() 生成trace 文件 精确定位相关函数的资源占用情况；
+
+    // start tracing to "/sdcard/calc.trace"
+    Debug.startMethodTracing("calc");
+    // ...
+    // stop tracing
+    Debug.stopMethodTracing();
+
+* 利用DDMS 生成，注意不要操作过长时间，导致调用函数过多，增加分析复杂度；
+
+时间面板中参数很多，刚开始看只有一种不明觉厉的感觉，其实其中有几个参数作为主线追踪即可，其他参数作为辅助参考：
+
+Name：函数名  parent ：调用该函数的父函数——双击可直接定位  children： 该函数的调用函数
+
+incl Real Time :  函数运行的真实时间(ms),包含其调用子函数的时间
+
+excl Real Time:    函数运行的真实时间，排除其子函数时间，也就是函数本身执行的时间
+
+Call + Recur Calls / Total 函数的调用次数 + 递归调用次数 / 总调用次数比
+
+Real Time / Call  函数每一次执行的真正占用时间
+
+一般分析抓住以上几个点，就可以顺藤摸瓜定位找出线程中真正耗时的函数，进行性能优化；
+
+{:.center}
+![TraceView](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20160225/TraceView.JPG)
+
+
+---
+
+[Android 编程下的 TraceView 简介及其案例实战](http://www.cnblogs.com/sunzn/p/3192231.html)
+
 
 [The Performance Lifecycle -- 性能分析三部曲](https://www.youtube.com/watch?v=_kKTGK-Cb_4&list=PLWz5rJ2EKKc9CBxr3BVjPTPoDPLdPIFCE&index=18&feature=iv&src_vid=GajI0uKyAGE&annotation_id=annotation_778442405)
 
