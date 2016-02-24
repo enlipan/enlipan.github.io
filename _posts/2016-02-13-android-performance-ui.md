@@ -64,7 +64,7 @@ onDraw 函数在UI线程中，系统对于onDraw函数会多次调用，频率�
 
 * 终极武器 TraceView 
 
-用于调试App中各个函数的占用时间，进而可以精准定位UI卡顿原因；
+可以用于精准的分析线程中各个函数的占用资源情况，当然也可以用于精准分析UI线程中的函数时间消耗情况，进而定位UI卡顿原因；
 
 
 ### TraceView
@@ -73,11 +73,15 @@ onDraw 函数在UI线程中，系统对于onDraw函数会多次调用，频率�
 
 * Debug.startMethodTracing() 与 Debug.stopMethodTracing() 生成trace 文件 精确定位相关函数的资源占用情况；
 
+{% highlight java %}
+
     // start tracing to "/sdcard/calc.trace"
     Debug.startMethodTracing("calc");
     // ...
     // stop tracing
     Debug.stopMethodTracing();
+
+{% endhighlight %}
 
 * 利用DDMS 生成，注意不要操作过长时间，导致调用函数过多，增加分析复杂度；
 
