@@ -54,6 +54,13 @@ category: android
 
 为什么 /data/local/tmp/ 目录可以直接执行呢？ 当我们执行 ls -l 命令就可以发现，该目录属于 shell 用户组，也就是对应的 adb shell，因而得以解释；
 
+在AS启动安装App时 我们也可以看到熟悉的 `local/tmp`
+
+{% highlight bash %}
+
+ pm install -r "/data/local/tmp/com.google.samples.apps.iosched"
+
+{%  endhightlight %}
 
 ### Fragment.getResource()
 
