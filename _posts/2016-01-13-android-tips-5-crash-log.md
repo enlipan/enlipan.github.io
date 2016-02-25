@@ -56,11 +56,10 @@ category: android
 
 在AS启动安装App时 我们也可以看到熟悉的 `local/tmp`
 
-{% highlight bash %}
 
- pm install -r "/data/local/tmp/com.google.samples.apps.iosched"
+`pm install -r "/data/local/tmp/com.google.samples.apps.iosched"`
 
-{%  endhightlight %}
+
 
 ### Fragment.getResource()
 

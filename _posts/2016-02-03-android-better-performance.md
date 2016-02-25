@@ -42,9 +42,11 @@ ArrayMap利用二分法插入删除数据，推荐用于小数据量Map结构,�
 
 事务的显示使用：
 
-`db.beginTransaction();`                          
-`db.setTransactionSuccessful();`                  
- `db.endTransaction();`                 
+`db.beginTransaction();`     
+
+`db.setTransactionSuccessful();`        
+
+`db.endTransaction();`                 
 
 
 
@@ -53,13 +55,18 @@ ArrayMap利用二分法插入删除数据，推荐用于小数据量Map结构,�
 
 数据库索引：
 
-* 合适的索引提升相关字段数据库检索速度，但在新增删除操作时，同样需要维护索引，造成增删速度减慢                   
-* 索引增加数据库大小              
+* 合适的索引提升相关字段数据库检索速度，但在新增删除操作时，同样需要维护索引，造成增删速度减慢      
+          
+* 索引增加数据库大小     
+      
 * 索引不适用于较小数据量的数据表
+
 
 重用 SQLiteStatement：
 
+
 `SQLiteStatement  statement = db.compileStatement(sql);`
+
 
 利用SQLiteStatement 变量替换关键字数据
 
