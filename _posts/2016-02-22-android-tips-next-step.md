@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android Next Step
+title: Android 开发提升要点
 category: android
 ---
 
@@ -28,7 +28,7 @@ Android 优化：
 
 > 多请求打包捆绑 —— 减少移动网络被激活的时间与次数 —— 数据批处理
 >
->数据预处理
+> 数据预处理
 >
 > 不应该使用Polling(轮询)的方式去执行网络请求 —— 服务器推送
 >
