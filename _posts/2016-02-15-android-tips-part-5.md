@@ -96,3 +96,6 @@ Quote:
 
 
 [Difference between `initLoader` and `restartLoader` in `LoaderManager`](http://stackoverflow.com/questions/14445070/difference-between-initloader-and-restartloader-in-loadermanager)
+
+
+[cat 输出文件内容](http://www.lampweb.org/linux/3/21.html)
