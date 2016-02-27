@@ -44,7 +44,7 @@ onDraw 函数在UI线程中，系统对于onDraw函数会多次调用，频率�
 
 ### Android图片加载
 
-采样率 bitMapOptions 测量 
+采样率 bitMapOptions 测量
 
 图片格式 ARGB_8888  RGB565 等针对具体情况选择，进而可以节省内存占用
 
@@ -55,14 +55,15 @@ onDraw 函数在UI线程中，系统对于onDraw函数会多次调用，频率�
 常见UI性能优化工具有：
 
 *  开发者选项中 —— 调试GPU过度绘制  蓝绿粉红                 
-*  开发者选项中 ——  Profile GPU Rendering             
-*  Hierarchy Viewer 
+*  开发者选项中 ——  Profile GPU Rendering                     
+*  SysTrace 跟踪View帧绘制情况                                                         
+*  Hierarchy Viewer
 
 [开启 Hierarchy Viewer: ](https://developer.android.com/tools/performance/hierarchy-viewer/index.html) Set an **ANDROID\_HVPROTO** environment variable on the desktop machine
 
 [Profiling with Hierarchy Viewer](https://developer.android.com/intl/zh-cn/tools/performance/hierarchy-viewer/profiling.html#InterpretingResults)
 
-* 终极武器 TraceView 
+* 终极武器 TraceView
 
 可以用于精准的分析线程中各个函数的占用资源情况，当然也可以用于精准分析UI线程中的函数时间消耗情况，进而定位UI卡顿原因；
 
@@ -125,4 +126,3 @@ Real Time / Call  函数每一次执行的真正占用时间
 [Google Performance -- about PNG](https://www.youtube.com/watch?v=2TUvmlGoDrw&feature=iv&src_vid=1WqcEHXRWpM&annotation_id=annotation_2477902193)
 
 [Google Performance -- about Image](https://www.youtube.com/watch?v=1WqcEHXRWpM&feature=iv&src_vid=SA4j6KKjMRk&annotation_id=annotation_2988823891)
-
