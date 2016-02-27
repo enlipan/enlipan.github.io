@@ -49,7 +49,7 @@ Dialog.show()函数调用后，后续的UI线程中操作挤占了
 典型处理事件：
 
  ScrollView 嵌套了 EditText，当EditText编辑文本较多时，需要可以Touch上下滚动查看，若不加以干涉，在滑动EditText 时，ScrollView会随之滚动，熟悉事件的传递机制就可以逐步分析解决：
- 
+
 
 {% highlight java %}
 
@@ -64,7 +64,22 @@ v.getParent().requestDisallowInterceptTouchEvent(true);
 {% endhighlight %}
 
 
+### 替换App 数据库
 
+很多时候，我们在调试时需要在已有账号上做分析处理，而直接从服务器同步下拉数据往往耗时很多，如何将一份 db数据库直接导入App做开发调试：
+
+
+{% highlight bash %}
+
+
+adb shell
+
+run-as  com.lee.demo
+chmod 666  /data/data/com.lee.demo/database/demo.db
+
+cat /sdcard/demo.db -> /data/data/com.lee.demo/database/demo.db
+
+{% endhighlight %}
 
 
 
