@@ -14,7 +14,7 @@ android-UniversalMusicPlayer、iosched、开源中国App
 
 ---
 
-自定义控件 View
+自定义控件
 
 自定义手势
 
