@@ -6,7 +6,7 @@ category: android
 
 开源框架：
 
-RxJava、okHttp、EventBus、Volley
+RxJava、okHttp、EventBus
 
 开源项目：
 
