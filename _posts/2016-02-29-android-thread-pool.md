@@ -21,7 +21,7 @@ HandlerThread 由于内部自动创建了`消息队列`，所以可以利用传�
 
 IntentService 与 其他Thread 有什么差异呢？ 当APP在后台运行时，我们知道当系统资源紧张时，Android系统会回收后台进程资源，也就是销毁后台App，而销毁时是有优先级的，IntentService 本质是一种服务，在后台运行时能够更加安全的运行后台服务，可以尽可能保证任务的执行，避免被系统杀死 —— 降低应用被杀死导致任务执行中断的概率；
 
-本质上 IntentService 内部是封装了
+本质上 IntentService 内部是封装了HandlerThread 完成消息的处理；
 
 
 
