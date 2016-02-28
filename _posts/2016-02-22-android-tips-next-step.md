@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Android 开发提升要点
+title: Android 高阶要点
 category: android
 ---
 
 开源框架：
 
-RxJava、okHttp、EventBus
+RxJava、okHttp、EventBus、DataBinding
 
 开源项目：
 

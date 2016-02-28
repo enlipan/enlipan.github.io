@@ -63,6 +63,9 @@ v.getParent().requestDisallowInterceptTouchEvent(true);
 
 {% endhighlight %}
 
+需要注意的一点是： requestDisallowInterceptTouchEvent 设定的 View的标志位：FLAG_DISALLOW_INTERCEPT 不能对ViewGroup的 ACTION_DOWN 作用，也就是 ACTION_DOWN 事件触发时，父View总是会调用 onInterceptTouchEvent 确定是否需要拦截 Child View 事件，若ACTION_DOWN 确定不需要拦截，会重置 FLAG_DISALLOW_INTERCEPT 标志位，跳过后面的 onInterceptTouchEvent 验证；反过来说 一旦父ViewGroup 拦截了ACTION_DOWN ,那么即使设置了标志位也无法阻止事件拦截，因为后面的事件都无法传递到Child View中去了；
+
+合理的利用该标志位，结合重写 View 的事件分发函数 dispatchTouchEvent() 可以优雅的解决滑动冲突问题；类似上述代码实例；
 
 ### 替换App 数据库
 
