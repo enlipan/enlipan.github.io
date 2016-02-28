@@ -10,11 +10,29 @@ category: algorithm
 
 插入排序与选择排序的逻辑概念要清晰：
 
-选择排序是依次从数组中选出对应位置大小的数，放置到对应位置上，而插入排序是从部分有序到全部有序的过程，包含移位插入的过程；
+选择排序是依次从数组中选出对应位置大小的数，放置到对应位置上，而插入排序是从部分有序到全部有序的过程，包含移位、插入的过程；
 
+{% highlight java%}
 
+public static void insetNumSort(int [] nums){
+    int length = nums.length;
+    for (int i = 1;i<length;i++){
+        int temp = nums[i];
+        if (temp < nums[i - 1]){
+            int j = i - 1;
+            do {
+                nums[j + 1] = nums[j];
 
+                j--;
+                if (j >= 0 && temp >= nums[j])break;
 
+            }while (j>=0);
+            nums[j + 1] = temp;
+        }
+    }
+}
+
+{% endhighlight %}
 
 ### 快速排序
 
@@ -70,6 +88,26 @@ private static int partitionNumFirstNumKey(int[] nums, int left, int right) {
 归并排序核心思想：分治法，有序数组的合并，其核心操作是将数组划分为单个数之后，逐一合并单元素有序数组
 
 
+{% highlight java%}
 
+while (i<middle && j< end){
+    if ( nums [i] < nums[j] ){
+
+
+    }else {
+
+    }
+}
+// copy remain nums
+//具体我们并不知晓哪一块先合并完，需要双校验
+while (i < middle){
+
+}
+while (j< end){
+
+}
+
+
+{% endhighlight %}
 
 ### 堆排序

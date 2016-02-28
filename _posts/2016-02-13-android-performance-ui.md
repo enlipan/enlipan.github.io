@@ -63,6 +63,14 @@ onDraw 函数在UI线程中，系统对于onDraw函数会多次调用，频率�
 
 [Profiling with Hierarchy Viewer](https://developer.android.com/intl/zh-cn/tools/performance/hierarchy-viewer/profiling.html#InterpretingResults)
 
+* SysTrace UI Trace报告
+
+用于观测帧画面生成过程中的方法事件，结合系统Alert报告可以粗略定位问题，当UI线程中方法较多时我们需要利用 TraceView精准定位函数耗时；
+
+
+
+
+
 * 终极武器 TraceView
 
 可以用于精准的分析线程中各个函数的占用资源情况，当然也可以用于精准分析UI线程中的函数时间消耗情况，进而定位UI卡顿原因；
@@ -105,6 +113,8 @@ Real Time / Call  函数每一次执行的真正占用时间
 
 
 ---
+
+[Chapter 4. Screen and UI Performance](https://www.safaribooksonline.com/library/view/high-performance-android/9781491913994/ch04.html)
 
 [Android 编程下的 TraceView 简介及其案例实战](http://www.cnblogs.com/sunzn/p/3192231.html)
 
