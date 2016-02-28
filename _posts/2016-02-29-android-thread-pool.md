@@ -4,6 +4,7 @@ title: Android 线程池
 category: android
 ---
 
+
 Android 中线程的概念主要有
 
 > AsyncTask                  
@@ -46,3 +47,10 @@ CachedThreadPool： 无核心线程，全部为非核心线程，适用于大量
 SingleThreadExecutor： 单线程池，仅有一个核心线程，保证所有任务在同一线程中依次顺序执行；
 
 ScheduledThreadPool： 核心线程数固定，而非核心线程数无限制，且非核心线程闲置立即回收，顾名思义一般适用于固定周期重复任务；
+
+---
+
+Quote：
+
+
+《Android开发艺术探索》
