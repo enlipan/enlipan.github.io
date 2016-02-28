@@ -10,7 +10,7 @@ category: android
 
 
 {:.center}
-![nestedmore4](\assets\img\20151218\levermore4.png)
+![nestedmore4](http://7xqncp.com1.z0.glb.clouddn.com/assets%2Fimg%2F20151218%2Flevermore4.png)
 
 多层次的Fragment嵌套问题中，如果Fragment层次超过三级，那么底层Fragment.getparentFragment().startActivityForResult(),依旧会产生RequestCode移位错乱问题。其实这类一般用的较少，一般底层Fragment被使用也是设计为DialogFragment。
 
@@ -45,7 +45,7 @@ category: android
 
 
 {:.center}
-![leverchange](\assets\img\20151218\leverchange.png)
+![leverchange](http://7xqncp.com1.z0.glb.clouddn.com/assets%2Fimg%2F20151218%2Fleverchange.png)
 
 
 当然在分发时依旧使用这种分发方式：
