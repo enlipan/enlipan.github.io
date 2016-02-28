@@ -16,7 +16,7 @@ category: android
 
 
 {:.center}
-![Looper-ViewPager](\assets\img\20160101\looperviewpager.png)
+![Looper-ViewPager](http://7xqncp.com1.z0.glb.clouddn.com/assets%2Fimg%2F20160101%2Flooperviewpager.png)
 
 
 {%  highlight java  %}
