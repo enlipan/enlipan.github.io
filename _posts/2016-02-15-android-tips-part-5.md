@@ -86,6 +86,74 @@ cat /sdcard/demo.db -> /data/data/com.lee.demo/database/demo.db
 
 
 
+### match_parent 其他细节
+
+* RelativeLayout 中 若两个View 关系，写在前面的视图若依赖写在后面的view的id，是会报错的
+
+最近一直写业务逻辑，突然写UI发现自己对于这个 match_parent 这个细节模糊了，写出UI脑海中竟然不能完全确认UI应该会长什么样，所以仔细回顾了这一细节知识点：
+
+{% highlight java %}
+
+wrong   RelativeLayout
+
+<TextView
+    android:layout_above="@id/yellow"
+    android:id="@+id/green"
+    android:background="#005500"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+<TextView
+    android:id="@+id/yellow"
+    android:background="#999900"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"/>
+
+right   RelativeLayout
+
+<TextView
+    android:id="@+id/yellow"
+    android:background="#999900"
+    android:layout_width="match_parent"
+    android:layout_alignParentBottom="true"
+    android:layout_height="50dp"/>
+
+
+<TextView
+    android:layout_above="@id/yellow"
+    android:id="@+id/green"
+    android:background="#005500"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+
+right-2   LinearLayout
+
+<TextView
+    android:id="@+id/green"
+    android:background="#005500"
+    android:layout_width="match_parent"
+    android:layout_height="0"
+    android:layout_weight="1"/>
+
+<TextView
+    android:id="@+id/yellow"
+    android:background="#999900"
+    android:layout_width="match_parent"        
+    android:layout_height="50dp"/>
+
+
+
+{% endhighlight %}
+
+View layout xml 解析
+
+RelativeLayout 中第一个先用到的 id 找不到，看起来很奇怪，明明在下面定义了，就是找不到，其实想想XML的解析机制就可以理解了，从上到下遍历，解析该View时无法获取下一个View的ID，所以更换位置同样的就好了
+
+match_parent  若不加其他细节约束，则子View 会与其父View同样大小，我们可以利用这一约束，同时混合其他约束去细节的使用 match_parent,改变其大小，其含义可以变为在满足其他约束条件的情况下，尽可能的想父View一样大；前提条件是满足其他约束条件，如在某个View之上，或者在某个View之左，这样之后View的match_parent，就不再占有全部空间，如上例；可以揣测，UI布局文件绘制的时候，如果只有 match_parent 而无其他约束条件，解析之后绘制时并不知道其他元素的存在，所以就布满了整个父View；
+
+一个UI写出来应该还没运行脑海中就需要知道长成什么样
+
 
 
 
