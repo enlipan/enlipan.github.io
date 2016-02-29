@@ -10,12 +10,17 @@ category: android
 
 ### DataBinding
 
-
+dependencies {
+    classpath 'com.android.tools.build:gradle:1.3.0'
+    classpath "com.android.databinding:dataBinder:1.0-rc1"
+}
 
 
 ---
 
 Quote:
+
+[Data Binding Guide](https://developer.android.com/tools/data-binding/guide.html)
 
 [来自官方的Android数据绑定（Data Binding）框架Read more](http://blog.chengyunfeng.com/?p=734)
 
