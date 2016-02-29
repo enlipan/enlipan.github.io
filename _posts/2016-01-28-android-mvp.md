@@ -41,3 +41,5 @@ MVP 就本质上来说并不是什么高深的东西，但是确实极大的改�
 [ 浅谈 MVP in Android](http://blog.csdn.net/lmj623565791/article/details/46596109)
 
 [几种常见Android代码架构分析](http://mobile.51cto.com/abased-386212.htm)
+
+[S.O.L.I.D：面向对象设计的头 5 大原则](http://blog.jobbole.com/86267/)
