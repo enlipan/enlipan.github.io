@@ -10,7 +10,7 @@ category: android
 
 ### DataBinding
 
-{% hightlight groovy %}
+{% highlight groovy %}
 
 dependencies {
 
@@ -19,7 +19,7 @@ dependencies {
     
 }
 
-{% endhightlight %}
+{% endhighlight %}
 
 
 ---
