@@ -25,6 +25,15 @@ category: android
 
 {% highlight groovy %}
 
+/////当前引入方式
+
+dataBinding {
+    enabled = true
+}
+
+//////////////////////
+
+
 dependencies {
 
     classpath 'com.android.tools.build:gradle:1.3.0'
