@@ -38,7 +38,7 @@ handler一般多用于创建内部类实例并重写其handleMessage()函数；
 ###  自定义Style在继承时的 `.` Parant.Child.X
 
 
-###   [Android网络状态](http://developer.android.com/training/monitoring-device-state/connectivity-monitoring.html#DetermineConnection):、
+###   [Android网络状态](http://developer.android.com/training/monitoring-device-state/connectivity-monitoring.html#DetermineConnection):
 
 {% highlight java %}
 
@@ -47,7 +47,7 @@ handler一般多用于创建内部类实例并重写其handleMessage()函数；
 */
 ConnectivityManager cm =
         (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-  
+
 NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 boolean isConnected = activeNetwork != null &&
                       activeNetwork.isConnectedOrConnecting();
@@ -114,7 +114,7 @@ a != b
 
 final String a = "ab"
 
-String b= a + "c"; 
+String b= a + "c";
 
 b == "abc"
 

@@ -85,6 +85,11 @@ cat /sdcard/demo.db -> /data/data/com.lee.demo/database/demo.db
 {% endhighlight %}
 
 
+### Android中的对象序列化
+
+  对象序列化是Android文件缓存中常用的操作之一，一般我们实现序列化接口完成对象的 ObjectInput(Output)Stream 完成对象的缓存操作，那么对于耗时性是否真正的关注或者考虑过呢？看到一篇文章的思路很好，[关于Android开发中Java对象序列化的一次测试](http://bxbxbai.gitcafe.io/2015/05/05/a-serializable-test/),将对象自定义输出装置，抛弃序列化接口繁重的反射性操作，比如文章中就将对象利用GSON转换成String字符串，再将字符串序列化，虽然GSON依旧利用了反射，但是根据其测试效果可以明显看出性能还是有比较大的改进；
+
+  推而广之，我么可以根据具体对象的特性自定义其序列化机制，进一步完成更高性能的对象序列化机制；
 
 ### match_parent 其他细节
 
