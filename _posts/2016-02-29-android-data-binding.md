@@ -19,16 +19,41 @@ category: android
 
 ### DataBinding
 
+表达式： `@{}`
+
+
+
 {% highlight groovy %}
 
 dependencies {
 
     classpath 'com.android.tools.build:gradle:1.3.0'
     classpath "com.android.databinding:dataBinder:1.0-rc1"
-    
+
 }
 
 {% endhighlight %}
+
+
+{% highlight java %}
+
+//Bean 类型中支持值域引用的函数方式：
+
+// getXXX形式
+public String getFirstName() {
+    return this.firstName;
+}
+
+// 或者属性名和方法名相同
+public String lastName() {
+    return this.lastName;
+}
+
+{% endhighlight %}
+
+
+
+DataBinding 支持多种表达式语言，写起来很有种写 JSTL 的感觉，其种类基本涵盖基本运算符:数学运算符、字符串连接、逻辑运算符、一二三元操作符、比较、以及值域引用、函数调用，甚至还有 Cast 、instanceof、Grouping ()等
 
 
 
