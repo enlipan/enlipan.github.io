@@ -19,10 +19,16 @@ category: android
 
 ### DataBinding
 
+{% highlight groovy %}
+
 dependencies {
+
     classpath 'com.android.tools.build:gradle:1.3.0'
     classpath "com.android.databinding:dataBinder:1.0-rc1"
+    
 }
+
+{% endhighlight %}
 
 
 
