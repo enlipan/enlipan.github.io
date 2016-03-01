@@ -37,6 +37,7 @@ dependencies {
 
 {% highlight java %}
 
+
 //Bean 类型中支持值域引用的函数方式：
 
 // getXXX形式
@@ -49,12 +50,41 @@ public String lastName() {
     return this.lastName;
 }
 
+
+///////////////////////////////////////////////////////////////////
+
+
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    ActivityMainBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+    Status status = new Status("Lee","Paul","","");
+    binding.setStatus(status);
+    ActionHandler actions = new ActionHandler(this);
+    binding.setActions(actions);
+}
+
+/////////////////////////////////////////////////////////////////////
+
+private Activity mAc;
+
+public ActionHandler(Activity ac){
+    mAc = ac;
+}
+
+public void onTvClick(View v){
+    mAc.finish();
+}
+
 {% endhighlight %}
 
+当layout xml文件中 layout 属性绑定完成会生成一个继承 ViewDataBinding的实例类根据 layout文件名对应生成，若 activity_main.xml 则生成 ActivityMainBinding类；通过layout 文件中的xml 表达式属性将 ViewModel绑定View；
 
 
 DataBinding 支持多种表达式语言，写起来很有种写 JSTL 的感觉，其种类基本涵盖基本运算符:数学运算符、字符串连接、逻辑运算符、一二三元操作符、比较、以及值域引用、函数调用，甚至还有 Cast 、instanceof、Grouping ()等
 
+
+#### 监听
 
 
 
