@@ -22,6 +22,9 @@ category: android
 表达式： `@{}`
 
 
+Layout —— `data` 元素中的 import属性，类似Java的引包机制；
+
+对于inClude 布局文件，若跟文件作为了View视图，其inClude xml layout文件同样需要相关属性变量定义；
 
 {% highlight groovy %}
 
@@ -95,7 +98,31 @@ DataBinding 支持多种表达式语言，写起来很有种写 JSTL 的感觉�
 
 #### 监听
 
+通过View 与 ViewModel的绑定，完成数据的更新监听，类似与观察者机制
 
+{% highlight java %}
+
+@Bindable
+public String getName() {
+    return name;
+}
+
+public void setName(String name) {
+    this.name = name;
+    notifyPropertyChanged(BR.name);
+}
+
+////////////////////
+
+public void onTvClick(View v){
+    mStatus.setName("New Name");
+}
+
+{% endhighlight %}
+
+`@Bindable`属性用于生成 BR.[property name]，进而调用 norify机制刷新界面，中间的通知机制由 DataBinding框架完成，隐藏细节，让开发者专注于业务逻辑；
+
+#### AdapterView绑定
 
 ---
 
