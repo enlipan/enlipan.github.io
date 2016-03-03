@@ -24,6 +24,14 @@ category: android
 
 Layout —— `data` 元素中的 import属性，类似Java的引包机制；
 
+引包时，默认type name 为类名，当不同包下的类名出现重复冲突问题时，采用  alias 别名字段重命名；
+
+
+注意可以通过import 在表达式中引用静态字段或者静态函数；
+
+
+利用`<data  class = "com.kotlin.example.lee.databindingdemo.MainBinding">` 标签去自定义 Binding类；
+
 对于inClude 布局文件，若跟文件作为了View视图，其inClude xml layout文件同样需要相关属性变量定义；
 
 {% highlight groovy %}
@@ -122,13 +130,114 @@ public void onTvClick(View v){
 
 `@Bindable`属性用于生成 BR.[property name]，进而调用 norify机制刷新界面，中间的通知机制由 DataBinding框架完成，隐藏细节，让开发者专注于业务逻辑；
 
+也可以利用 ObservableFields 或者 Observable Collections 的形式去进行 POJO 数据改变时的监听
+
+DataBinding 不支持： this  super 以及 new 关键字；
+
+DataBinding @引用表达式自动校验空指针问题；
+
+
 #### AdapterView绑定
+
+
+{% highlight java %}
+
+    public static class BindingHolder<T extends ViewDataBinding> extends RecyclerView.ViewHolder {
+        public T getBinding() {
+            return mBinding;
+        }
+
+        private T mBinding;
+
+        public  BindingHolder(T binding) {
+            super(binding.getRoot());
+            mBinding = binding;
+        }
+
+    }
+
+    /////////////////
+
+    public static class BindingAdapter extends RecyclerView.Adapter<BindingHolder> {
+
+        ArrayList<Book> mBooks = new ArrayList<>();
+
+        public void addBooks(Book[] books) {
+            mBooks.clear();
+            mBooks.addAll(Arrays.asList(books));
+        }
+
+        @Override
+        public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            ItemRecyclerBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_recycler, parent, false);
+            BindingHolder<ItemRecyclerBinding> holder = new BindingHolder<>(binding);
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(BindingHolder holder, int position) {
+            final Book book = mBooks.get(position);
+            holder.getBinding().setVariable(BR.book, book);
+            holder.getBinding().executePendingBindings();
+        }
+
+        @Override
+        public int getItemCount() {
+            return mBooks.size();
+        }
+
+    }
+
+    /////////////////////////////////////
+
+    public class Book extends BaseObservable{
+
+    @Bindable
+    private String name;
+    @Bindable
+    private String title;
+
+    public Book(@NonNull String name, @NonNull String title){
+        this.name = name;
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+        notifyPropertyChanged(BR.title);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        notifyPropertyChanged(BR.name);
+    }
+
+}
+
+{% endhighlight %}
+
+executePendingBindings() 立即绑定更新数据界面；
+
+DataBinding 后台线程更新数据问题，更新非 集合类型的数据 DataModel，即使是后台线程 DataBinding可以自动更新界面，并且可以很好的避免并发问题；
 
 ---
 
 Quote:
 
 [Data Binding Guide](https://developer.android.com/tools/data-binding/guide.html)
+
+[Marshmallow Brings Data Bindings to Android](https://realm.io/news/data-binding-android-boyar-mount/)
+
+[How to use Android DataBinding with RecyclerView](https://robotsandpencils.com/how-to-use-android-databinding-with-recyclerview/)
+
 
 [来自官方的Android数据绑定（Data Binding）框架Read more](http://blog.chengyunfeng.com/?p=734)
 

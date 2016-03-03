@@ -6,7 +6,7 @@ category: android
 
 开源框架：
 
-RxJava、okHttp、EventBus、DataBinding
+RxJava、okHttp、EventBus、DataBinding、Image —— Glide、Fresco、Volly
 
 开源项目：
 
