@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <!--[if lte IE 9]><meta http-equiv="refresh" content="0;url=/ie.html"><![endif]-->
     <title>{{ page.title }}</title>
     <meta name="description" content="">
@@ -22,8 +22,9 @@
           <li id="js-label5" class="tags__li tags-btn">Network</li>
           <li id="js-label6" class="tags__li tags-btn">Algorithm</li>
           <li id="js-label7" class="tags__li tags-btn">Others</li>
-          <li class="tags__li tags-btn"><a href="/pages/archive.html">Archive</a></li> 
-          <li class="tags__li tags-btn"><a href="/pages/about.html">About</a></li> 
+          <li class="tags__li tags-btn"><a href="/pages/archive.html">Archive</a></li>
+            <li class="tags__li tags-btn"><a href="/pages/books.md">Books</a></li> 
+          <li class="tags__li tags-btn"><a href="/pages/about.html">About</a></li>
         </ul>
         <div id="tags__bottom">
           <a href="mailto:javaclee@gmail.com" id="icon-email" class="tags-btn fontello"></a>
@@ -34,11 +35,11 @@
 	 <div id="posts-list">
         <!-- NOTE: input field is disabled by default
         <form action="" id="search-form">
-          <a href="/index.html" id="mobile-avatar"></a> 
+          <a href="/index.html" id="mobile-avatar"></a>
           <input id="search-input" type="text" placeholder="Search..."  />
           	</form>-->
   	<form id="search-form" >
-	 <a href="/index.html" id="mobile-avatar"></a>     
+	 <a href="/index.html" id="mobile-avatar"></a>
     <gcse:search></gcse:search>
 	  </form>
 	<!-- <form id="search-form">
@@ -47,7 +48,7 @@
         <span class="pl__circle"></span><span class="pl__title"><font style="font-family:Cursive">Mind's Eye</font></span>
         </center>
         </form> -->
-        <nav id="pl__container">          
+        <nav id="pl__container">
         {% for post in site.posts %}
           <a class="{{ post.categories }} pl__all" href="{{ post.url }}" ><span class="pl__circle"></span><span class="pl__title">{{ post.title }}</span><span class="pl__date" >{{ post.date | date: "%d %b %Y" }}</span></a>
         {% endfor %}
