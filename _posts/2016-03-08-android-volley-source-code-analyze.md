@@ -72,3 +72,7 @@ if (mResponse.isSuccess()) {
 消息Post回调如上，整体的一条主线到此就基本走完了，Volley的第一个无缓存的网络请求流程就理清头绪，继续回头绕回 Add函数后面的 Cache过程：
 
 `CacheDispatcher` 类似于上面的网络请求 `networkDispatcher`，需要注意的一点，进入run实现可以发现默认的请求是先走 `CacheDispatcher` 判断是否需要缓存，是否有缓存，是否缓存过期，而后分发到`networkDispatcher`；
+
+最后一个Add流程是 mWaitingRequests 等待请求，当重复请求发起时，我们将后续请求放入等待HashMap中，以url为key，考虑到可能有多个重复Url请求，将所有请求放入一个 LinkedList链表中，我们此时必然很疑惑，放入之后什么时候再唤醒触发请求呢？查找后我们可以定位发现 `RequestQueue.finish()`函数,我们再根据注释定位request的请求结束过程，发现具体流程是 当request请求响应完成，会触发finish();将该request的相同 request全部加入 `mCacheQueue.addAll(waitingRequests);`中，我们知道如果利用缓存这些请求的响应是相当迅速的，而且同类request瞬间全部响应，效率非常高；
+
+到这里add流程基本就走完了，这一过程之后，Volley的主要逻辑实现我们也就清楚了，主题框架主线也清晰了很多；
