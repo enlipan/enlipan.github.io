@@ -34,7 +34,7 @@ queue.start();
 
 而后进一步进入 RequestQueue 的构造函数，可以构建一个对象间的依赖关系，在这个过程中可以不需要进一步深入 各个类的继承以及实现层级关系，往下继续走start()函数流程;
 
-发现`mCacheDispatcher.start();    networkDispatcher.start();` 进去看一眼类的实现，二者都属于继承Thread的的工作线程，可以适当的看一看 run()函数走一下工作流程，熟悉的BlockingQueue 出现在眼前也就是生产消费者模型建立，看一下mQueue 初始化可以发现这些工作线程的生产者全部是指向同一引用`PriorityBlockingQueue<Request<?>>`，到这里类间关系以及初始化的流程好像挖掘殆尽，最好陷入各种工作线程的worker过程，防止各种类间关系让自己迷糊，应该重新回到Volley的使用过程 request的添加过程中来，也就是add()函数；
+发现`mCacheDispatcher.start();``networkDispatcher.start();`进去看一眼类的实现，二者都属于继承Thread的的工作线程，可以适当的看一看 run()函数走一下工作流程，熟悉的BlockingQueue 出现在眼前也就是生产消费者模型建立，看一下mQueue 初始化可以发现这些工作线程的生产者全部是指向同一引用`PriorityBlockingQueue<Request<?>>`，到这里类间关系以及初始化的流程好像挖掘殆尽，最好陷入各种工作线程的worker过程，防止各种类间关系让自己迷糊，应该重新回到Volley的使用过程 request的添加过程中来，也就是add()函数；
 
 {% highlight java %}
 
