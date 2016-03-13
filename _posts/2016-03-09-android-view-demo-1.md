@@ -1,6 +1,6 @@
 ---
 layout: post
-title: practice before sleep(1)
+title: Practice Before Sleep(1)
 category: android
 ---
 
