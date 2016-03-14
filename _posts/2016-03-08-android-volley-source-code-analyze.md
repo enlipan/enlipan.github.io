@@ -76,3 +76,9 @@ if (mResponse.isSuccess()) {
 最后一个Add流程是 mWaitingRequests 等待请求，当重复请求发起时，我们将后续请求放入等待HashMap中，以url为key，考虑到可能有多个重复Url请求，将所有请求放入一个 LinkedList链表中，我们此时必然很疑惑，放入之后什么时候再唤醒触发请求呢？查找后我们可以定位发现 `RequestQueue.finish()`函数,我们再根据注释定位request的请求结束过程，发现具体流程是 当request请求响应完成，会触发finish();将该request的相同 request全部加入 `mCacheQueue.addAll(waitingRequests);`中，我们知道如果利用缓存这些请求的响应是相当迅速的，而且同类request瞬间全部响应，效率非常高；
 
 到这里add流程基本就走完了，这一过程之后，Volley的主要逻辑实现我们也就清楚了，主题框架主线也清晰了很多；
+
+PS:
+
+[Why Volley DiskBasedCache splicing without direct access to the cache file name](http://stackoverflow.com/questions/34984302/why-volley-diskbasedcache-splicing-without-direct-access-to-the-cache-file-name/34987423#34987423)
+
+针对 Volley缓存 key 二分取hash拼接的问题，Java中Hash是不可靠的，通过这种细节处理尽可能（依旧不能完全避免）避免Hash值覆盖问题；这一点我们可以针对 取HashCode()函数源码可以论证；

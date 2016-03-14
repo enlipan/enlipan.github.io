@@ -18,25 +18,38 @@ ReactiveX is sometimes called “functional reactive programming” but this is 
 
 可以变复杂的异步事件序列为简介的事件序列，组合各类事件操作集合如同利用Array 组合数据元素一样简洁；同时可以精简繁杂的业务逻辑，提升代码可读性；
 
-如何用RxJava？
-
 数据流与事件流？
 
+RxJava 核心是基于观察者模式对observable数据流的操作变化；
 
-
-
+如何用RxJava？
 
 observable 对象 : 被观察对象 —— 事件的来源；当 observable 对象产生事件后，订阅其的 Observer 对象做出相应的响应；
 
-observable 创建函数：
+observable 创建函数： create()  just()  from()
 
 
 
-Subscribe 订阅者：
+Subscribe 订阅者： Action、 Subscribe 。Observable 产生消息事件，Subscribe 消费事件二者对应；独立的Observable 并不产生消息，只有在被订阅之后才会对于整个系统产生作用；
 
 
 
 Schedule 调度器：
+
+利用 subscribeOn(Scheduler scheduler) 可以指定 observable 的事件源所执行线程；而通过执行 ObserveOn() 可以指定订阅者Subscribe 其回调函数OnNext()等执行线程；
+
+>  Schedulers.from(executor)              
+>
+> Schedulers.io()            
+>  
+> Schedulers.newThread()          
+>
+> Schedulers.computation()           
+>
+> Schedulers.trampoline()
+
+
+RxJava 函数 —— Operators： map() flatmap()
 
 
 

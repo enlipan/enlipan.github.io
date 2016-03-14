@@ -37,7 +37,6 @@ public class LoadingDataLvActivity extends AppCompatActivity implements LoadingL
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +64,7 @@ public class LoadingDataLvActivity extends AppCompatActivity implements LoadingL
 
         @Override
         public void run() {
+            //模拟网络操作数据返回，直接loading本地数据loading效果不明显，延时2000ms
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
