@@ -21,7 +21,7 @@ category: android
 
 
 
-### 基于 ClassLoader 的热修复技术(Tencent)
+#### 基于 ClassLoader 的热修复技术(Tencent)
 
 特点：App下次启动有效，高通用性，适用性较好
 
