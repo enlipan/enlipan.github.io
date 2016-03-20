@@ -7,7 +7,7 @@ category: android
 
 ### 从Android Dex 分包说起：
 
-随着业务逻辑的增加，`方法数 65536 —— Conversion to Dalvik format failed:Unable to execute dex: method ID not in [0, 0xffff]: 65536` 是难以绕过的坎，早期的时候的解决方案还是比较麻烦的，在比较紧急的时候衍生诸多治标不治本的方案，如ProGuard，lib冗余精简等，而后在Google multidex lib之后解决方案变得比较简单；目前解决的方案基本大多都是基于dex分包机制，根据apk build Tool 打包流程，在 apk编译打包dex阶段人为干预 dex打包编译过程，自定义指定类打包为哪一个指定dex包，进而生成多个dex文件；Google multidex lib 会根据需要自动分析哪些类需要打包到 主dex包，哪些打包到 secondary Dex包，根据实际情况生成 dex2 dex3等；如果这一过程完全自行判断就需要自己 分析好准确的业务逻辑等，并处理好在较低Android版本中，当类被调用 dex包还未被加载进入classloader的情况；具体情况分析可以查看美团团队给出的详细解决方案；
+`方法数 65536 —— Conversion to Dalvik format failed:Unable to execute dex: method ID not in [0, 0xffff]: 65536` 随着业务逻辑的增加是难以绕过的坎，早期的时候的解决方案还是比较麻烦的，在比较紧急的时候衍生诸多治标不治本的方案，如ProGuard，lib冗余精简等，而后在Google multidex lib之后解决方案变得比较简单；目前解决的方案基本大多都是基于dex分包机制，根据apk build Tool 打包流程，在 apk编译打包dex阶段人为干预 dex打包编译过程，自定义指定类打包为哪一个指定dex包，进而生成多个dex文件；Google multidex lib 会根据需要自动分析哪些类需要打包到 主dex包，哪些打包到 secondary Dex包，根据实际情况生成 dex2 dex3等；如果这一过程完全自行判断就需要自己 分析好准确的业务逻辑等，并处理好在较低Android版本中，当类被调用 dex包还未被加载进入classloader的情况；具体情况分析可以查看美团团队给出的详细解决方案；
 
 在 Lollipop以下版本multidex 可能会导致诸多问题，一者 Dex加载问题复杂度较高，多Dex加载时，若 Secondary Dex文件过大，可能会导致Application无响应，或者冷启动过慢的问题；Lollipop之后源于 ART的存在，ART 的AOT(Ahead of time)机制，系统在apk安装过程会利用 自带 dex2oat工具对apk中多 dex文件编译生成 .oat文件这一可在本地执行的文件，提高app启动速度；
 
