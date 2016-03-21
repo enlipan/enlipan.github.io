@@ -54,7 +54,7 @@ Java程序的执行过程，虚拟机加载所需要的Class对象创建对象�
 
 [ClassLoader](https://android.googlesource.com/platform/libcore/+/a7752f4d22097346dd7849b92b9f36d0a0a7a8f3/libdvm/src/main/java/java/lang/ClassLoader.java)
 
-{% hightlight java %}
+{% highlight java %}
 
 
 ClassLoader(ClassLoader parentLoader, boolean nullAllowed) {
@@ -91,7 +91,7 @@ protected Class<?> loadClass(String className, boolean resolve) throws ClassNotF
     }
 
 
-{% endhightlight   %}
+{% endhighlight %}
 
 从源码可以看到利用构造函数指定parent构造ClassLoader树，而loaderClass则loader递归调用至顶级loader，可以看出一个Class在整个应用生命周期中，有且仅加载一次，一旦被加载后续不再会被重新加载；需要注意的要明确在虚拟机中怎么样的Class被认定为**同一Class —— 相同ClassName + 相同PackageName + 相同ClassLoader**，若需要通过动态加载新类替代旧类，若旧类已经被加载则虚拟机会持续使用旧类，原因如上 loadClass，所以尽可能保证新的Class加载在旧Class之前，若无法完成该顺序，则可以利用自定义一个与该旧类无父子继承关系的Loader完成新类的加载，但是需要注意这两个同一类型的类却被虚拟机当作不同类型Class，所以可能出现新类替换旧类使用时的类型转换异常；
 
