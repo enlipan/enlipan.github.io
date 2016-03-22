@@ -50,9 +50,13 @@ category: android
 
 Java程序的执行过程，虚拟机加载所需要的Class对象创建对象实例，完成业务逻辑构建，若对象无法正确加载，则抛出异常 Class not Found，这一系列加载关键过程在Classloader中完成，这一点Android虚拟机与JVM虚拟机工作机制是类似的；
 
+系统启动时创建的根 BootClassLoader 与 应用启动时用于加载的 PathClassLoader；
+
 从Classloader的构造函数看Loader树状结构以及从ClassLoader的 loadClass 类加载机制看其Class代理加载机制；
 
 [ClassLoader](https://android.googlesource.com/platform/libcore/+/a7752f4d22097346dd7849b92b9f36d0a0a7a8f3/libdvm/src/main/java/java/lang/ClassLoader.java)
+
+
 
 {% highlight java %}
 
@@ -93,10 +97,47 @@ protected Class<?> loadClass(String className, boolean resolve) throws ClassNotF
 
 {% endhighlight %}
 
-从源码可以看到利用构造函数指定parent构造ClassLoader树，而loaderClass则loader递归调用至顶级loader，可以看出一个Class在整个应用生命周期中，有且仅加载一次，一旦被加载后续不再会被重新加载；需要注意的要明确在虚拟机中怎么样的Class被认定为**同一Class —— 相同ClassName + 相同PackageName + 相同ClassLoader**，若需要通过动态加载新类替代旧类，若旧类已经被加载则虚拟机会持续使用旧类，原因如上 loadClass，所以尽可能保证新的Class加载在旧Class之前，若无法完成该顺序，则可以利用自定义一个与该旧类无父子继承关系的Loader完成新类的加载，但是需要注意这两个同一类型的类却被虚拟机当作不同类型Class，所以可能出现新类替换旧类使用时的类型转换异常；
+从源码可以看到利用构造函数指定parent构造ClassLoader树，而loaderClass则loader递归调用至顶级loader，可以看出一个Class在整个应用生命周期中，有且仅加载一次，一旦被加载后续不再会被重新加载；需要注意的要明确在虚拟机中怎么样的Class被认定为 *同一Class —— 相同ClassName + 相同PackageName + 相同ClassLoader*，若需要通过动态加载新类替代旧类，若旧类已经被加载则虚拟机会持续使用旧类，原因如上 loadClass，所以尽可能保证新的Class加载在旧Class之前，若无法完成该顺序，则可以利用自定义一个与该旧类无父子继承关系的Loader完成新类的加载，但是需要注意这两个同一类型的类却被虚拟机当作不同类型Class，所以可能出现新类替换旧类使用时的类型转换异常；
 
-DexClassLoader 与 PathClassLoader：
+#### [DexClassLoader 与 PathClassLoader](https://android.googlesource.com/platform/libcore-snapshot/+/ics-mr1/dalvik/src/main/java/dalvik/system)：
 
+DexClassLoader 使用更加灵活，可以自定义存储路径，进而加载外部Dex文件，因而也是我们常用的;而在一般我们在自定义ClassLoader也会选用继承自 ClassLoader 利用复写其  loadClass 关键函数，根据其双亲代理机制的先查找后加载的过程，去指定寻找加载我们需要的指定类，完成类自定义加载；
+
+当类加载后就需要进一步考虑Android环境下的两个棘手问题，**一是如何不预先注册Activity 启动 动态加载Activity，二是如何在动态加载后 动态获取相应的运行环境，获取Apk运行的资源等文件**；
+
+#### Dex文件加载与函数调用：
+
+> Dex文件生成： jar包转换 Dex包文件； `sdk\build-tools\23.0.2\dx.bat` 工具生成 Dex文件；                 
+
+> 构造 DexClassLoader对象加载指定 Dex文件；
+
+> 利用反射 或 接口抽象调用 Dex下动态注册函数；
+
+反射不用说，都理解，利用反射找到对应函数，设定函数访问域进而访问；那么抽象接口多态调用，需要理解一下：
+
+首先将动态加载Dex包内函数抽象为接口，且与其具体实现一齐打包封装在需要动态加载的Dex包中，接口首先存在于 Dex 中；为了在主项目代码逻辑中能利用接口，将接口复制一份到主项目中，将反射所得到的Dex类实例，强转换为主项目中这些与 Dex包内等同的接口，进而利用多态调用接口的函数，触发具体业务逻辑；
+
+
+
+{% highlight java %}
+
+interface IFunction{
+  void func();
+}
+
+////////////////////
+Class  clazz = dexClassLoader.loadClass("me.kaede.dexclassloader.Loader");
+IFunction iFunc = (IFunction)class.newInstance();
+iFunc.func();
+
+
+{% endhighlight %}
+
+函数的调用之后则下一问题，如何动态加载界面，也就是布局 UI等生成，根据 *kaedea* 的说法，腾讯有比较好的一套从底层生成，以及解析XML的机制，当然想想也是可以理解的，估计其复杂度也是相当之高，同时需要兼顾考虑动态兼容屏幕特性，由于无法利用系统性兼容行为，如 dpi分级这类机制，需要自行根据屏幕特性适配，具体的还是有机会要去大厂了解下；
+
+#### 代理Activity模式：
+
+解决Activity 启动问题，Activity的启动需要附加Context环境同时以标准Intent形式启用，且在Manifest文件注册标记；通过Dex动态直接加载的Activity被实例化之后会退化为普通实例，丧失环境以及生命周期；未解决这类问题而采用代理Activity模式，在主项目中设置一个对应的代理Activity，同时在代理Activity的生命周期函数内触发Dex包中Activity对象的其对应的生命周期函数，二者匹配而生成一个完整的Activity实例；
 
 
 ### AndFix(Alipay)：
