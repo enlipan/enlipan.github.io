@@ -171,6 +171,17 @@ match_parent  若不加其他细节约束，则子View 会与其父View同样大
 获取CPU GPU 等系统信息
 
 
+
+###  getScrollX、getScrollY 以及 scrollTo(),scrollBy():
+
+getScrollX 获取View中当前所显示的内容的 X 方向上的偏移量，scrollTo 表示将 View中的内容移动到指定的位置，View中的内容可以是子view 也可以是其他内容填充；
+
+scrollTo 移动时需要注意：向scrollTo 中传入负数，view中的内容向下移动；向右移动；即当 View中内容向下移动后，View.getScrollY 为负数；其数值的计算为 (View内容的边界 - view 的边界)，而无论如何移动，其移动的都只会是View中的内容，View的边界是不会改变的；
+
+具体可以参考：Android开发艺术第三章以及 [图解MotionEvent中getRawX、getRawY与getX、getY以及View中的getScrollX、getScrollY](http://www.cnblogs.com/virtual-young/p/4578424.html)
+
+一个简单的例子： 查看ScrollView 当前的内容偏移量，若ScrollView向下滚动了一段距离，换句话说就是 内容向上移动了一段距离，所以 其 ScrollView.getScrollY() 就是指的由于滚动导致上面隐藏部分的内容的高度；
+
 ---
 
 
