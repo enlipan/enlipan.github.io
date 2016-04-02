@@ -20,7 +20,6 @@ public class Activity extends ContextThemeWrapper
         Window.OnWindowDismissedCallback {
 
 
-
   /**
    * A ContextWrapper that allows you to modify the theme from what is in the
    * wrapped context.
@@ -31,36 +30,7 @@ public class Activity extends ContextThemeWrapper
 {% endhighlight %}          
 
 
-ContextThemeWrapper 在 ContextWrapper的基础上封装了一些主题相关的函数与属性，基于这一特性，LayoutInfater的获取时传入的Context不一样其主题属性会被附加的有些许差异；如源码所展示的,创建获取LayoutInflater并且浅克隆一个新的副本，并将克隆产生的LayoutInflater对象所关联的Context指向 this 对象；
-
-{% highlight java %}
-
-@Override public Object getSystemService(String name) {
-    if (LAYOUT_INFLATER_SERVICE.equals(name)) {
-        if (mInflater == null) {
-            mInflater = LayoutInflater.from(getBaseContext()).cloneInContext(this);
-        }
-        return mInflater;
-    }
-    return getBaseContext().getSystemService(name);
-}
-
-/**
- * Create a copy of the existing LayoutInflater object, with the copy
- * pointing to a different Context than the original.  This is used by
- * {@link ContextThemeWrapper} to create a new LayoutInflater to go along
- * with the new Context theme.
- *
- * @param newContext The new Context to associate with the new LayoutInflater.
- * May be the same as the original Context if desired.
- *
- * @return Returns a brand spanking new LayoutInflater object associated with
- * the given Context.
- */
-public abstract LayoutInflater cloneInContext(Context newContext);
-
-
-{% endhighlight %}      
+ContextThemeWrapper 在 ContextWrapper的基础上封装了一些主题相关的函数与属性;
 
 
 进一步看Activity的启动相关内容：
@@ -189,6 +159,11 @@ private void handleLaunchActivity(ActivityClientRecord r, Intent customIntent) {
             try {
                 r.activity.mCalled = false;
                 mInstrumentation.callActivityOnPause(r.activity);
+                ............
+                int theme = r.activityInfo.getThemeResource();
+                if (theme != 0) {
+                    activity.setTheme(theme);
+                }
 
 /////////////////////////////////////////////////////////
 
@@ -208,7 +183,7 @@ private Activity performLaunchActivity(ActivityClientRecord r, Intent customInte
 {% endhighlight %}    
 追本溯源，最终我们定位到了 ActivityThread中的 performLaunchActivity；
 
-其实有性能调优经验的同学对这个performLaunchActivity；函数应该非常熟悉， TraceView中经常出现这一函数，通过熟悉了Activity的系统性启动流程，我们在性能调优时对于这类函数也会更加敏感，类似的函数还有  performResumeActivity ,都是在TraceView中常见的函数；
+其实有性能调优经验的同学对这个 performLaunchActivity() 函数应该非常熟悉， TraceView中经常出现这一函数，通过熟悉了Activity的系统性启动流程，我们在性能调优时对于这类函数也会更加敏感，类似的函数还有  performResumeActivity ,都是在TraceView中常见的函数；
 
 另一个我们关注的 Context 也是在 Activity创建之后创建，并且通过 activity.attach() 函数绑定到 Activity中，也就是每一个Activity都会获取到一个与之相关的 Context环境；
 
@@ -217,9 +192,112 @@ private Activity performLaunchActivity(ActivityClientRecord r, Intent customInte
 除此之外我们看到 handleLaunchActivity中，Activity 实例创建后，由于其需要占用前台交互,上一个Activity Onpause之后，新的Activity才能只能Onresume，获取用户前台交互资源；这和我们的一直理解的逻辑是相吻合的，
 
 
+### Application 中的 Context 与 Activity中的 Context：
+
+进一步看一看 Application Context与 Activity中 context 差异，
+
+{% highlight java %}
+
+private Context createBaseContextForActivity(ActivityClientRecord r, final Activity activity) {
+    int displayId = Display.DEFAULT_DISPLAY;
+    try {
+        displayId = ActivityManagerNative.getDefault().getActivityDisplayId(r.token);
+    } catch (RemoteException e) {
+    }
+
+    ContextImpl appContext = ContextImpl.createActivityContext(
+            this, r.packageInfo, displayId, r.overrideConfig);
+    appContext.setOuterContext(activity);
+    Context baseContext = appContext;
+
+    final DisplayManagerGlobal dm = DisplayManagerGlobal.getInstance();
+    // For debugging purposes, if the activity's package name contains the value of
+    // the "debug.use-second-display" system property as a substring, then show
+    // its content on a secondary display if there is one.
+    String pkgName = SystemProperties.get("debug.second-display.pkg");
+    if (pkgName != null && !pkgName.isEmpty()
+            && r.packageInfo.mPackageName.contains(pkgName)) {
+        for (int id : dm.getDisplayIds()) {
+            if (id != Display.DEFAULT_DISPLAY) {
+                Display display =
+                        dm.getCompatibleDisplay(id, appContext.getDisplayAdjustments(id));
+                baseContext = appContext.createDisplayContext(display);
+                break;
+            }
+        }
+    }
+    return baseContext;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+private Activity performLaunchActivity(ActivityClientRecord r, Intent customIntent) {
+  ...............
+  try {
+    Application app = r.packageInfo.makeApplication(false, mInstrumentation);
+    ....................
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+public Application makeApplication(boolean forceDefaultAppClass,
+        Instrumentation instrumentation) {
+    if (mApplication != null) {
+        return mApplication;
+    }
+
+    Application app = null;
+
+    String appClass = mApplicationInfo.className;
+    if (forceDefaultAppClass || (appClass == null)) {
+        appClass = "android.app.Application";
+    }
+
+    try {
+        java.lang.ClassLoader cl = getClassLoader();
+        if (!mPackageName.equals("android")) {
+            initializeJavaContextClassLoader();
+        }
+        ContextImpl appContext = ContextImpl.createAppContext(mActivityThread, this);
+        app = mActivityThread.mInstrumentation.newApplication(
+                cl, appClass, appContext);
+        appContext.setOuterContext(app);
+        ..................
+
+{% endhighlight %}    
+
+Application所绑定的 Context 其mDisplay为 null；
 
 
 
+{% highlight java %}
+
+@Override public Object getSystemService(String name) {
+    if (LAYOUT_INFLATER_SERVICE.equals(name)) {
+        if (mInflater == null) {
+            mInflater = LayoutInflater.from(getBaseContext()).cloneInContext(this);
+        }
+        return mInflater;
+    }
+    return getBaseContext().getSystemService(name);
+}
+
+/**
+ * Create a copy of the existing LayoutInflater object, with the copy
+ * pointing to a different Context than the original.  This is used by
+ * {@link ContextThemeWrapper} to create a new LayoutInflater to go along
+ * with the new Context theme.
+ *
+ * @param newContext The new Context to associate with the new LayoutInflater.
+ * May be the same as the original Context if desired.
+ *
+ * @return Returns a brand spanking new LayoutInflater object associated with
+ * the given Context.
+ */
+public abstract LayoutInflater cloneInContext(Context newContext);
+
+
+{% endhighlight %}      
+
+
+今天电面时面试官表示 layoutInflater创建传入 ApplicationContext与 Activity是有差异的，源于Activity继承自 ContextThemeWrapper ,在View创建后的一些主题上会有不一样，所以回过头来自己想看一看，其实其关键不一样的点在于 cloneInContext() 函数，getBaseContext() 二者对应的Context其实所差异并不大，而基于cloneInContext函数创建对应Clone对象且重新绑定Context后，利用 ApplicationContext 创建的加载器所加载的View会使用Android系统默认主题，而使用Activity（Context）则会使用Activity所制定的主题；这是一个很重要的差异；
 
 ---
 
@@ -232,6 +310,5 @@ Quote:
 [What is Context in Android?--stackoverflow](http://stackoverflow.com/questions/3572463/what-is-context-in-android)
 
 [Android应用Context详解及源码解析](http://blog.csdn.net/yanbober/article/details/45967639)
-
 
 [从源码深入理解context](http://souly.cn/%E6%8A%80%E6%9C%AF%E5%8D%9A%E6%96%87/2015/08/19/%E4%BB%8E%E6%BA%90%E7%A0%81%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3context/)
