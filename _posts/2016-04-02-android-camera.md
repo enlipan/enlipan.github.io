@@ -163,8 +163,6 @@ Quote:
 
 [Camera——Google Doc](http://developer.android.com/guide/topics/media/camera.html)
 
-
-
 [Android相机开发那些坑-QZone](https://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&mid=401454605&idx=1&sn=d5a16f6dc13e7581fec08a4e704cd5d0&scene=1&srcid=0129iGRJmL4TZH30OZ4D3Ih6&key=710a5d99946419d940adfc47e2f61666f462551073e0e78b456c1012285d18f5c9d16d017b7e46794a0f41a277424c16&ascene=0&uin=Mjc3OTU3Nzk1&devicetype=iMac+MacBookPro10%2C1+OSX+OSX+10.10.5+build%2814F27%29&version=11020201&pass_ticket=TbVqOqFm7Sb0QDBJ52ODh0eBxTApnoGWBuvVAl2hl4F0VrsgG2ZcLohvthzuwow0)
 
 [The Ultimate Android Camera Development Guide](https://www.airpair.com/android/android-camera-development)
@@ -172,3 +170,5 @@ Quote:
 [Android相机开发指南（一）](https://www.zybuluo.com/flyouting/note/6272)
 
 [Scan Media Files in Android](http://droidyue.com/blog/2014/01/19/scan-media-files-in-android/index.html)
+
+[How to get camera result as a uri in data folder? —— stackoverflow](http://stackoverflow.com/questions/10042695/how-to-get-camera-result-as-a-uri-in-data-folder/10229228#10229228)
