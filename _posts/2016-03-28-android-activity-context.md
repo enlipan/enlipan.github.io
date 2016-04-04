@@ -6,7 +6,7 @@ category: android
 
 ### Context 是什么
 
-如果查看Android 源码，会发现 Activity Service 以及ApplicationContext 都继承自Context，Context代表什么？其实做J2EE开发的会很熟悉这个Context，上下文环境，在程序的运行时构建完善的上下文资源环境，Android中有三种Context的实例，Activity Service 以及ApplicationContext，而BroadCast以及Provider虽然不属于Context实例，其运行却依然离不开Context，BroadCast在 onReceiver()是，会接受到系统传入的Context组件，用于获取上下文资源，进行完整的业务逻辑操作，而Provider 则在其创建时就会获取一个Context组件；
+如果查看Android 源码，会发现 Activity Service 以及ApplicationContext 都继承自Context，Context代表什么？其实做J2EE开发的会很熟悉这个Context，上下文环境，在程序的运行时构建完善的上下文资源环境，Android中有三种Context的实例，Activity Service 以及ApplicationContext，而BroadCast以及Provider虽然不属于Context实例，其运行却依然离不开Context，BroadCast在 onReceiver()函数调用时会接受到系统传入的Context组件参数，用于获取上下文资源，进行完整的业务逻辑操作，而Provider 则在其创建时就会获取一个Context组件；
 
 
 ###  Activity 相关Context：
