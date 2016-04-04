@@ -182,3 +182,5 @@ Quote:
 [Android动态加载技术 系列索引](https://segmentfault.com/a/1190000004086213)
 
 [各大热补丁方案分析和比较](http://blog.zhaiyifan.cn/2015/11/20/HotPatchCompare/)
+
+[Android热修复实践应用--AndFix](http://www.jianshu.com/p/c36c9e0ca3fe)

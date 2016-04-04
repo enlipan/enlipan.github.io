@@ -117,14 +117,106 @@ context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)
 
 #### 使用自定义相机：
 
+**引用GoogleDoc使用流程：**
+
+> Detect and Access Camera - Create code to check for the existence of cameras and request access.
+>
+> Create a Preview Class - Create a camera preview class that extends SurfaceView and implements the SurfaceHolder interface. This class previews the live images from the camera.
+>
+> Build a Preview Layout - Once you have the camera preview class, create a view layout that incorporates the preview and the user interface controls you want.
+>
+> Setup Listeners for Capture - Connect listeners for your interface controls to start image or video capture in response to user actions, such as pressing a button.
+>
+> Capture and Save Files - Setup the code for capturing pictures or videos and saving the output.
+>
+> Release the Camera - After using the camera, your application must properly release it for use by other applications.
 
 
+注意Camera.Open()对于资源的占用，异步开启是比较合适的方式，否则可能造成明显的卡顿：
 
+> On some devices, this method may take a long time to complete. It is best to call this method from a worker thread (possibly using AsyncTask) to avoid blocking the main application UI thread.
+
+{% highlight java %}
+
+private void handleCapture() {
+        mCamera.takePicture(null, null, new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera) {
+                File imageFile = null;
+                try {
+                    imageFile = FileUtil.getOutputMediaFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+                if (imageFile != null) {
+                    FileOutputStream fos = null;
+                    try {
+                        fos = new FileOutputStream(imageFile);
+                        fos.write(data);
+                        fos.flush();
+                    }catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (fos != null) {
+                            try {
+                                fos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private class CameraInitTask extends AsyncTask<Void,Void,Camera>{
+
+        @Override
+        protected void onPostExecute(Camera camera) {
+            if (camera != null){
+                initCameraUI(camera);
+            }else {
+                CameraActivity.this.finish();
+            }
+        }
+
+        @Override
+        protected Camera doInBackground(Void... params) {
+            return getCameraInstance();
+        }
+    }
+
+    private Camera getCameraInstance(){
+        Camera c = null;
+        try{
+            c = Camera.open();
+        }catch (Exception e){
+            // Camera is not available (in use or does not exist)
+        }
+        return c;
+    }
+
+    private void initCameraUI(Camera camera) {
+        mCamera = camera;
+        Camera.Parameters parameters = mCamera.getParameters();
+        if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_AUTO)){
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+            mCamera.setParameters(parameters);
+        }
+       /* parameters.isZoomSupported();
+        parameters.getMaxZoom();*/
+
+        mCameraPreView = new CameraPreView(mCamera,this);
+        mFrameLayout.addView(mCameraPreView);
+
+        mCaptureBtn.setOnClickListener(this);
+    }
+
+{% endhighlight %}  
 
 ### 多媒体文件存储：
-
-
-
 
 #### 通知系统扫描多媒体文件更新：
 
