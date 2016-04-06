@@ -67,11 +67,11 @@ protected void onStop() {
 
 #####  ThreadMode: BACKGROUND
 
-订阅事件发生在 后台线程中，若 postEvent 产生于后台线程，则该订阅事件 直接发生在产生该事件的线程中，而若 postEvent 产生于UI线程，则 事件的订阅获取发生在一个发生在一个后台单线程中逐一处理，为了避免其这类UI线程产生，后台线程处理模式事件的阻塞，这类事件也不能阻塞该独立线程，需要避免阻塞情况发生；
+订阅事件发生在 后台线程中，若 postEvent 产生于后台线程，则该订阅事件 直接发生在产生该事件的线程中，而若 postEvent 产生于UI线程，则 事件的订阅获取发生在一个发生在一个后台单线程中逐一处理，该后台线程属于唯一线程，为了避免其这类UI线程产生，唯一后台线程处理模式这类事件处理的阻塞情况，这类事件也不能阻塞该独立线程，需要避免阻塞情况发生；
 
 ##### ThreadMode: ASYNC
 
-事件的处理永远发生在一个独立线程之后，这里的独立与 BACKGROUND 模式有明显差异，该订阅事件发生的线程与 事件的产生线程完全独立的子线程，这类事件的接受线程模式适合处理高耗时，易阻塞事件；针对这一模式，EventBus内部使用了线程池优化处理 —— 控制最大并发线程数，重用线程；
+事件的处理永远发生在一个独立线程之后，这里的独立与 BACKGROUND 模式有明显差异，该订阅事件发生的线程是与事件的产生线程完全独立的子线程，这类事件的接受线程模式适合处理高耗时，易阻塞事件；针对这一模式特性 —— 单开线程处理，EventBus内部使用了线程池优化处理 —— 控制最大并发线程数，重用线程；
 
 
 ####  Subscriber Priorities
@@ -158,6 +158,8 @@ public void execute(final RunnableEx runnable) {
 Quote:
 
 [EventBus Documentation](http://greenrobot.org/eventbus/documentation/)
+
+[EventBus 源码解析](http://codekk.com/blogs/detail/54cfab086c4761e5001b2538)
 
 [公共技术点之 Java 注解 Annotation](http://a.codekk.com/detail/Android/Trinea/%E5%85%AC%E5%85%B1%E6%8A%80%E6%9C%AF%E7%82%B9%E4%B9%8B%20Java%20%E6%B3%A8%E8%A7%A3%20Annotation)
 
