@@ -18,7 +18,7 @@ Dalvik虚拟机是google针对移动设备特征而对于JVM的改进型，使�
 
 * Dalvik更好的安全机制，SandBox机制，每一个App运行在独立的虚拟机实例中，其代码在虚拟机的解释下得以执行。 另外可以让虚拟机更多的依赖操作系统的线程调度机制和管理机制。
 
-* .dex格式文件为利用dx工具合并链接.class文件生成，.class文件实际属于编译过程中间件，整合过程中去除冗余信息，进而减小文件尺寸.提高IO速度，而odex是为了在运行过程中进一步提高性能，对dex文件的进一步优化。 
+* .dex格式文件为利用dx工具合并链接.class文件生成，.class文件实际属于编译过程中间件，整合过程中去除冗余信息，进而减小文件尺寸.提高IO速度，而odex是为了在运行过程中进一步提高性能，对dex文件的进一步优化。
 
 {:.center}
 ![stack-vs-registers](\assets\img\20150808\dexfile.png)
@@ -33,7 +33,7 @@ Dalvik虚拟机是google针对移动设备特征而对于JVM的改进型，使�
 * 基于Trace，针对项目中Hot Method所占程序全部代码比例较低的情况进行优化，只讲那些最常使用的Mehod加载进虚拟机中。这里与普通JVM有一定的差异，采用基于Trace可以更加简单有效的获取到涉及到热代码的执行路径，传统的基于方法单位的优化措施，很可能将在该热方法的冷路径上浪费编译资源而并不能提升较大的执行速度的提升。相反直接最终热路径却更能精准的定位。
 
 
- 
+
 ####Dalvik GC
 
 GingerBread之前，Dalvik虚拟使用的垃圾收集机制有以下特点：
@@ -88,4 +88,4 @@ GingerBread之前，Dalvik虚拟使用的垃圾收集机制有以下特点：
 
 [Real-time Java--IBM](http://www.ibm.com/developerworks/views/java/libraryview.jsp?search_by=Real+time+Java+Part)
 
-
+[深入理解Android之dalvik.pdf](http://vdisk.weibo.com/s/z68f8l0xU7buA)
