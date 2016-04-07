@@ -11,27 +11,27 @@ category: android
 Google提供了大量的 内存分析工具，尤其是 AS之后，各种图形化界面，让内存分析变得越来越简单，一般常用的内存分析工具有：
 
 
-* AS : Android Monitor 中 Memory 使用情况以及 虚拟机GC情况的图形化监控工具；
+*  AS : Android Monitor 中 Memory 使用情况以及 虚拟机GC情况的图形化监控工具；
 
 
 
 *  AS : Android Monitor 中 Allocation Tracker Walkthrough  跟踪内存分配情况
 
 
-* DDM 中 Heap Viewer 查看堆区内存实时信息，每次GC后 堆区信息会刷新，同时利用该工具可以dump hprof文件转换后可用于 MAT 内存分析 ；
+*  DDM 中 Heap Viewer 查看堆区内存实时信息，每次GC后 堆区信息会刷新，同时利用该工具可以dump hprof文件转换后可用于 MAT 内存分析
 
 
-*  ** MAT ——Memory Analyzer Tool** 堆内存分析工具，用于分析标准 dump hprof文件，需要注意的是 使用DDMS 直接导出的 dump 文件 需要 android\platform-tools\hprof-conv.exe 工具转换成标准 dump文件，导入到MAT后可以清晰的查看对象的全部引用情况，是内存分析的高级神器，虽然上手有门槛，但确实是必须要了解的工具；
+*  MAT ——Memory Analyzer Tool  堆内存分析工具，用于分析标准 dump hprof文件，需要注意的是 使用DDMS 直接导出的 dump 文件 需要 android\platform-tools\hprof-conv.exe 工具转换成标准 dump文件，导入到MAT后可以清晰的查看对象的全部引用情况，是内存分析的高级神器，虽然上手有门槛，但确实是必须要了解的工具；
 
 本来自己还想着写点东西，绕来绕去其实 MAT 常用点并不那么多，多实践即可，引用的几篇文章已经讲的非常清楚，MAT的内存泄漏分析是一个实践与分析结合的过程，一般是 查看源码，观察内存监控图，dump文件，MAT分析，然后再次回到源码分析的循环过程；
 
 需要注意的几个概念是：
 
-Retained Heap 
+Retained Heap
 
 List objects：       
 with outgoing references  被该对象的引用对象列表                      
-with incoming references  引用该对象的对象列表 
+with incoming references  引用该对象的对象列表
 
 GC root                         
 
