@@ -90,14 +90,192 @@ Note: the priority does NOT affect the order of delivery among subscribers with 
 #### EventBus 核心源码研究：
 
 
+**Event Regester**
+
+{% highlight java %}
+
+/**
+    * Registers the given subscriber to receive events. Subscribers must call {@link #unregister(Object)} once they
+    * are no longer interested in receiving events.
+    * <p/>
+    * Subscribers have event handling methods that must be annotated by {@link Subscribe}.
+    * The {@link Subscribe} annotation also allows configuration like {@link
+    * ThreadMode} and priority.
+    */
+   public void register(Object subscriber) {
+       Class<?> subscriberClass = subscriber.getClass();
+       List<SubscriberMethod> subscriberMethods = subscriberMethodFinder.findSubscriberMethods(subscriberClass);
+       synchronized (this) {
+           for (SubscriberMethod subscriberMethod : subscriberMethods) {
+               subscribe(subscriber, subscriberMethod);
+           }
+       }
+   }
+
+   // Must be called in synchronized block
+   private void subscribe(Object subscriber, SubscriberMethod subscriberMethod) {
+       //EventType 代表 Event事件对应Class-- 具体见 findSubscriberMethods(subscriberClass); 返回subscriberMethods的构造过程
+       Class<?> eventType = subscriberMethod.eventType;
+       Subscription newSubscription = new Subscription(subscriber, subscriberMethod);
+       CopyOnWriteArrayList<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+       if (subscriptions == null) {
+           subscriptions = new CopyOnWriteArrayList<>();
+           subscriptionsByEventType.put(eventType, subscriptions);
+       } else {
+           if (subscriptions.contains(newSubscription)) {
+               throw new EventBusException("Subscriber " + subscriber.getClass() + " already registered to event "
+                       + eventType);
+           }
+       }
+
+       int size = subscriptions.size();
+       for (int i = 0; i <= size; i++) {
+           if (i == size || subscriberMethod.priority > subscriptions.get(i).subscriberMethod.priority) {
+               subscriptions.add(i, newSubscription);
+               break;
+           }
+       }
+
+       List<Class<?>> subscribedEvents = typesBySubscriber.get(subscriber);
+       if (subscribedEvents == null) {
+           subscribedEvents = new ArrayList<>();
+           typesBySubscriber.put(subscriber, subscribedEvents);
+       }
+       subscribedEvents.add(eventType);
+
+       if (subscriberMethod.sticky) {
+           if (eventInheritance) {
+               // Existing sticky events of all subclasses of eventType have to be considered.
+               // Note: Iterating over all events may be inefficient with lots of sticky events,
+               // thus data structure should be changed to allow a more efficient lookup
+               // (e.g. an additional map storing sub classes of super classes: Class -> List<Class>).
+               Set<Map.Entry<Class<?>, Object>> entries = stickyEvents.entrySet();
+               for (Map.Entry<Class<?>, Object> entry : entries) {
+                   Class<?> candidateEventType = entry.getKey();
+                   if (eventType.isAssignableFrom(candidateEventType)) {
+                       Object stickyEvent = entry.getValue();
+                       checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+                   }
+               }
+           } else {
+               Object stickyEvent = stickyEvents.get(eventType);
+               checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+           }
+       }
+   }
+
+   private void checkPostStickyEventToSubscription(Subscription newSubscription, Object stickyEvent) {
+       if (stickyEvent != null) {
+           // If the subscriber is trying to abort the event, it will fail (event is not tracked in posting state)
+           // --> Strange corner case, which we don't take care of here.
+           postToSubscription(newSubscription, stickyEvent, Looper.getMainLooper() == Looper.myLooper());
+       }
+   }
+
+{% endhighlight %}  
+
+总结过程：
+
+* 寻找所有注册 Class 中所有 注解 @Subscribe 的函数                  
+* 每一个Event.class 绑定一个 读写ArrayList订阅者列表；            
+* 注册事件，处理事件优先级权重问题                    
+* 处理粘性事件            
 
 
+**Event Post**
+
+{% highlight java  %}
+
+/** Posts the given event to the event bus. */
+public void post(Object event) {
+    // 类似 Looper 机制  利用ThreadLocal 构建线程独立 PostingThreadState
+    PostingThreadState postingState = currentPostingThreadState.get();
+    List<Object> eventQueue = postingState.eventQueue;
+    eventQueue.add(event);
+
+    if (!postingState.isPosting) {
+        postingState.isMainThread = Looper.getMainLooper() == Looper.myLooper();
+        postingState.isPosting = true;
+        if (postingState.canceled) {
+            throw new EventBusException("Internal error. Abort state was not reset");
+        }
+        try {
+            while (!eventQueue.isEmpty()) {
+                postSingleEvent(eventQueue.remove(0), postingState);
+            }
+        } finally {
+            postingState.isPosting = false;
+            postingState.isMainThread = false;
+        }
+    }
+}
+
+private boolean postSingleEventForEventType(Object event, PostingThreadState postingState, Class<?> eventClass) {
+    CopyOnWriteArrayList<Subscription> subscriptions;
+    synchronized (this) {
+        subscriptions = subscriptionsByEventType.get(eventClass);
+    }
+    if (subscriptions != null && !subscriptions.isEmpty()) {
+        for (Subscription subscription : subscriptions) {
+            postingState.event = event;
+            postingState.subscription = subscription;
+            boolean aborted = false;
+            try {
+                postToSubscription(subscription, event, postingState.isMainThread);
+                aborted = postingState.canceled;
+            } finally {
+                postingState.event = null;
+                postingState.subscription = null;
+                postingState.canceled = false;
+            }
+            if (aborted) {
+                break;
+            }
+        }
+        return true;
+    }
+    return false;
+}
+
+private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
+     switch (subscription.subscriberMethod.threadMode) {
+         case POSTING:
+             invokeSubscriber(subscription, event);
+             break;
+         case MAIN:
+             if (isMainThread) {
+                 invokeSubscriber(subscription, event);
+             } else {
+                 mainThreadPoster.enqueue(subscription, event);
+             }
+             break;
+         case BACKGROUND:
+             if (isMainThread) {
+                 backgroundPoster.enqueue(subscription, event);
+             } else {
+                 invokeSubscriber(subscription, event);
+             }
+             break;
+         case ASYNC:
+             asyncPoster.enqueue(subscription, event);
+             break;
+         default:
+             throw new IllegalStateException("Unknown thread mode: " + subscription.subscriberMethod.threadMode);
+     }
+ }
+
+ void invokeSubscriber(Subscription subscription, Object event) {
+    try {
+        subscription.subscriberMethod.method.invoke(subscription.subscriber, event);
+    } catch (InvocationTargetException e) {
+        handleSubscriberException(subscription, event, e.getCause());
+    } catch (IllegalAccessException e) {
+        throw new IllegalStateException("Unexpected exception", e);
+    }
+}
 
 
-
-
-
-
+{% endhighlight %}
 
 
 
@@ -158,6 +336,8 @@ public void execute(final RunnableEx runnable) {
 Quote:
 
 [EventBus Documentation](http://greenrobot.org/eventbus/documentation/)
+
+[EventBus使用详解](http://liuling123.com/2016/01/EventBus-explain.html)
 
 [EventBus 源码解析](http://codekk.com/blogs/detail/54cfab086c4761e5001b2538)
 
