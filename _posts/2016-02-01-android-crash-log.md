@@ -52,8 +52,10 @@ public class CrashHandle implements Thread.UncaughtExceptionHandler {
         }
         uploadCrashFileToServer();
         if (sHandleInstance.mAppDefaultCrashHandler != null) {
+            //Use default Handler
             sHandleInstance.mAppDefaultCrashHandler.uncaughtException(thread, ex);
         } else {
+           // Clear FC dialog
             android.os.Process.killProcess(android.os.Process.myPid());
         }
     }

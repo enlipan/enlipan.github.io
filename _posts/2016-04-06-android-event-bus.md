@@ -194,6 +194,7 @@ public void post(Object event) {
     eventQueue.add(event);
 
     if (!postingState.isPosting) {
+       // Check 该线程ThreadLocal绑定的 PostingThreadState 是否位于UI线程；
         postingState.isMainThread = Looper.getMainLooper() == Looper.myLooper();
         postingState.isPosting = true;
         if (postingState.canceled) {
@@ -210,9 +211,36 @@ public void post(Object event) {
     }
 }
 
+private void postSingleEvent(Object event, PostingThreadState postingState) throws Error {
+    Class<?> eventClass = event.getClass();
+    boolean subscriptionFound = false;
+    if (eventInheritance) {
+        //找到 所有  Event.class 的继承类，考虑多态针对基类Event注册的情况；
+        List<Class<?>> eventTypes = lookupAllEventTypes(eventClass);
+        int countTypes = eventTypes.size();
+        for (int h = 0; h < countTypes; h++) {
+            Class<?> clazz = eventTypes.get(h);
+            //检查所有基类，检查是否有注册Event 的订阅者；
+            subscriptionFound |= postSingleEventForEventType(event, postingState, clazz);
+        }
+    } else {
+        subscriptionFound = postSingleEventForEventType(event, postingState, eventClass);
+    }
+    if (!subscriptionFound) {
+        if (logNoSubscriberMessages) {
+            Log.d(TAG, "No subscribers registered for event " + eventClass);
+        }
+        if (sendNoSubscriberEvent && eventClass != NoSubscriberEvent.class &&
+                eventClass != SubscriberExceptionEvent.class) {
+            post(new NoSubscriberEvent(this, event));
+        }
+    }
+}
+
 private boolean postSingleEventForEventType(Object event, PostingThreadState postingState, Class<?> eventClass) {
     CopyOnWriteArrayList<Subscription> subscriptions;
     synchronized (this) {
+        //获取注册 Event.class 的所有订阅者列表
         subscriptions = subscriptionsByEventType.get(eventClass);
     }
     if (subscriptions != null && !subscriptions.isEmpty()) {
@@ -221,6 +249,7 @@ private boolean postSingleEventForEventType(Object event, PostingThreadState pos
             postingState.subscription = subscription;
             boolean aborted = false;
             try {
+                //真正的发送处理Event
                 postToSubscription(subscription, event, postingState.isMainThread);
                 aborted = postingState.canceled;
             } finally {
@@ -237,6 +266,8 @@ private boolean postSingleEventForEventType(Object event, PostingThreadState pos
     return false;
 }
 
+
+//依据各种 订阅类型处理Event逻辑
 private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
      switch (subscription.subscriberMethod.threadMode) {
          case POSTING:
@@ -277,8 +308,7 @@ private void postToSubscription(Subscription subscription, Object event, boolean
 
 {% endhighlight %}
 
-
-
+反射与注解的组合灵活的构建了整个 EventBus框架；
 
 
 ####  AsyncExecutor 与 RunnableEx：
@@ -315,19 +345,6 @@ public void execute(final RunnableEx runnable) {
 {% endhighlight %}  
 
 根据源码可以看到，我们可以通过自定义 Exception 且将 CustomException 实现 HasExecutionScope 接口，通过这一方式进而指定异常捕获事件的  scope 执行范围 ,确定 failure event 的 post 环境定位； Subscribe 就可以在自己的执行环境下，获取到 执行失败事件，进而做出对应的业务逻辑处理，其考虑确实相当完善；
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
