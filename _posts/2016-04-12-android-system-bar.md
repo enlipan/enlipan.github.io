@@ -32,7 +32,17 @@ View的内部布尔属性值，用于调整View基于状态栏等System Window�
 
 
 {% highlight java %}
+  // android:background="?attr/colorPrimary" ——  尤其需要注意，否则主题中设定的颜色不生效，？ 代表引用当前主题下的属性值；
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/id_v7_toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="?attr/colorPrimary"
+      app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+      android:fitsSystemWindows="true">
+  </android.support.v7.widget.Toolbar>
 
+  ////////////////////////////////////////////////////////////
   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
    WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
    localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
