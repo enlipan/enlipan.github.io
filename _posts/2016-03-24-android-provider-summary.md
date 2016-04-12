@@ -6,15 +6,15 @@ category: android
 
 ### ContentUri
 
-规则： `content://authority/path/id`
+Uri规则： `content://authority/path/id`
 
-content: ContentResolver.SCHEME_CONTENT (value content://)
+*  content: ContentResolver.SCHEME_CONTENT (value content://)
 
-authority：用于区分 contentProvider;为了保证应用Provider的的独立标识性，一般使用 应用包名；
+*  authority：用于区分 contentProvider;为了保证应用Provider的的独立标识性，一般使用 应用包名；
 
-path: 一般用于区分所请求的数据类型，根据Provider所提供的数据类别，path可以是0个或多个段落组合而成，最后的一个段落为"twig"；
+*  path: 一般用于区分所请求的数据类型，根据Provider所提供的数据类别，path可以是0个或多个段落组合而成，最后的一个段落为"twig"；
 
-id: 用于在数据集合中标识数据，一般用于表示表中指定row id数据 ；Id 可以通过 Uri 解析获得：ContentUris.parseId(uri);  
+*  id: 用于在数据集合中标识数据，一般用于表示表中指定row id数据 ；Id 可以通过 Uri 解析获得：ContentUris.parseId(uri);  
 
 
 ###  UriMather
@@ -23,18 +23,18 @@ Uri 工具类，用于构建 Uri 与对应码值的匹配规则，简化Uri的Ca
 
 通配符：
 
-\# 符号代表任意数字
+*  \# 符号代表任意数字
 
-\* 符号代表任意字符
+*  \* 符号代表任意字符
 
-常量 UriMatcher.NO_MATCH 表示不匹配任何路径
+*  常量 UriMatcher.NO_MATCH 表示不匹配任何路径
 
 
 
 
 ### Provider
 
-Provider安全：
+*  Provider安全：
 
 Content Provider Permissions:  自定义权限控制数据的安全性
 
@@ -47,19 +47,19 @@ Example： `<uses-permission android:name="android.permission.READ_USER_DICTIONA
 此外还需要防止用户输入数据，SQL注入安全问题；
 
 
-Provider 数据增删改查：
+*  Provider 数据增删改查：
 
 结合 ContentResover，利用 Cursor 获取数据其中Cursor代表了数据集； Ps：异步CursorLoader必须对应使用 Provider；
 
 
-ContentValues： 构建Provider的 新增与更新操作；
+*  ContentValues： 构建Provider的 新增与更新操作；
 
-构建高级条件过滤 sql语句：
+*  构建高级条件过滤 sql语句：
 
 `CASE WHEN [condition] THEN [expression] ELSE [expression] END`
 
 
-其他ProVider形式：
+*  其他ProVider形式：
 
 Batch access: 批量事务处理：ContentProviderOperation ——  ContentResolver.applyBatch()
 
@@ -70,10 +70,38 @@ Batch access: 批量事务处理：ContentProviderOperation ——  ContentResol
 
 ### ContentObserver
 
+用于监听针对Provider 特定 Uri 对应数据集的数据变化，类似于SQL Trigger的存在；如：监听数据库某个表的数据增删情况，实时获取总数据行数，而不是没吃增删了之后 Query查询一遍；
 
 
+*  实现 ContentObserver 自定义类，重写 onChange函数，完成对应的业务逻辑；                  
+*  针对对应 Uri 注册 ContentObserver实例；
 
+{% highlight java %}
 
+/**
+ * Dispatches a change notification to the observer. Includes the changed
+ * content Uri when available and also the user whose content changed.
+ * <p>
+ * If a {@link Handler} was supplied to the {@link ContentObserver} constructor,
+ * then a call to the {@link #onChange} method is posted to the handler's message queue.
+ * Otherwise, the {@link #onChange} method is invoked immediately on this thread.
+ * </p>
+ *
+ * @param selfChange True if this is a self-change notification.
+ * @param uri The Uri of the changed content, or null if unknown.
+ * @param userId The user whose content changed.
+ */
+private void dispatchChange(boolean selfChange, Uri uri, int userId) {
+    if (mHandler == null) {
+        onChange(selfChange, uri, userId);
+    } else {
+        mHandler.post(new NotificationRunnable(selfChange, uri, userId));
+    }
+}
+
+{% endhighlight %}  
+
+根据其构造函数是否传入 Handler，其 Onchangde所发生的线程是有差别的；
 
 ### 应用升级时表数据迁移的处理
 
@@ -99,3 +127,5 @@ Quote:
 [Content Provider Basics](http://developer.android.com/guide/topics/providers/content-provider-basics.html#Permissions)
 
 [Meaning of android.content.UriMatcher](http://stackoverflow.com/questions/26901644/meaning-of-android-content-urimatcher)
+
+[Use Android’s ContentObserver in Your Code to Listen to Data Changes](http://www.grokkingandroid.com/use-contentobserver-to-listen-to-changes/)
