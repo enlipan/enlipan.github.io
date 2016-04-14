@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Android Activity Start
+category: android
 ---
 
 在之前的IPC 文章中，借助 Android 框架揭秘一书，理清了 服务注册，服务检索，服务使用中的 ContextManager， BinderDriver, ServiceServer ,以及Client之间的流程，这里顺着这个思路，站在前人基础上追踪Activity的完整启动流程以及Activity的通信流程：
@@ -336,7 +337,7 @@ final boolean realStartActivityLocked(ActivityRecord r,
 
 {% endhighlight %}  
 
-记录了这些，了解到了 Activity的启动流程涉及到的知识非常之多，Android的底层封装之完善，细节屏蔽完整，对于 Proxy代理，以及IPC知识的流程有了完整的认知，可以看到 Activity的核心是 Activity与 ActivityManagerService的交互结合，回过头再进一步阅读 Android框架揭秘，加深对于利用Binder IPC交互的理解；其实这里Activity 作为Client 与 ServiceServer  —— ActivityManagerService 的对应 IPC交互依旧屏蔽，但是我们在外在了解其交互是如何一步步进行下去的依旧是有意义的； 
+记录了这些，了解到了 Activity的启动流程涉及到的知识非常之多，Android的底层封装之完善，细节屏蔽完整，对于 Proxy代理，以及IPC知识的流程有了完整的认知，可以看到 Activity的核心是 Activity与 ActivityManagerService的交互结合，回过头再进一步阅读 Android框架揭秘，加深对于利用Binder IPC交互的理解；其实这里Activity 作为Client 与 ServiceServer  —— ActivityManagerService 的对应 IPC交互依旧屏蔽，但是我们在外在了解其交互是如何一步步进行下去的依旧是有意义的；
 
 
 关于源码查找阅读的方法探索：
