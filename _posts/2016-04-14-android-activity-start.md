@@ -342,4 +342,4 @@ final boolean realStartActivityLocked(ActivityRecord r,
 
 关于源码查找阅读的方法探索：
 
-主要源码阅读工具：  AndroidStudio、SourceInsight，Everthing；其中以AS为主，SourceInsight为辅助，源于很多代码在AS中无法跟踪进入，具体显示为标红代码，这样隐藏了很多细节，对于流程的进一步追踪在很多情况下是有阻碍的；这种情况下，我们可以利用android源码，结合SourceInsight快速定位阅读寻找蛛丝马迹，在某些方法比较长的函数，利用SouceInsight 对于一些操作不便的情况下，可以利用Everthing 找到对应Java文件，使用自己喜欢的编辑器打开阅读，条条大路通罗马，找到适合自己的节奏就好；
+主要源码阅读工具：  AndroidStudio、SourceInsight，Everthing；其中以AS为主，SourceInsight为辅助，源于很多代码在AS中无法跟踪进入，具体显示为标红代码，这样隐藏了很多细节，在很多情况下对于流程的进一步追踪是有阻碍的；这种情况下，我们可以利用android源码，结合SourceInsight快速定位阅读寻找蛛丝马迹，在某些方法比较长的函数，针对 SouceInsight 对于一些操作不方便的情况下，可以利用Everthing 找到对应Java文件，使用自己喜欢的编辑器打开阅读，条条大路通罗马，找到适合自己的节奏就好；
