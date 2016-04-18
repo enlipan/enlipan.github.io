@@ -246,6 +246,8 @@ void moveToState(Fragment f, int newState, int transit, int transitionStyle,
 
 Fragment 的状态变化中，我们仔细查看会发现 Fragment的生命周期管理都在这里进行了统一的管理处理，有些疑惑都可以通过这里来逐一解决 如： onHiddenChangde()等函数的调用时机等；
 
+更加关键的是，通过这里可以了解到：其实Fragment的本质是 将Fragment中的View 动态的在合适的时间点Add到 Activity所在的ViewGroup中管理，并没有本质的区别；
+
 
 
 最后是嵌套 Fragment StartActivityForResult问题，这一问题在其他文章已经表达过，这里不再赘述，注意嵌套Fragment 位置管理的移位处理：
@@ -275,3 +277,5 @@ Quote:
 [Fragment源码阅读笔记](http://www.jianshu.com/p/bd4a8be309c8)
 
 [从源码角度剖析Fragment核心知识点](http://www.jianshu.com/p/180d2cc0feb5)
+
+[Android实战技巧：Fragment的那些坑](http://toughcoder.net/blog/2015/04/30/android-fragment-the-bad-parts/)
