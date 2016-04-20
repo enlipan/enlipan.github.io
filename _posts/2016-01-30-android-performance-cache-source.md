@@ -22,9 +22,9 @@ HttpCaching默认是关闭的，开启后将用于所有Http响应，以及绑�
 
 工具：
 
-AS 之 Android NetWork Traffic Tool 
+AS 之 Android NetWork Traffic Tool
 
-ATT_APO tool 
+ATT_APO tool
 
 
 经典缓存管理 [LruCache](https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/core/java/android/util/LruCache.java)的实现：
@@ -152,7 +152,7 @@ ATT_APO tool
 
 {% endhighlight %}
 
-数据结构： [LinkedHashMap](https://docs.oracle.com/javase/7/docs/api/java/util/LinkedHashMap.html)与HashMap的区别在于其利用链表保存了存入的顺序；且对于缓存需要不断在首尾切换添加，删除操作，链表结构实在是最好的是最好的实现方式；
+数据结构： [LinkedHashMap](https://docs.oracle.com/javase/7/docs/api/java/util/LinkedHashMap.html)与HashMap的区别在于其利用双向链表保存了存入的顺序，或者根据使用的频率重排序；且对于缓存需要根据使用情况，以及为维护缓存容量不断在首尾切换添加，删除操作，利用双向链表结构维护 Entry的有序性是较好的实现方式；
 
  * get(K key)
 
@@ -168,8 +168,8 @@ ATT_APO tool
  * put(K key, V value)    
 
  * trimToSize(int maxSize)        
-     
-   移除尾部Entry，知道缓存size小于限制；
+
+   移除尾部Entry，直到缓存size小于限制；
 
 
  * entryRemoved(boolean evicted, K key, V oldValue, V newValue)
@@ -193,3 +193,5 @@ Quot：
 [性能优化系列总篇](http://www.trinea.cn/android/performance/)
 
 [详细解读LruCache类](http://www.cnblogs.com/tianzhijiexian/p/4248677.html)
+
+[LinkedHashMap 的实现原理](http://wiki.jikexueyuan.com/project/java-collection/linkedhashmap.html)
