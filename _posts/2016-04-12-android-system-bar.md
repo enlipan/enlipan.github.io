@@ -110,6 +110,18 @@ View的内部布尔属性值，用于调整View基于状态栏等System Window�
 
 clipToPadding 属性： ViewGroup 的 Padding 默认不可绘制子View，设为 false后 Padding空白可用于子View的绘制，典型用于 ListView，首尾元素留白；
 
+
+
+
+PS:
+
+两个坑的解决：   
+
+透明状态栏模式下 EditText 输入法弹起导致的 Toolbar文字消息以及 输入法模式的无效问题
+
+主题属性导致 Toast  显示偏移的问题；
+
+
 ---
 
 Quote:
@@ -128,3 +140,5 @@ Quote:
 [Material Designer的低版本兼容实现（二）—— Theme](http://www.cnblogs.com/tianzhijiexian/p/4081562.html)
 
 [Canvas之translate、scale、rotate、skew](http://blog.csdn.net/tianjian4592/article/details/45234419)
+
+[Android开发：Translucent System Bar 的最佳实践](http://www.jianshu.com/p/0acc12c29c1b)
