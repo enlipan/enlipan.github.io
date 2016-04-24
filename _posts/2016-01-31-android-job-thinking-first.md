@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Job杂谈
+title: Job Thinking
 category: others
 ---
 
