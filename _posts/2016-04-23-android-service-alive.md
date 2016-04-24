@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android Service  保活总结
+title: Android Service 保活总结
 category: android
 ---
 
@@ -70,8 +70,8 @@ category: android
 前台Service的默认形式如下：
 
 {% highlight java %}
-//前台带通知的 Service 情况
 
+//前台带通知的 Service 情况
 Intent intent = new Intent(this, MainActivity.class);
 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
@@ -82,8 +82,6 @@ Notification.Builder builder = new Notification.Builder(this)
         .setSmallIcon(R.drawable.btn_rating_star_on_pressed)
         .setContentIntent(pendingIntent);
 startForeground(FORE_SERVICE_ID,builder.getNotification());
-
-
 
 {% endhighlight %}  
 
@@ -98,15 +96,17 @@ API 18 之前我们可以简单的通过设置 startForeground() 所绑定的 No
 
 {% highlight java %}
 
-onStartCommand{
-  startForeground(FORE_SERVICE_ID, new Notification());
-  stopForeground(true)；
-  stopSelf();  
-}
+  onStartCommand{
+    startForeground(FORE_SERVICE_ID, new Notification());
+    stopForeground(true)；
+    stopSelf();  
+  }
 
 {% endhighlight %}  
 
+
 ![ForegroundService](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20160423/service_force.png)
+
 
 ---
 
