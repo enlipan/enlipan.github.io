@@ -31,7 +31,8 @@ View的内部布尔属性值，用于调整View基于状态栏等System Window�
 *  借鉴 [SystemBarTint](https://github.com/jgilfelt/SystemBarTint) 实践思想，由于状态栏可以用于显示View，则在DocView中添加一个与Toolbar颜色相同的View，填充在Systembar区域；
 
 
-{% highlight java %}
+{% highlight xml %}
+
   // android:background="?attr/colorPrimary" ——  尤其需要注意，否则主题中设定的颜色不生效，？ 代表引用当前主题下的属性值；
   <android.support.v7.widget.Toolbar
       android:id="@+id/id_v7_toolbar"
@@ -56,7 +57,7 @@ View的内部布尔属性值，用于调整View基于状态栏等System Window�
 ![FastBlur](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20160412/device-2016-04-13-231504.png)
 
 
-{% highlight java %}
+{% highlight xml  %}
 
 <item name= "android:windowTranslucentStatus">true</item>
 <item name="android:windowTranslucentNavigation">true</item>
