@@ -5,14 +5,11 @@ layout: index
 <article id="post__content">
 
 <div id = "headertime">
-  <span class="pl__title">{{ page.date | date:" %Y %B %d " }}</span>
-</div>
-<div id = "headerkey">
+  <span class="pl__title">{{ page.date | date:" %Y %B %d  —— " }}</span>
   {% if page.keywords.size > 0 %}
     <span class="pl__title">{{ page.keywords | join: '; ' }}</span>
     {% endif %}
 </div>
-
 
 <h2 id="post__title" data-identifier="{{ page.date | date: "%Y%m%d" }}">{{ page.title }}</h2>
   {{ content }}
