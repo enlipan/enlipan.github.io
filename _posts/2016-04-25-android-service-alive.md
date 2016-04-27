@@ -2,6 +2,7 @@
 layout: post
 title: Android Service 保活总结
 category: android
+keywords: [android, service]
 ---
 
 进程杀死后IM推送无法接收等等,为了保证自身业务逻辑的完整性，以及各类需求的及时性，进程保活是无法绕过的一个坎;
