@@ -606,14 +606,11 @@ iframe {
   box-sizing: content-box; }
 
 #headertime{
-  margin: 0;
-  padding-top: 1em;
   font-size: .6em;
   font-family:Cursive;
   color: #CBCBCB;
   text-align : left;
   line-height: 200%;
-  border-top: 2px solid rgba(200,200,200, 0.5);
 }
 
 #copyright {
