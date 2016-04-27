@@ -6,10 +6,8 @@ layout: index
 
 <div id = "headertime">
   <span class="pl__title">{{ page.date | date:" %Y %B %d " }}</span>
-
 </div>
-
-<div id = "headertime">
+<div id = "headerkey">
   {% if page.keywords.size > 0 %}
     <span class="pl__title">{{ page.keywords | join: '; ' }}</span>
     {% endif %}
