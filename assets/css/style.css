@@ -422,14 +422,14 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 16px;
   font-family:FangSong;
   display: inline-block;
-  text-align:left;    
+  text-align:left;
    width: 49%;
 }
 #post_next_a_next{
   font-size: 16px;
   font-family:FangSong;
   display: inline-block;
-  text-align:right;    
+  text-align:right;
    width: 49%;
 }
 
@@ -604,6 +604,17 @@ iframe {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box; }
+
+#headertime{
+  margin: 0;
+  padding-top: 1em;
+  font-size: .6em;
+  font-family:Cursive;
+  color: #CBCBCB;
+  text-align: center;
+  line-height: 200%
+  border-top: 2px solid rgba(200,200,200, 0.5);
+}
 
 #copyright {
   margin: 0;
@@ -1266,10 +1277,9 @@ pre > code {
   text-align: center;
   margin: 0 auto;
 }
-/*set the img align center   
+/*set the img align center
 eg:
 {:.center}
-![cardinal](/img/2012/cardinal.jpg)  
+![cardinal](/img/2012/cardinal.jpg)
 This is an image
 */
-

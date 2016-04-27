@@ -4,11 +4,11 @@ layout: index
 
 <article id="post__content">
 
-<div id = "post_pre_a_pre">
+<div id = "headertime">
   <span class="pl__title">{{ page.date | date:"%Y %B %d" }}</span>
 </div>
 
-  <h1 id="post__title" data-identifier="{{ page.date | date: "%Y%m%d" }}">{{ page.title }}</h1>
+<h2 id="post__title" data-identifier="{{ page.date | date: "%Y%m%d" }}">{{ page.title }}</h2>
   {{ content }}
 </article> <!-- end #post__content -->
 
