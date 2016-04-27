@@ -2,6 +2,7 @@
 layout: post
 title: Android Studio NDK
 category: android
+tags:ndk,c,java
 ---
 
 
