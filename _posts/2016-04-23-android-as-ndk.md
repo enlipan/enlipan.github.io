@@ -48,6 +48,10 @@ Quote:
 
 [Java Native Interface Specification—Contents](http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html)
 
+[Java Programming Tutorial
+Java Native Interface (JNI)](https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaNativeInterface.html)
+
+
 [Create Hello-JNI with Android Studio - Google Codelabs](https://codelabs.developers.google.com/codelabs/android-studio-jni/index.html?index=..%2F..%2Findex#0)
 
 [Java programming with JNI -- IBM](http://www.ibm.com/developerworks/java/tutorials/j-jni/j-jni.html)
