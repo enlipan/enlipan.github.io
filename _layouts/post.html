@@ -7,6 +7,11 @@ layout: index
 <div id = "post_pre_a_pre">
   <span class="pl__title">{{ page.date | date:"%Y %B %d" }}</span>
 </div>
+<div id = "post_next_a_next">
+  {% if page.tags.size > 0 %}
+  <span class="pl__title">{{ page.tags | join: ', ' }}</span>
+  {% endif %}
+</div>
 
 <h1 id="post__title" data-identifier="{{ page.date | date: "%Y%m%d" }}">{{ page.title }}</h1>
   {{ content }}
