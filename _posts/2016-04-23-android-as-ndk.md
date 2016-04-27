@@ -65,6 +65,7 @@ sqlite3_create_function();
 {% endhighlight %}  
 
 
+NDK 的调试在模拟器上往往容易出各种问题，无法进入调试modle，而在使用真机调试后，则解决了这一问题；
 
 [Github —— AS Native Sqlite Demo](https://github.com/itlipan/hack042)
 
