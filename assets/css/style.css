@@ -612,6 +612,7 @@ iframe {
   font-family:Cursive;
   color: #CBCBCB;
   text-align: center;
+  text-align : left
   line-height: 200%
   border-top: 2px solid rgba(200,200,200, 0.5);
 }
