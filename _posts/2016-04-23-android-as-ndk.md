@@ -20,6 +20,7 @@ keywords: [android, ndk,c,sqlite3]
 
 ...
 
+[Androidstudio-hello-jni](https://github.com/itlipan/android-ndk/tree/master/hello-jni)
 
 ####  CMD  NDK-Build配置 MK命令
 
