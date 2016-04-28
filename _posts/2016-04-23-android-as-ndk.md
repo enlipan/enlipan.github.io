@@ -8,15 +8,19 @@ keywords: [android, ndk,c,sqlite3]
 
 ###  NDK JNI
 
+是什么？
+解决什么问题？适用什么场景？
 ...
 
 
 ###  JNI 数据类型
 
+JNI 与 C 的联合编程，FindClass、GetMethodID等；
 ...
 
 
 ###  从 GoogleSample HelloJNI 开始
+
 
 ...
 
@@ -80,8 +84,14 @@ NDK 的调试在模拟器上往往容易出各种问题，无法进入调试modl
 如厂商Rom内置后，后期其他app调用；亦或某个时刻获取到了管理员权限，同时移植了该命令到 system/bin 目录下，后期再次执行就不需要管理员权限，这种方式属于 NDK 的一种拓展使用；
 
 
+###  NdkDemo 实践
 
-**待完善**
+前面是一些系统的学习，自己边回顾边查找，边解决问题也写了一个小的Demo，其实只是简单的利用Native Sql查询语句，单纯的看起来比原生 SqliteDatabase查询快6倍的速度；回过头来复盘发现要注意的地方还挺多的，主要集中在 Gradle的配置，javah头文件的生成，以及 native C中资源的释放问题；
+
+
+项目Github地址：[NdkDemoNativeSqlite](https://github.com/itlipan/NdkDemoNativeSqlite)
+
+**大纲完成，周末总结完善**
 
 ---
 
@@ -92,9 +102,6 @@ Quote:
 [Experimental Plugin User Guide --- AndroidStudio Info](http://tools.android.com/tech-docs/new-build-system/gradle-experimental)
 
 [Java Native Interface Specification—Contents](http://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html)
-
-[Java Programming Tutorial
-Java Native Interface (JNI)](https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaNativeInterface.html)
 
 [C-language Interface Specification for SQLite —— SQLITE Doc](https://www.sqlite.org/c3ref/intro.html)
 
