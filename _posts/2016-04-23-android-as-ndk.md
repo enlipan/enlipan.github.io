@@ -23,8 +23,9 @@ JNI 与 C 的联合编程，FindClass、GetMethodID等；
 
 
 ...
+从 HelloJNI 开始上手是比较合适的，简单的依赖用来熟悉 javah,mk 命令，迁移到 AS 后也可以用来结合 AS NDK Gradle文档熟悉 NDK Gradle写法；
 
-[Androidstudio-hello-jni](https://github.com/itlipan/android-ndk/tree/master/hello-jni)
+项目地址：[Androidstudio-hello-jni](https://github.com/itlipan/android-ndk/tree/master/hello-jni)
 
 ####  CMD  NDK-Build配置 MK命令
 
@@ -72,7 +73,9 @@ sqlite3_create_function();
 
 NDK 的调试在模拟器上往往容易出各种问题，无法进入调试modle，而在使用真机调试后，则解决了这一问题；
 
-[Github —— AS Native Sqlite Demo](https://github.com/itlipan/hack042)
+Android 50 Hacks Hack 42 Demo：一个很好的NDK Demo，比HelloJNI复杂，但又不算太复杂，我将其从Eclipse迁移到AS，解决了一些小问题，更新了一些文件
+
+项目地址：[Github —— AS Native Sqlite Demo](https://github.com/itlipan/hack042)
 
 
 
