@@ -9,23 +9,28 @@ keywords: [android, ndk,c,sqlite3]
 ###  NDK JNI
 
 是什么？
+
 解决什么问题？适用什么场景？
+
 ...
 
 
 ###  JNI 数据类型
 
 JNI 与 C 的联合编程，FindClass、GetMethodID等；
+
 ...
 
 
 ###  从 GoogleSample HelloJNI 开始
 
 
-...
+
 从 HelloJNI 开始上手是比较合适的，简单的依赖用来熟悉 javah,mk 命令，迁移到 AS 后也可以用来结合 AS NDK Gradle文档熟悉 NDK Gradle写法；
 
 项目地址：[Androidstudio-hello-jni](https://github.com/itlipan/android-ndk/tree/master/hello-jni)
+
+...
 
 ####  CMD  NDK-Build配置 MK命令
 
