@@ -23,4 +23,315 @@ View的自定义之所以复杂是由于其涉及的知识点较多，但是只�
 
 ###  自定义卫星菜单 View的实践
 
-以下进行 卫星菜单的自定义：
+以下进行 卫星菜单的自定义实现：
+
+*  分析View属性，确定自定义属性
+
+{% highlight java %}
+
+<attr name="position" format="enum">
+    <enum name="left_top" value="0"/>
+    <enum name="left_bottom" value="1"/>
+    <enum name="right_top" value="2"/>
+    <enum name="right_bottom" value="3"/>
+</attr>
+<attr name="radius" format="dimension"/>
+
+<!-- 此处 注意 写成  <attr name="radius" format="dimension"/> 将变成重复声明，而非仅仅引用 -->
+<declare-styleable name="SatelliteViewGroup">
+    <attr name="position"/>
+    <attr name="radius"/>
+</declare-styleable>
+
+{% endhighlight %}  
+
+一个小的 case 是在 `declare-styleable`中既可以完成声明，也可以在外部声明，此处仅仅引用；
+
+*  View 位置确定分析 实现 onMeasure onLayout；
+
+![SatelliteViewGroup](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20150430/item_view_satellite.jpg)
+
+*  实现 View的 Action 
+
+{% highlight java %}
+
+public class SatelliteViewGroup extends ViewGroup implements View.OnClickListener {
+    private static final String TAG = "SatelliteViewGroup";
+
+    //ViewGroup  State Type
+    private static final int S_VIEW_STATE_OPEN = -1;
+    private static final int S_VIEW_STATE_CLOSE = 1;
+    private int mCurrentViewState = S_VIEW_STATE_CLOSE;
+
+    //ViewGroup Position
+    private static final int S_VIEW_POSITION_LEFT_TOP = 0;
+    private static final int S_VIEW_POSITION_LEFT_BOTTOM = 1;
+    private static final int S_VIEW_POSITION_RIGHT_TOP = 2;
+    private static final int S_VIEW_POSITION_RIGHT_BOTTOM = 3;
+
+    private final int F_DefaultRadiusValue = 100;
+    private final int F_DefaultPosition = 0;
+
+    private View mCenterView = null;
+    private int mMoonRadius;
+    private int mCenterPosition;
+
+    private int mViewGroupTotalHeight;
+    private int mViewGroupTotalWidth;
+
+    private OnMoonMenuClickListener mMenuClickListener;
+
+    private void setMoonMenuClickListener(OnMoonMenuClickListener listener) {
+        mMenuClickListener = listener;
+    }
+
+    public interface OnMoonMenuClickListener {
+        void onMenuClick(View v);
+    }
+
+
+    public SatelliteViewGroup(Context context) {
+        this(context, null);
+    }
+
+    public SatelliteViewGroup(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public SatelliteViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        //Radius default Value  50dp
+        float defaultRadiusValue = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, F_DefaultRadiusValue, context.getResources().getDisplayMetrics());
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SatelliteViewGroup, defStyleAttr, 0);
+        mMoonRadius = (int) ta.getDimension(R.styleable.SatelliteViewGroup_radius, defaultRadiusValue);
+        final int position = ta.getInt(R.styleable.SatelliteViewGroup_position, F_DefaultPosition);
+        ta.recycle();
+        if (position == S_VIEW_POSITION_LEFT_TOP) {
+            mCenterPosition = S_VIEW_POSITION_LEFT_TOP;
+        } else if (position == S_VIEW_POSITION_LEFT_BOTTOM) {
+            mCenterPosition = S_VIEW_POSITION_LEFT_BOTTOM;
+        } else if (position == S_VIEW_POSITION_RIGHT_TOP) {
+            mCenterPosition = S_VIEW_POSITION_RIGHT_TOP;
+        } else if (position == S_VIEW_POSITION_RIGHT_BOTTOM) {
+            mCenterPosition = S_VIEW_POSITION_RIGHT_BOTTOM;
+        }
+        Log.d(TAG, "position >>> " + position + "   mNoonRadius>> " + mMoonRadius);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        final int childCount = getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            if (i == 0) mCenterView = getChildAt(i);
+            measureChild(getChildAt(i), widthMeasureSpec, heightMeasureSpec);
+        }
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        mViewGroupTotalHeight = getMeasuredHeight();
+        mViewGroupTotalWidth = getMeasuredWidth();
+        mCenterView.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        if (changed) {
+            layoutCenterBtnViewPosition();
+            layoutItemViewPosition();
+        }
+    }
+
+
+    private void layoutCenterBtnViewPosition() {
+        if (mCenterView == null) return;
+        int left = 0;
+        int top = 0;
+
+        int width = mCenterView.getMeasuredWidth();
+        int height = mCenterView.getMeasuredHeight();
+        if (mCenterPosition == S_VIEW_POSITION_LEFT_TOP) {
+            //default  0
+        } else if (mCenterPosition == S_VIEW_POSITION_LEFT_BOTTOM) {
+            left = 0;
+            top = mViewGroupTotalHeight - height;
+        } else if (mCenterPosition == S_VIEW_POSITION_RIGHT_TOP) {
+            left = mViewGroupTotalWidth - width;
+            top = 0;
+        } else if (mCenterPosition == S_VIEW_POSITION_RIGHT_BOTTOM) {
+            left = mViewGroupTotalWidth - width;
+            top = mViewGroupTotalHeight - height;
+        }
+        mCenterView.layout(left, top, left + width, top + height);
+    }
+
+
+    private void layoutItemViewPosition() {
+        final int itemCount = getChildCount();
+        final double singleAngle = Math.PI / (2 * (itemCount - 2));
+        for (int i = 1; i < itemCount; i++) {//centerView  index 0
+
+            final View childView = getChildAt(i);
+            final int height = childView.getMeasuredHeight();
+            final int width = childView.getMeasuredWidth();
+            childView.setVisibility(GONE);
+            /**
+             * ps: notice  this >>>>
+             * (int)(Math.cos(singleAngle * (i - 1)) * mMoonRadius);
+             * (int)Math.cos(singleAngle * (i - 1) * mMoonRadius;
+             */
+            int left = (int) (Math.cos(singleAngle * (i - 1)) * mMoonRadius);
+            int top = (int) (Math.sin(singleAngle * (i - 1)) * mMoonRadius);
+            if (mCenterPosition == S_VIEW_POSITION_LEFT_TOP) {
+                //default
+            } else if (mCenterPosition == S_VIEW_POSITION_LEFT_BOTTOM) {
+                top = mViewGroupTotalHeight - height - top;
+            } else if (mCenterPosition == S_VIEW_POSITION_RIGHT_TOP) {
+                left = mViewGroupTotalWidth - width - left;
+            } else if (mCenterPosition == S_VIEW_POSITION_RIGHT_BOTTOM) {
+                left = mViewGroupTotalWidth - width - left;
+                top = mViewGroupTotalHeight - height - top;
+            }
+            childView.layout(left, top, left + childView.getMeasuredWidth(), top + childView.getMeasuredHeight());
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        rotateCenterView(mCenterView, 500L);
+        makeMenuItemAction(500L);
+    }
+
+    private void rotateCenterView(View v, long duration) {
+        int start = 0;
+        int end = 360;
+        RotateAnimation roAnimation = new RotateAnimation(start, end,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        roAnimation.setDuration(duration);
+        roAnimation.setFillAfter(true);
+        v.startAnimation(roAnimation);
+    }
+
+
+    private void makeMenuItemAction(long duration) {
+
+        final int itemCount = getChildCount();
+        final double singleAngle = Math.PI / (2 * (itemCount - 2));
+        for (int i = 1; i < itemCount; i++) {
+            final View childView = getChildAt(i);
+            childView.setVisibility(VISIBLE);
+            //confirm  animation position  start and end
+            int leftLength = (int) (Math.cos(singleAngle * (i - 1)) * mMoonRadius);
+            int topHeight = (int) (Math.sin(singleAngle * (i - 1)) * mMoonRadius);
+            // ends position(0,0)  View 本来就位于那个终点位置，所以距离原来位置的位置偏移量为 0;
+            if (mCenterPosition == S_VIEW_POSITION_LEFT_TOP) {
+                leftLength = leftLength * (-1);
+                topHeight = topHeight * (-1);
+            } else if (mCenterPosition == S_VIEW_POSITION_LEFT_BOTTOM) {
+                leftLength = leftLength * (-1);
+            } else if (mCenterPosition == S_VIEW_POSITION_RIGHT_TOP) {
+                topHeight = topHeight * (-1);
+            } else if (mCenterPosition == S_VIEW_POSITION_RIGHT_BOTTOM) {
+                //null
+            }
+            AnimationSet animationSet = new AnimationSet(true);
+            Animation tranAnim = null;//位移动画
+            Animation rotateAnim = null;//旋转动画
+            if (mCurrentViewState == S_VIEW_STATE_CLOSE) {//click to open
+                tranAnim = new TranslateAnimation(leftLength, 0, topHeight, 0);
+                childView.setClickable(true);
+                childView.setFocusable(true);
+            } else if (mCurrentViewState == S_VIEW_STATE_OPEN) {//click to close
+                tranAnim = new TranslateAnimation(0, leftLength, 0, topHeight);
+                childView.setClickable(false);
+                childView.setFocusable(false);
+            }
+            tranAnim.setFillAfter(true);
+            tranAnim.setDuration(duration);
+            tranAnim.setStartOffset(i * 100/itemCount);
+            tranAnim.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    if (mCurrentViewState == S_VIEW_STATE_CLOSE) {
+                        childView.setVisibility(GONE);
+                    }
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+            });
+
+            rotateAnim = new RotateAnimation(0, 720F, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5F);
+            rotateAnim.setDuration(duration);
+            rotateAnim.setFillAfter(true);
+
+            animationSet.addAnimation(rotateAnim);
+            animationSet.addAnimation(tranAnim);
+            childView.startAnimation(animationSet);
+            childView.setOnClickListener(new ChildViewClickListener());
+        }
+        changeViewGroupCurrentState();
+    }
+
+    private  void  changeViewGroupCurrentState(){
+        if (mCurrentViewState == S_VIEW_STATE_CLOSE) {//Change State
+            mCurrentViewState = S_VIEW_STATE_OPEN;
+        } else if (mCurrentViewState == S_VIEW_STATE_OPEN) {//Change State
+            mCurrentViewState = S_VIEW_STATE_CLOSE;
+        }
+    }
+
+
+    class ChildViewClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            if (SatelliteViewGroup.this.mMenuClickListener != null){
+                mMenuClickListener.onMenuClick(v);
+            }
+            addMenuItemClickAnimation(v);
+            changeViewGroupCurrentState();
+        }
+    }
+
+    private void addMenuItemClickAnimation(View v) {
+        final int itemCount = SatelliteViewGroup.this.getChildCount();
+        for (int i = 1; i < itemCount; i++) {
+             if (v == getChildAt(i)){
+                makeMenuItemScaleBigAnimation(getChildAt(i),500L);
+             }else {
+                 makeMenuItemBeSmallAnimation(getChildAt(i),500L);
+             }
+        }
+    }
+
+    private void makeMenuItemScaleBigAnimation(View v, long l) {
+        AnimationSet animationset = new AnimationSet(true);
+        ScaleAnimation scaleAnim = new ScaleAnimation(1.0F,4.0F,1.0F,4.0F,
+                Animation.RELATIVE_TO_SELF,0.5F,Animation.RELATIVE_TO_SELF,0.5F);
+        AlphaAnimation alphaAnim = new AlphaAnimation(1F,0);
+        animationset.addAnimation(scaleAnim);
+        animationset.addAnimation(alphaAnim);
+        animationset.setDuration(l);
+        animationset.setFillAfter(true);
+        v.startAnimation(animationset);
+    }
+
+    private void makeMenuItemBeSmallAnimation(View v, long l) {
+        AnimationSet animationset = new AnimationSet(true);
+        ScaleAnimation scaleAnim = new ScaleAnimation(1.0F,0F,1.0F,0F,
+                Animation.RELATIVE_TO_SELF,0.5F,Animation.RELATIVE_TO_SELF,0.5F);
+        AlphaAnimation alphaAnim = new AlphaAnimation(1F,0);
+        animationset.addAnimation(scaleAnim);
+        animationset.addAnimation(alphaAnim);
+        animationset.setDuration(l);
+        animationset.setFillAfter(true);
+        v.startAnimation(animationset);
+    }
+
+}
+
+{% endhighlight %}  
