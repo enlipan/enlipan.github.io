@@ -297,7 +297,7 @@ public abstract LayoutInflater cloneInContext(Context newContext);
 {% endhighlight %}      
 
 
-今天电面时面试官表示 layoutInflater创建传入 ApplicationContext与 Activity是有差异的，源于Activity继承自 ContextThemeWrapper ,在View创建后的一些主题上会有不一样，所以回过头来自己想看一看，其实其关键不一样的点在于 cloneInContext() 函数，getBaseContext() 二者对应的Context其实所差异并不大，而基于cloneInContext函数创建对应Clone对象且重新绑定Context后，利用 ApplicationContext 创建的加载器所加载的View会使用Android系统默认主题，而使用Activity（Context）则会使用Activity所制定的主题；这是一个很重要的差异；
+今天交流时，了解到 layoutInflater创建传入 ApplicationContext与 Activity是有差异的，源于Activity继承自 ContextThemeWrapper ,在View创建后的一些主题上会有不一样，所以回过头来自己想看一看，其实其关键不一样的点在于 cloneInContext() 函数，getBaseContext() 二者对应的Context其实所差异并不大，而基于cloneInContext函数创建对应Clone对象且重新绑定Context后，利用 ApplicationContext 创建的加载器所加载的View会使用Android系统默认主题，而使用Activity（Context）则会使用Activity所制定的主题；这是一个很重要的差异；
 
 ---
 

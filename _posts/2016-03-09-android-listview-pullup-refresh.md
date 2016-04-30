@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Practice Custom ListView 
+title: Practice Custom ListView
 category: android
 ---
 
@@ -159,4 +159,4 @@ public class LoadingListView extends ListView implements AbsListView.OnScrollLis
 
 {% endhighlight %}
 
-google推荐在设置Adaper之前设置FooterView或者HeaderView，FooterView 直接设置Visible状态会导致多一行，熟悉源码的会记得，二者的count会封装到Adapter中，所以内容Gone掉依旧会导致该行显示，只是是空白，所以解决方案是包装一层FramLayout设置其高度 `wrap_content`,GONE FrameLayout内部内容隐藏问题；
+Google 推荐在设置 Adaper之前设置 FooterView 或者 `HeaderView，FooterView` 直接设置 Visible 状态会导致多一行，熟悉源码的会记得，二者的count会封装到Adapter中，所以内容Gone掉依旧会导致该行显示，只是是空白，所以解决方案是包装一层FramLayout设置其高度 `wrap_content`, `GONE` FrameLayout 内部内容隐藏问题；
