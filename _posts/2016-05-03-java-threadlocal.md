@@ -31,6 +31,9 @@ ThreadLocal 本身是为了解决操作系统中的 TLS 问题而生，所谓的
 
 对于 ThreadLocal 的实现，JDK 与 Android 所用的 OpenJDK 是有差异的，先来看看 JDK：
 
+
+{% highlight java %}
+
 /**
  * Returns the value in the current thread's copy of this
  * thread-local variable.  If the variable has no value for the
@@ -67,9 +70,11 @@ private T setInitialValue() {
     return value;
 }
 
-
+{% endhighlight %}  
 
 而 OpenJDK 的对应函数以及属性：
+
+{% highlight java %}
 
 public T get() {
     // Optimized for the fast path.
@@ -87,6 +92,8 @@ public T get() {
 
     return (T) values.getAfterMiss(this);
 }
+
+{% endhighlight %}  
 
 可以看到 JDK 中利用 ThreadLocalMap 类存储线程 TLS 属性，而 Android 源码中对应的 则是利用 Valus 内部类使用 Object数组 做属性构建存储；
 
