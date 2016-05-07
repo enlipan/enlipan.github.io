@@ -8,7 +8,7 @@ keywords: [android, java,os]
 
 ###  ThreadLocal 与 Thread Local  Storage
 
-对于ThreadLocal 并不陌生，J2EE ，Looper， 以及 Volley里面都能够看到 ThreadLocal 的身影，ThreadLocal 如其名，常常伴随 Thread一起出现，同时简单的了解其存储线程变量独立副本的特性之后，很多人认为其是为了解决 **竞态条件(打印机问题)**而出现的一个解决方案 ，然而**其实并不是**。
+对于ThreadLocal 并不陌生，J2EE ，Looper， 以及 EventBus 里面都能够看到 ThreadLocal 的身影，ThreadLocal 如其名，常常伴随 Thread一起出现，同时简单的了解其存储线程变量独立副本的特性之后，很多人认为其是为了解决 **竞态条件(打印机问题)**而出现的一个解决方案 ，然而**其实并不是**。
 
 ThreadLocal 本身是为了解决操作系统中的 TLS 问题而生，所谓的 TLS 也就是 Thread Local Storage 概念，即线程本地存储，Java中将该变量抽象了出来，有点混淆概念的感觉，尽管 操作系统线程在Java线程中被用于诸多部分，但是在 Java TLS 中 并没有使用 native 的  TLS 实现，而转而用 线程与属性值的映射实现了 TLS；
 
