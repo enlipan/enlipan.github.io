@@ -1,1 +1,6 @@
+# Site settings
+title: Lee
+
+# Build settings
 highlighter: rouge
+paginate: 5
