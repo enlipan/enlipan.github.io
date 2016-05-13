@@ -248,19 +248,6 @@ a {
       display: block;
       float: left; } }
 
-      #copyright {
-        margin: 0;
-        padding-top: 1em;
-        font-size: .6em;
-        font-family:Cursive;
-        color: #CBCBCB;
-        text-align: center;
-        border-top: 2px solid rgba(200,200,200, 0.5); }
-        #copyright > a {
-          color: #A9DAA7; }
-          #copyright > a:hover {
-            text-decoration: none; }
-
 .post-preview > a {
   color: #404040;
 }
