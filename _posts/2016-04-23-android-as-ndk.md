@@ -5,6 +5,7 @@ category: android
 keywords: [android, ndk,c,sqlite3]
 ---
 
+AndroidStudio 高效开发 NDK；
 
 ###  NDK JNI
 

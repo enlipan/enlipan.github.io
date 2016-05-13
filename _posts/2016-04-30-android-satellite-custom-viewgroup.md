@@ -5,7 +5,7 @@ category: android
 keywords: [android, viewgoup,animation]
 ---
 
-自定义View写过一些，但是自定义ViewGroup一直写的不多，上次还是写流式布局，一直想着写一个自定义ViewGroup 来总结一下自定义ViewGroup相关的，恰恰看到Mooc上的hyman老师的分享，想着自己先写一下，遇到问题再看看视频，看完再复盘回顾，自己总结一下，于是有了这一篇文章，写的过程中还是遇到一些细节性问题的，非常感谢hyman老师的讲解；
+自定义View写过一些，但是自定义ViewGroup一直写的不多，上次还是写流式布局，一直想着写一个自定义ViewGroup 来总结一下自定义ViewGroup相关的，恰恰看到Mooc上的hyman老师的分享，想着自己先写一下，遇到问题再看看视频，看完再复盘回顾，自己总结一下，于是有了这一篇文章，写的过程中还是遇到一些细节性问题的，非常感谢hyman老师的讲解分享；
 
 ###  自定义View的相关内容
 

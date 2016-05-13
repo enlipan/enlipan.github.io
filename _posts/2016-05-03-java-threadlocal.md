@@ -6,14 +6,12 @@ keywords: [android, java,os]
 ---
 
 
-###  ThreadLocal 与 Thread Local  Storage
-
-
 对于ThreadLocal 并不陌生，J2EE ，Looper以及 EventBus 里面都能够看到 ThreadLocal 的身影，ThreadLocal 如其名，常常伴随 Thread一起出现，同时简单的了解其存储线程变量独立副本的特性之后，很多人认为其是为了解决 **竞态条件(打印机问题)**而出现的一个解决方案 ，然而**其实并不是**。
 
 
-ThreadLocal 本身是为了解决操作系统中的 TLS 问题而生，所谓的 TLS 也就是 Thread Local Storage 概念，即线程本地存储，Java中将该变量抽象了出来，有点混淆概念的感觉，尽管 操作系统线程在Java线程中被用于诸多部分，但是在 Java TLS 中 并没有使用 native 的  TLS 实现，而转而用 线程与属性值的映射实现了 TLS；
+###  ThreadLocal 与 Thread Local  Storage
 
+ThreadLocal 本身是为了解决操作系统中的 TLS 问题而生，所谓的 TLS 也就是 Thread Local Storage 概念，即线程本地存储，Java中将该变量抽象了出来，有点混淆概念的感觉，尽管 操作系统线程在Java线程中被用于诸多部分，但是在 Java TLS 中 并没有使用 native 的  TLS 实现，而转而用 线程与属性值的映射实现了 TLS；
 
 
 进程中，线程之间共享地址空间，进而进程之间共享全局变量；突然想起了 Volatile 解决线程之间共享变量时的 CPU 缓存以及代码重排序问题，这里只提一下，不作引申；共享全局变量的一个问题就是 多线程共同协作时一个线程更改该变量会导致其他线程该变量同步修改，有些时候我们并不希望一个线程运行时改变其他线程的上下文环境，利用TLS 完成多线程中的该上下文变量互不影响；TLS 解决了线程之间访问同一环境时的，线程对于环境操作后的，线程之间的环境污染问题；
