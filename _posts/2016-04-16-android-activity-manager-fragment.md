@@ -194,7 +194,7 @@ static final int RESUMED = 5;          // Created started and resumed.
 
 同时如果常用Fragment 会遇到常见的两个错误问题，也就是事务提交时的 Fragment状态审查异常；其具体原因在 Quote引用文章《Fragment Transactions & Activity State Loss》，表诉非常清楚，需要注意的是Fragment版本区别，这一版本差异所直接导致的影响在于，如果利用 Surpport V4 包 其Fragment的状态保存时间点与 官方 Fragment是有差异的，源于 onSaveInstanceState()，函数的调用时间，以及Activity可能被系统回收销毁的时间点差异：
 
-　**pre-Honeycomb　 之前 Activity 在 onPause 之后就可能被系统回收，而  post-Honeycomb 之后在 onStop 之前是不会被回收，所以 这一差异导致 onSaveInstanceState()  函数调用的时间点是不同的，** 这一差异是非常重要的； 版本的差异导致的问题，往往在兼容性处理上有较多问题，Java的向前支持就导致自身日渐臃肿，虽然机制是日渐完善；很多人笼统的认为 Activity 的回收就是在 onStop() 或者 onPause之后，导致代码的Bug调试出现难以自圆其说的点，                      最终问题只能靠猜，一点题外话，自己引以为戒；
+**pre-Honeycomb　 之前 Activity 在 onPause 之后就可能被系统回收，而  post-Honeycomb 之后在 onStop 之前是不会被回收，所以 这一差异导致 onSaveInstanceState()  函数调用的时间点是不同的，** 这一差异是非常重要的； 版本的差异导致的问题，往往在兼容性处理上有较多问题，Java的向前支持就导致自身日渐臃肿，虽然机制是日渐完善；很多人笼统的认为 Activity 的回收就是在 onStop() 或者 onPause之后，导致代码的Bug调试出现难以自圆其说的点， 最终问题只能靠猜，一点题外话，自己引以为戒；
 
 所以在使用兼容包 Fragment时， 如果事务的提交在 onPause() and onStop() 之间是会有状态审查异常问题发生的，这一问题的根源就在于 onPause()前，Fragment 状态被保存了；状态被保存后，其恢复的时间点也是需要注意的，这个问题，导致我们在 Activity 生命周期中去处理 Fragment 事务要格外小心，例如 ：  onActivityResult(), onStart(), 以及看起来没啥问题的onResume()，而应该使用 Fragment 状态已经确保恢复的 FragmentActivity#onResumeFragments() 或者 Activity#onPostResume()去处理事务；
 

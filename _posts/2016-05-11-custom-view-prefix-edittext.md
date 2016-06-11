@@ -62,9 +62,4 @@ public class PrefixEditText extends AppCompatEditText {
 
 
 
-
-
-
-
-
 但是有一个问题要是多行输入如何处理？每一行的输入起点都一样，其实多行我们更加期望的是，首行有前缀，其他行顶格，造成一种首行输入标签Title的感觉，实现起来的思路：
