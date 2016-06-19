@@ -22,16 +22,19 @@ Git  对于文本文件的追踪非常强大，但是对于音频图片等以二
 *   git diff  显示当前文件修改内容;当 git status 显示文件已修改时，可以利用diff 查看具体修改部分
 *   git log 显示历史记录，git log加自动补全tab 可以显示log摘要，而 git log 输出全部信息时往往较为杂乱，可以利用--pretty=oneline输出单行信息（其 CommitId 是由SHA1计算所得数字版本号）      
 *   git reset 版本回退命令,一个问题是 当本地文件被修改却未提交时,自己不想提交想回退到编辑之前，运行reset 显示git unstaged changes after reset，我们可以放弃本次的编辑，利用如下命令：      
->  git stash     
->
+
+>  git stash        
+>         
 > git stash drop  
 
 *  git reset 后面即可以利用 HEAD ^ 符号向上回退，每一个^ 代表一个版本，也可以利用 git log 输出的版本号，回退到指定版本     
 *  git reset  --hard 命令中，--hard 表示：        
 *  要理解 git 中工作区，暂存区，以及本地仓库分支，其中尤其是暂存区的思想        
 
-*  撤销修改      
->  修改仅仅处于 工作区，直接利用  git checkout --file 命令 放弃工作区内容       
+*  撤销修改         
+
+>  修改仅仅处于 工作区，直接利用  git checkout --file 命令 放弃工作区内容              
+>               
 >  修改不仅仅位于工作区，同时已经添加到了暂存区，这时需要先清除暂存区的内容利用  git reset HEAD file  命令回退暂存区内容 —— 将暂存区的修改回退到工作区，也就是工作区有修改，但是还没有添加到暂存区的状态，再次利用 checkout --file 放弃工作区内容       
 
 有问题找 help ，Git的说明在help中有详细说明    
@@ -52,5 +55,3 @@ Git  对于文本文件的追踪非常强大，但是对于音频图片等以二
 ---
 
 Quote:
-
-
