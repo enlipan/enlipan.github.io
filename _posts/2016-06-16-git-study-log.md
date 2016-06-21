@@ -23,9 +23,9 @@ Git  对于文本文件的追踪非常强大，但是对于音频图片等以二
 *   git log 显示历史记录，git log加自动补全tab 可以显示log摘要，而 git log 输出全部信息时往往较为杂乱，可以利用--pretty=oneline输出单行信息（其 CommitId 是由SHA1计算所得数字版本号）      
 *   git reset 版本回退命令,一个问题是 当本地文件被修改却未提交时,自己不想提交想回退到编辑之前，运行reset 显示git unstaged changes after reset，我们可以放弃本次的编辑，利用如下命令：      
 
->  git stash        
+>   git stash        
 >         
-> git stash drop  
+>   git stash drop  
 
 *  git reset 后面即可以利用 HEAD ^ 符号向上回退，每一个^ 代表一个版本，也可以利用 git log 输出的版本号，回退到指定版本     
 *  git reset  --hard 命令中，--hard 表示：        
