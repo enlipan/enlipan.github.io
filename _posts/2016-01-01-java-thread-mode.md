@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Java 多线程使用模式
-category: Java
+category: java
 ---
 
 ### 最常用的两种线程使用模式：
@@ -69,7 +69,7 @@ public static class WaitNotifyBuffer{
 
     }
 
-    
+
     public static class BlockingQueueBuffer{
 
     ArrayBlockingQueue<Integer> mIntBuffer = new ArrayBlockingQueue<>(10);
@@ -95,7 +95,7 @@ public static class WaitNotifyBuffer{
 
 ### 线程通信：
 
-关于非Double 、非Float类型的原子变量，**Java保证在对应线程中返回的值是该线程中存储的对应变量的值，** 但是  **并不能保证一个线程写入的值对于另一个线程也是可见的** 
+关于非Double 、非Float类型的原子变量，**Java保证在对应线程中返回的值是该线程中存储的对应变量的值，** 但是  **并不能保证一个线程写入的值对于另一个线程也是可见的**
 
 较为常用的保证线程间**可靠**通信：  不变量(final字段的灵活运用) 以及同步互斥机制；
 
@@ -116,7 +116,7 @@ public static class WaitNotifyBuffer{
 由于Android的40个线程等级，其内置的线程优先级值就远远比Java的三级要多了一般有：
 
 > THREAD_PRIORITY_DEFAULT，默认的线程优先级，值为0。
-> 
+>
 > THREAD_PRIORITY_LOWEST，最低的线程级别，值为19。   
 >  
 >  THREAD_PRIORITY_BACKGROUND 后台线程建议设置这个优先级，值为10。   
@@ -148,7 +148,7 @@ public static class WaitNotifyBuffer{
 
 顺带提一个遇到的小**Tip**：
 
-关于Collections.copy();函数的OutOfIndex问题； 
+关于Collections.copy();函数的OutOfIndex问题；
 
 destination List 内容长度要大于 src List，而不是容量大于，所以 new ArrayList(src.size())是错误的，正确方式是: new ArrayList(src);
 
