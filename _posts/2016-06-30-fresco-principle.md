@@ -42,6 +42,28 @@ MVC 肢解了复杂的图片管理系统： Calling code need only instantiate a
 
 ###  Fresco源码
 
+Drawable层次结构：
+
+ArrayDrawable层次Drawable:构件图像层次，建立图层
+
+容器Drawable,Drawable的封装，图片的处理变换如旋转缩放等操作
+
+Drawable视图，图像的根本载体
+
+
+public class GenericDraweeHierarchy implements SettableDraweeHierarchy {
+        //Fresco的视图显示中最主要的图层
+        private static final int BACKGROUND_IMAGE_INDEX = 0;
+        private static final int PLACEHOLDER_IMAGE_INDEX = 1;
+        private static final int ACTUAL_IMAGE_INDEX = 2;
+        private static final int PROGRESS_BAR_IMAGE_INDEX = 3;
+        private static final int RETRY_IMAGE_INDEX = 4;
+        private static final int FAILURE_IMAGE_INDEX = 5;
+        private static final int OVERLAY_IMAGES_INDEX = 6;
+        .......
+      }
+
+
 
 
 ---
@@ -51,3 +73,5 @@ Quote：
 [Introducing Fresco: A new image library for Android](https://code.facebook.com/posts/366199913563917/introducing-fresco-a-new-image-library-for-android/)
 
 [Fresco-Source-Analysis](https://github.com/desmond1121/Fresco-Source-Analysis)
+
+[Fresco源码分析(1)](http://blog.desmondyao.com/2016/04/18/fresco-1-drawable/)
