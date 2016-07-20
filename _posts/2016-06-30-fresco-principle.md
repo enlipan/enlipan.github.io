@@ -42,14 +42,22 @@ MVC 肢解了复杂的图片管理系统： Calling code need only instantiate a
 
 ###  Fresco源码
 
-Drawable层次结构：
+Fresco是有非常复杂而健全的机制，其内部包含结构主要有：
 
-ArrayDrawable层次Drawable:构件图像层次，建立图层
+draweeView、fbcore、pipeline、cache、controller、datasource包等等，我主要想找寻simpleDrawee的使用，以及其缓存管理的一些痕迹；
 
-容器Drawable,Drawable的封装，图片的处理变换如旋转缩放等操作
 
-Drawable视图，图像的根本载体
+UI中的Drawable层次结构：
 
+*  ArrayDrawable层次Drawable:构件图像层次，建立图层
+
+*  容器Drawable,Drawable的封装，图片的处理变换如旋转缩放等操作
+
+*  Drawable视图，图像的根本载体
+
+层次结构实现View与Controller的业务分离，以及实现多种类别图像显示的过渡以及切换；
+
+{% highlight java %}
 
 public class GenericDraweeHierarchy implements SettableDraweeHierarchy {
         //Fresco的视图显示中最主要的图层
@@ -63,6 +71,11 @@ public class GenericDraweeHierarchy implements SettableDraweeHierarchy {
         .......
       }
 
+{% endhighlight %}
+
+几个核心类：
+
+基类 DraweeView 以及伴随其的 DraweeHolder，Holder是 DraweeView所关联的Controller以及DraweeHierarchy的容器，是二者交互的桥梁；
 
 
 
