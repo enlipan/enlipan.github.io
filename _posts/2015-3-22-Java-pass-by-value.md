@@ -93,6 +93,8 @@ o1与o2变量不过是Qi变量与Lee两个对象的指针变量的Copy副本，�
 所以 Java 值传递，对象指针副本的传递就很好理解了；
 
 
+> Java is always pass-by-value.when object is passed as a argument, be careful with that it is also the copy of reference
+
 
 
 
