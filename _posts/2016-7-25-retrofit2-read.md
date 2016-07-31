@@ -7,6 +7,9 @@ keywords: [framework]
 
 Retrofit是对于网络请求框架的封装，而并不是网络框架，其网络部分由OkHttp完成，其本身用于完成结构化数据转换，Data to  DataBean之间的转换，以便于开发专注对Java对象的OO类型操作；Retrofit将 网络API请求转换为Java接口的形式，其定义的针对REST API的注解声明网络请求操作，形式类似 SpringMVC的注解操作；利用注解描述HTTP请求，从实际上来看有些类似ORM（数据库结构数据与JavaBean）框架做的事情；
 
+> Retrofit adapts a Java interface to HTTP calls by using annotations on the declared methods to
+ define how requests are made. 
+
 Retrofit 支持请求时Object对象到 request 请求体之间的转换，而数据返回时自动转化数据到Object，同事支持 MultiPart 请求体（多个请求对象）以及文件upload；
 
 Retrofit 自动为所定义的针对 API的接口生成对应的网络实现；简化网络请求实现；同时提供了插件化形式的高度可自定义度；
@@ -91,7 +94,17 @@ static class ArbitraryResponseBodyConverter implements Converter<ResponseBody, R
 
 有的业务线有些多的情况下，可能出现多BaseUrl的问题，这种问题如果要每次创建时指定全名有点恶心，可以另外想办法在运行时更改Retrofit对象的BaseUrl;
 
+{% highlight java %}
 
+//定义配置 Builder，用于对于Builder更改 BaseUrl，再直接利用Builder.build()构建对象
+private static Retrofit.Builder builder =
+        new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(apiBaseUrl);
+
+//控制暴露一个函数构建新的 Builder的baseUrl可以直接获取到新的Retrofit对象，构建新的Api
+
+{% endhighlight %}
 
 ####  原理
 
