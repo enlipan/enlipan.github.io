@@ -108,11 +108,60 @@ private static Retrofit.Builder builder =
 
 ####  原理
 
-动态代理
+同样从使用开始入手：
+
+{% highlight java %}
+ ServerApi apiInterface = retrofitClient.create(ServerApi.class);
+
+//////////////////////////////////////////////////////////////
+
+ public <T> T create(final Class<T> service) {
+   Utils.validateServiceInterface(service);
+   if (validateEagerly) {
+     eagerlyValidateMethods(service);
+   }
+   return (T) Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[] { service },
+       new InvocationHandler() {
+         private final Platform platform = Platform.get();
+
+         @Override public Object invoke(Object proxy, Method method, Object... args)
+             throws Throwable {
+           // If the method is a method from Object then defer to normal invocation.
+           if (method.getDeclaringClass() == Object.class) {
+             return method.invoke(this, args);
+           }
+           if (platform.isDefaultMethod(method)) {// Java8 新特性，接口可以添加默认函数实现
+             return platform.invokeDefaultMethod(method, service, proxy, args);
+           }
+           // 正常流程，也就是api接口定义的 Call<>
+           ServiceMethod serviceMethod = loadServiceMethod(method);
+           OkHttpCall okHttpCall = new OkHttpCall<>(serviceMethod, args);
+           return serviceMethod.callAdapter.adapt(okHttpCall);
+         }
+       });
+ }
+ // 可以看到起网络请求 OkHttpCall,api接口函数被适配转换成对应的 http Call
+ //  转换的实现都在CallAdapter中定义，我们也可以通过自定义实现来增强转换
+/////////////////////////////////////////////////////////////////////
+
+public static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces,
+                                      InvocationHandler invocationHandler)
+        throws IllegalArgumentException {
+            ......
+            return getProxyClass(loader, interfaces)
+                  .getConstructor(InvocationHandler.class)
+                  .newInstance(invocationHandler);
+        }
+
+// 根据动态代理，其本质还是调用了 involke函数
+
+{% endhighlight %}
 
 
 
 #### Mock Server
+
+其实最近一直在学PythonWeb，想自己弄个轮子实现伪接口，返回Json数据，恰好看到了Retrofit的这个能力，就先把这一块给好好弄明白再进一步学习Python
 
 ---
 
