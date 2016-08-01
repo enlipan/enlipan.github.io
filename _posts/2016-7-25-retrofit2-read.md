@@ -8,7 +8,7 @@ keywords: [framework]
 Retrofit是对于网络请求框架的封装，而并不是网络框架，其网络部分由OkHttp完成，其本身用于完成结构化数据转换，Data to  DataBean之间的转换，以便于开发专注对Java对象的OO类型操作；Retrofit将 网络API请求转换为Java接口的形式，其定义的针对REST API的注解声明网络请求操作，形式类似 SpringMVC的注解操作；利用注解描述HTTP请求，从实际上来看有些类似ORM（数据库结构数据与JavaBean）框架做的事情；
 
 > Retrofit adapts a Java interface to HTTP calls by using annotations on the declared methods to
- define how requests are made. 
+ define how requests are made.
 
 Retrofit 支持请求时Object对象到 request 请求体之间的转换，而数据返回时自动转化数据到Object，同事支持 MultiPart 请求体（多个请求对象）以及文件upload；
 
@@ -108,7 +108,11 @@ private static Retrofit.Builder builder =
 
 ####  原理
 
+动态代理
 
+
+
+#### Mock Server
 
 ---
 
@@ -119,6 +123,8 @@ Quote:
 [Retrofit - Future](https://futurestud.io/blog/retrofit-getting-started-and-android-client)
 
 [深入浅出 Retrofit](http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=1117)
+
+[Hack Retrofit (2) 之 Mock Server](http://www.println.net/post/Android-Hack-Retrofit-Mock-Server)
 
 [Retrofit – Java(Android) 的REST 接口封装类](http://blog.chengyunfeng.com/?p=491&utm_source=tuicool&utm_medium=referral)
 
