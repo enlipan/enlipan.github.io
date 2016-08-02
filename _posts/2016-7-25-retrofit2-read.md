@@ -157,15 +157,201 @@ public static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces,
 
 {% endhighlight %}
 
-
-
 #### Mock Server
 
-其实最近一直在学PythonWeb，想自己弄个轮子实现伪接口，返回Json数据，恰好看到了Retrofit的这个能力，就先把这一块给好好弄明白再进一步学习Python
+其实最近一直在学PythonWeb，想自己弄个轮子实现伪接口，返回Json数据，恰好看到了Retrofit的这个能力，就先把这一块给好好弄明白再进一步学习Python:
+
+##### Retrofit Mock 使用
+
+{% highlight java %}
+
+public class RetrofitFactory {
+    private static  Retrofit  S_RETROFIT_INSTANCE = null;
+    private static  Retrofit.Builder  sBuilder = new Retrofit.Builder().baseUrl("https://www.baidu.com/")
+                                                    .addConverterFactory(GsonConverterFactory.create())
+                                                    .client(HttpClient.getInstance());
+    public static Retrofit getRetrofitInstance() {
+        if (S_RETROFIT_INSTANCE == null){
+            S_RETROFIT_INSTANCE = sBuilder.build();
+        }
+        return S_RETROFIT_INSTANCE;
+    }
+
+    public void changeBaseUrl(String newBaseUrl){
+        sBuilder.baseUrl(newBaseUrl);
+        S_RETROFIT_INSTANCE = sBuilder.build();
+    }
+}
+
+public class MockApiService implements ApiDemoService {
+
+    private final BehaviorDelegate<ApiDemoService>  mDelegate;
+    private final Map<String,String> resultGet;
+
+    public MockApiService(BehaviorDelegate<ApiDemoService> delegate){
+        this.mDelegate = delegate;
+        this.resultGet = new HashMap<>();
+
+        resultGet.put("Baidu","百度");
+        resultGet.put("Tencent","腾讯");
+        resultGet.put("Alibaba","阿里");
+    }
+
+    @Override
+    public Call<String> getSearchResult(@Query("wd") String word) {
+        String response = resultGet.get(word);
+        return mDelegate.returningResponse(response).getSearchResult(word);
+    }
+}
+
+public class MockApiService implements ApiDemoService {
+
+    private final BehaviorDelegate<ApiDemoService>  mDelegate;
+    private final Map<String,String> resultGet;
+
+    public MockApiService(BehaviorDelegate<ApiDemoService> delegate){
+        this.mDelegate = delegate;
+        this.resultGet = new HashMap<>();
+
+        resultGet.put("Baidu","百度");
+        resultGet.put("Tencent","腾讯");
+        resultGet.put("Alibaba","阿里");
+
+    }
+
+    @Override
+    public Call<String> getSearchResult(@Query("wd") String word) {
+        String response = resultGet.get(word);
+        return mDelegate.returningResponse(response).getSearchResult(word);
+    }
+}
+
+
+
+{% endhighlight %}
+
+##### Retrofit Mock 自定义
+
+{% highlight java %}
+
+public T returning(Call<?> call) {
+  final Call<?> behaviorCall = new BehaviorCall<>(behavior, executor, call);
+  return (T) Proxy.newProxyInstance(service.getClassLoader(), new Class[] { service },
+      new InvocationHandler() {
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+          Type returnType = method.getGenericReturnType();
+          Annotation[] methodAnnotations = method.getAnnotations();
+          CallAdapter<?> callAdapter = retrofit.callAdapter(returnType, methodAnnotations);
+          return callAdapter.adapt(behaviorCall);
+        }
+      });
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+Response<T> parseResponse(okhttp3.Response rawResponse) throws IOException {
+    ResponseBody rawBody = rawResponse.body();
+
+    // Remove the body's source (the only stateful object) so we can pass the response along.
+    rawResponse = rawResponse.newBuilder()
+        .body(new NoContentResponseBody(rawBody.contentType(), rawBody.contentLength()))
+        .build();
+
+    int code = rawResponse.code();
+    if (code < 200 || code >= 300) {
+      try {
+        // Buffer the entire body to avoid future I/O.
+        ResponseBody bufferedBody = Utils.buffer(rawBody);
+        return Response.error(bufferedBody, rawResponse);
+      } finally {
+        rawBody.close();
+      }
+    }
+
+    if (code == 204 || code == 205) {
+      return Response.success(null, rawResponse);
+    }
+
+    ExceptionCatchingRequestBody catchingBody = new ExceptionCatchingRequestBody(rawBody);
+    try {
+      T body = serviceMethod.toResponse(catchingBody);
+      return Response.success(body, rawResponse);
+    } catch (RuntimeException e) {
+      // If the underlying source threw an exception, propagate that rather than indicating it was
+      // a runtime exception.
+      catchingBody.throwIfCaught();
+      throw e;
+    }
+  }
+
+/////////////////////////////////////////////////////////////////
+
+final class RealCall implements Call {
+  ......
+  @Override public Response execute() throws IOException {
+  synchronized (this) {
+    if (executed) throw new IllegalStateException("Already Executed");
+    executed = true;
+  }
+  try {
+    client.dispatcher().executed(this);
+    Response result = getResponseWithInterceptorChain();
+    if (result == null) throw new IOException("Canceled");
+    return result;
+  } finally {
+    client.dispatcher().finished(this);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+private Response getResponseWithInterceptorChain() throws IOException {
+  // Build a full stack of interceptors.
+  List<Interceptor> interceptors = new ArrayList<>();
+  interceptors.addAll(client.interceptors());
+  interceptors.add(retryAndFollowUpInterceptor);
+  interceptors.add(new BridgeInterceptor(client.cookieJar()));
+  interceptors.add(new CacheInterceptor(client.internalCache()));
+  interceptors.add(new ConnectInterceptor(client));
+  if (!retryAndFollowUpInterceptor.isForWebSocket()) {
+    interceptors.addAll(client.networkInterceptors());
+  }
+  interceptors.add(new CallServerInterceptor(
+      retryAndFollowUpInterceptor.isForWebSocket()));
+
+  Interceptor.Chain chain = new RealInterceptorChain(
+      interceptors, null, null, null, 0, originalRequest);
+  return chain.proceed(originalRequest);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+public final class RealInterceptorChain implements Interceptor.Chain {
+  ......
+  public Response proceed(Request request, StreamAllocation streamAllocation, HttpStream httpStream,
+    Connection connection) throws IOException {
+  //拦截器链
+  // Call the next interceptor in the chain.
+  RealInterceptorChain next = new RealInterceptorChain(
+      interceptors, streamAllocation, httpStream, connection, index + 1, request);
+  Interceptor interceptor = interceptors.get(index);
+  Response response = interceptor.intercept(next);
+  ......
+
+  return response;
+}
+
+{% endhighlight %}
+
+通过源码的流程可以发现，请求最终通过拦截器链后返回处理后的Response，也就是我们可以通过自定义对应的拦截器拦截处理对应的Response，将处理后的Response返回出来即可
+
+##### 拦截器
+
+拦截器并不是什么新鲜玩意，在J2ee中我们知道Struts以及Spirng都支持插件化拦截器，Servelet的过滤器也是有类似作用，拦截器的用途却极为广泛，无论是用于处理日志，还是增加自定义功能都广泛使用，OkHttp支持多重拦截器，用于我们自定义处理请求，常用的有打印请求日志等；
 
 ---
 
-Quote:
+Quote:0.
 
 [Retrofit Doc](http://square.github.io/retrofit/)
 
