@@ -120,6 +120,7 @@ private static Retrofit.Builder builder =
    if (validateEagerly) {
      eagerlyValidateMethods(service);
    }
+   //Java 动态代理
    return (T) Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[] { service },
        new InvocationHandler() {
          private final Platform platform = Platform.get();
@@ -153,9 +154,41 @@ public static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces,
                   .newInstance(invocationHandler);
         }
 
-// 根据动态代理，其本质还是调用了 involke函数
+
 
 {% endhighlight %}
+
+这里涉及Retrofit核心，其使用反射Java动态代理，我们在调用apiService.method(),其本质还是调用了involke函数:
+
+{% highlight java %}
+
+/**
+ * 构建动态代理类实例对象
+ * Returns an instance of the dynamically built class for the specified
+ * interfaces. Method invocations on the returned instance are forwarded to
+ * the specified invocation handler. The interfaces must be visible from the
+ * supplied class loader; no duplicates are permitted. All non-public
+ * interfaces must be defined in the same package.
+ */
+newProxyInstance(ClassLoader loader, Class<?>[] interfaces,InvocationHandler invocationHandler)
+
+{% endhighlight %}     
+
+invocationHandler 指定了在动态代理类指定函数被调用时的注入的指定要执行的代码；
+
+另外顺带提一下另一个通过反射获取动态代理类构造函数实例化的方式：
+
+{% highlight java %}
+
+/**
+ * 构建动态代理类实例对象
+ */
+ Proxy.getProxyClass(interface.class.getClassLoader(), interface.class)
+                   .getConstructor(InvocationHandler.class）
+                   .newInstance(MyInvocationHandler);
+{% endhighlight %}                                    
+
+
 
 #### Mock Server
 
