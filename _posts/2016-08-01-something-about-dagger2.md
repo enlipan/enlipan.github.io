@@ -6,7 +6,9 @@ category: android
 
 Dagger2 类似 ButterKnife（compile-time annotations，生成ViewBind代理） ，Dagger利用Annotation Processing，编译时分析校验机制，是一种非常高效的依赖注入方式；
 
-对象的实例化往往容易引入其他依赖，依赖注入可以减少外部直接依赖，实现高模块化，同时也更加容易使用单元测试；
+对象的实例化往往容易引入其他依赖，依赖注入可以减少外部直接依赖，实现更加内聚模块化，提升模块复用性，当然也更加容易使用单元测试；
+
+>  Dagger 2 is the first to implement the full stack with generated code. The guiding principle is to generate code that mimics the code that a user might have hand-written to ensure that dependency injection is as simple, traceable and performant as it can be.
 
 
 

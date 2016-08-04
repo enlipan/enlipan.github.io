@@ -45,3 +45,10 @@ Environment.getExternalStorageDirectory();
 Environment.getExternalStoragePublicDirectory("exter");
 
 {% endhighlight %}
+
+
+---
+
+Quote:
+
+[Android存储使用参考](http://www.liaohuqiu.net/cn/posts/storage-in-android/)
