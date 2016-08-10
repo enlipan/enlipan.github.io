@@ -11,6 +11,8 @@ Dagger2 类似 ButterKnife（compile-time annotations，生成ViewBind代理） 
 >  Dagger 2 is the first to implement the full stack with generated code. The guiding principle is to generate code that mimics the code that a user might have hand-written to ensure that dependency injection is as simple, traceable and performant as it can be.
 
 
+### Dagger中的几种注解：
+
 
 
 
