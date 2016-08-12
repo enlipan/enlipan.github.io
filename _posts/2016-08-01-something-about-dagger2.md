@@ -4,7 +4,7 @@ title:  Dagger2
 category: android
 ---
 
-Dagger2 类似 ButterKnife（compile-time annotations，生成ViewBind代理） ，Dagger利用Annotation Processing，编译时分析校验机制，是一种非常高效的依赖注入方式；
+Dagger2 类似 ButterKnife（compile-time annotations，生成ViewBind代理） ，Dagger利用Annotation Processing，编译时分析校验机制，是一种非常高效的依赖注入(No New,Dependence come to you)方式；
 
 对象的实例化往往容易引入其他依赖，依赖注入可以减少外部直接依赖，实现更加内聚模块化，提升模块复用性，当然也更加容易使用单元测试；
 Dagger2与Spring框架同样完成对象的依赖注入，而Dagger通过在编译阶段的工作，而针对其他借助反射的依赖注入框架而言相对大大提升了运行时的性能，与Spring通过xml或注解并借助反射的形式完全不同；
@@ -66,6 +66,11 @@ this.userDetailsPresenter =
 *  函数
 
 
+> @Inject doesn’t work everywhere:             
+Interfaces can’t be constructed.                
+Third-party classes can’t be annotated.              
+Configurable objects must be configured!      
+
 ###  Dagger依赖级别：
 
 Module级别高于Inject构造函数，所以其流程如下：
@@ -82,6 +87,37 @@ Module级别高于Inject构造函数，所以其流程如下：
 
 所以Component的划分如何合理需要按情况去定义，即不能跨度过大导致无法维护管理，也不能粒度过细导致过多的Component，管理困难，比较推荐的形式是针对MVP架构而言，每一套MVP（Activity）一个Component，这样在细分时管理粒度适中，结构更加清晰（很多人喜欢一个MVP单独划分一个子Package,如userinfo下userInfoActivity,userinfoPresenter,userinfoM,以及接口，这样在这个包下新增一个类同样清晰）。
 
+### Dagger2使用：
+
+Gradle依赖：
+
+{% highlight groovy %}
+
+// Root build.gradle:
+
+dependencies {
+     // other classpath definitions here
+     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+ }
+
+
+//  app/build.gradle:
+
+// add after applying plugin: 'com.android.application'  
+apply plugin: 'com.neenbedankt.android-apt'
+
+dependencies {
+    // apt command comes from the android-apt plugin
+    apt 'com.google.dagger:dagger-compiler:2.2'
+    compile 'com.google.dagger:dagger:2.2'
+    provided 'javax.annotation:jsr250-api:1.0'
+}
+
+
+{% endhighlight %}
+
+> By convention, @Provides methods are named with a provide prefix and module classes are named with a Module suffix.
+
 
 
 
@@ -90,6 +126,8 @@ Module级别高于Inject构造函数，所以其流程如下：
 Quote：
 
 [Dagger 2 users-guide](http://google.github.io/dagger/users-guide)
+
+[Dependency injection with Dagger 2](https://medium.com/@froger_mcs/dependency-injection-with-dagger-2-producers-c424ddc60ba3#.jv1zlbqbp)
 
 [Dependency Injection with Dagger 2](https://github.com/codepath/android_guides/wiki/Dependency-Injection-with-Dagger-2)
 
