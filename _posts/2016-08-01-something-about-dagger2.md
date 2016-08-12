@@ -47,13 +47,15 @@ this.userDetailsPresenter =
 
 *  @Module:提供Inject构建对象时，所寻找依赖的地方（工厂），提供上层所需的依赖，Modul的层次思想明显，上层代码在获取依赖时并不关心Module层的具体提供，也就是一旦依赖需要修改时也只需要更改Modeul层的提供而无需修改上层代码；   
 
-*  @Provide:在Modeles用于定义函数，用以告诉Dagger我们希望用何种方式获取依赖
+*  @Provide:在Modeles用于定义函数，用以告诉Dagger我们希望用何种方式获取依赖，当某个对象需要注入时，框架通过Component桥梁，在Modeule中寻找用Provider标注的对应实例创建函数构建；
 
 *  @Componet:提供Module与Inject的桥梁，连接二者，也就是提供依赖的底层与需要依赖注入的对象之间的映射关联关系，也就是需要依赖的对象将知道来源，提供依赖的对象明白注入去处;Componet 一般采用接口实现；Componet其Modules属性可以添加多个Module进行统一管理
 
 *  @Scope:限定注解作用域
 
-*  @Qualifier:当Class类型不足以区分类型时，用于强化鉴别机制，如指定Context类型，而ActivityContext与ApplicationContext都属于Context
+*  @Qualifier:当Class类型不足以区分类型时，用于强化鉴别机制，如指定Context类型，而ActivityContext与ApplicationContext都属于Context，或者当有多种实例对象可以产生时：如带参数构造函数与不带参数构造函数都可以生产对象，Qualifier注解用于解决这类依赖指定不清晰的问题；
+
+总结：Dagger依赖注入的核心是Inject，Component，Module，以及Provider，各自分工组合完成；
 
 ### Dagger注入方式：
 
@@ -62,6 +64,14 @@ this.userDetailsPresenter =
 *  类非私有属性
 
 *  函数
+
+### 依赖的组合形式：
+
+既然有分层的形式，Inject属于应用层，并不Care谁提供的，而Module也并不Care谁来使用，那么核心就在Component的组合形式，试想如果整个应用所有的Module都由一个Component管理，这个Component必将成为脏代码，代码将不易于维护管理；所以Component的划分如何合理需要按情况去定义，即不能跨度过大导致无法维护管理，也不能粒度过细导致过多的Component，管理困难，比较推荐的形式是针对MVP架构而言，每一套MVP（Activity）一个Component，这样在细分时管理粒度适中，结构更加清晰（很多人喜欢一个MVP单独划分一个子Package,如userinfo下userInfoActivity,userinfoPresenter,userinfoM,以及接口，这样在这个包下新增一个类同样清晰）
+
+
+
+
 
 
 
