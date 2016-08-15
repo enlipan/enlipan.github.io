@@ -119,6 +119,9 @@ dependencies {
 
 {% endhighlight %}
 
+>  Note that the provided keyword refers to dependencies that are only needed at compilation. The Dagger compiler generates code that is used to create the dependency graph of the classes defined in your source code. These classes are added to the IDE class path during compilation. The apt keyword, which is provided with the android-apt plugin, does not add these classes to the class path, they are used only for annotation processing, which prevents accidentally referencing them.
+
+
 > By convention, @Provides methods are named with a provide prefix and module classes are named with a Module suffix.
 
 
