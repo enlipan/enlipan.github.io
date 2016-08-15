@@ -57,13 +57,13 @@ this.userDetailsPresenter =
 
 总结：Dagger依赖注入的核心是Inject，Component，Module，以及Provider，各自分工组合完成；
 
-### Dagger注入方式：
+### Dagger使用Inject注入方式：
 
 *  构造函数
 
-*  类非私有属性
+*  类非私有属性（not final ,not private）
 
-*  函数
+*  函数Injection—— 方法参数依赖注入，注入发生在对象被完全加载完成时；（补充构造函数的设定，将方法参数注入到对象）
 
 
 > @Inject doesn’t work everywhere:             
@@ -86,6 +86,9 @@ Module级别高于Inject构造函数，所以其流程如下：
 既然有分层的形式，Inject属于应用层，并不Care谁提供的，而Module也并不Care谁来使用，那么核心就在Component的组合形式，试想如果整个应用所有的Module都由一个Component管理，这个Component必将成为脏代码，代码将不易于维护管理；
 
 所以Component的划分如何合理需要按情况去定义，即不能跨度过大导致无法维护管理，也不能粒度过细导致过多的Component，管理困难，比较推荐的形式是针对MVP架构而言，每一套MVP（Activity）一个Component，这样在细分时管理粒度适中，结构更加清晰（很多人喜欢一个MVP单独划分一个子Package,如userinfo下userInfoActivity,userinfoPresenter,userinfoM,以及接口，这样在这个包下新增一个类同样清晰）。
+
+
+
 
 ### Dagger2使用：
 
@@ -129,7 +132,7 @@ Quote：
 
 [Dependency injection with Dagger 2](https://medium.com/@froger_mcs/dependency-injection-with-dagger-2-producers-c424ddc60ba3#.jv1zlbqbp)
 
-[Dependency Injection with Dagger 2](https://github.com/codepath/android_guides/wiki/Dependency-Injection-with-Dagger-2)
+[Dependency Injection with Dagger 2-codepath](https://github.com/codepath/android_guides/wiki/Dependency-Injection-with-Dagger-2)
 
 [Tasting Dagger 2 on Android](http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/)
 
