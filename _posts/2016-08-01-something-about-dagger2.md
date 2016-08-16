@@ -132,7 +132,7 @@ Quote：
 
 [Dependency injection with Dagger 2](https://medium.com/@froger_mcs/dependency-injection-with-dagger-2-producers-c424ddc60ba3#.jv1zlbqbp)
 
-[Dependency Injection with Dagger 2](https://github.com/codepath/android_guides/wiki/Dependency-Injection-with-Dagger-2)
+[Dependency Injection with Dagger 2-codepath](https://github.com/codepath/android_guides/wiki/Dependency-Injection-with-Dagger-2)
 
 [Tasting Dagger 2 on Android](http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/)
 
