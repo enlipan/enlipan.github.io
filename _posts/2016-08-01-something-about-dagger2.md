@@ -138,10 +138,26 @@ Scope 并没有神奇的特效，并非限定了某个Scope就制定了一个对
 
 #### Module 命名的一些约定：
 
-@Modules（Provider） 与 @Inject(构造函数)  共同构建一副借助其依赖而链接起来的对象图
+@Modules（Provider） 与 @Inject(构造函数)  共同构建一副借助其依赖而链接起来的对象图，借助component（Interface）作为对象图的节点，连接各个Module；
 
 
 > By convention, @Provides methods are named with a provide prefix and module classes are named with a Module suffix.
+
+####  Component：
+
+>  Any module with an accessible default constructor can be elided as the builder will construct an instance automatically if none is set. And for any module whose @Provides methods are all static, the implementation doesn’t need an instance at all. If all dependencies can be constructed without the user creating a dependency instance, then the generated implementation will also have a create() method that can be used to get a new instance without having to deal with the builder.
+
+
+Component构建的构建规则由以下这些依赖共同构建形成：
+
+> Those declared by @Provides methods within a @Module referenced directly by @Component.modules or transitively via @Module.includes
+Any type with an @Inject constructor that is unscoped or has a @Scope annotation that matches one of the component’s scopes
+The component provision methods of the component dependencies
+The component itself
+Unqualified builders for any included subcomponent
+Provider or Lazy wrappers for any of the above bindings
+A Provider of a Lazy of any of the above bindings (e.g., Provider<Lazy<CoffeeMaker>>)
+A MembersInjector for any type
 
 
 ---
