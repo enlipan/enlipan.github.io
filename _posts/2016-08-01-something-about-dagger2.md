@@ -4,6 +4,13 @@ title:  Dagger2
 category: android
 ---
 
+为什么要使用Dagger2？同样是依赖注入框架，Dagger2针对其前辈们（Spring，Guice，Dagger1）有什么优势？
+
+{:.center}
+![Dagger2](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20160816/Dagger2.JPG)
+
+Dagger2 没有了烦人的xml配置文件管理，不再依赖运行时反射检验机制，提升性能，这点针对移动设备尤其重要，利用编译时完全校验机制，编译时更加产生优雅的生成代码，可调试性增强等等优势。
+
 Dagger2 类似 ButterKnife（compile-time annotations，生成ViewBind代理） ，Dagger利用Annotation Processing，编译时分析校验机制，是一种非常高效的依赖注入(No New,Dependence come to you)方式；
 
 对象的实例化往往容易引入其他依赖，依赖注入可以减少外部直接依赖，实现更加内聚模块化，提升模块复用性，当然也更加容易使用单元测试；
@@ -122,9 +129,19 @@ dependencies {
 >  Note that the provided keyword refers to dependencies that are only needed at compilation. The Dagger compiler generates code that is used to create the dependency graph of the classes defined in your source code. These classes are added to the IDE class path during compilation. The apt keyword, which is provided with the android-apt plugin, does not add these classes to the class path, they are used only for annotation processing, which prevents accidentally referencing them.
 
 
+
+#### About Scope ：
+
+Scope 并没有神奇的特效，并非限定了某个Scope就制定了一个对象的生命周期规则，其生命周期规则需要执行结合Component以及实际的注入去限定；
+
+>  A scoped provider creates one instance for that given scope for each component. Meaning a component keeps track of its own instances, but other components don't have a shared scope pool or some magic. To have one instance in a given scope, you need one instance of the component. This is why you must provide the ApplicationComponent to access its own scoped dependencies.
+
+#### Module 命名的一些约定：
+
+@Modules（Provider） 与 @Inject(构造函数)  共同构建一副借助其依赖而链接起来的对象图
+
+
 > By convention, @Provides methods are named with a provide prefix and module classes are named with a Module suffix.
-
-
 
 
 ---
@@ -137,6 +154,8 @@ Quote：
 
 [Dependency Injection with Dagger 2-codepath](https://github.com/codepath/android_guides/wiki/Dependency-Injection-with-Dagger-2)
 
+[What determines the lifecycle of a component (object graph) in Dagger 2?](http://stackoverflow.com/questions/28411352/what-determines-the-lifecycle-of-a-component-object-graph-in-dagger-2)
+
 [Tasting Dagger 2 on Android](http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/)
 
 [Android：dagger2让你爱不释手](http://www.jianshu.com/p/cd2c1c9f68d4)
@@ -144,3 +163,9 @@ Quote：
 [Inject everything — ViewHolder and Dagger 2 (with Multibinding and AutoFactory example)](https://medium.com/@froger_mcs/inject-everything-viewholder-and-dagger-2-e1551a76a908#.z22tzr2cn)
 
 [详解Dagger2](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0519/2892.html)
+
+Youtube：
+
+[DAGGER 2 - A New Type of dependency injection](https://www.youtube.com/watch?v=oK_XtfXPkqw)
+
+[The Future of Dependency Injection with Dagger 2](https://www.youtube.com/watch?v=plK0zyRLIP8)
