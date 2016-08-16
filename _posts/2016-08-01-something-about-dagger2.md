@@ -119,6 +119,18 @@ dependencies {
 >  Note that the provided keyword refers to dependencies that are only needed at compilation. The Dagger compiler generates code that is used to create the dependency graph of the classes defined in your source code. These classes are added to the IDE class path during compilation. The apt keyword, which is provided with the android-apt plugin, does not add these classes to the class path, they are used only for annotation processing, which prevents accidentally referencing them.
 
 
+
+#### About Scope ：
+
+Scope 并没有神奇的特效，并非限定了某个Scope就制定了一个对象的生命周期规则，其生命周期规则需要执行结合Component以及实际的注入去限定；
+
+>  A scoped provider creates one instance for that given scope for each component. Meaning a component keeps track of its own instances, but other components don't have a shared scope pool or some magic. To have one instance in a given scope, you need one instance of the component. This is why you must provide the ApplicationComponent to access its own scoped dependencies.
+
+#### Module 命名的一些约定：
+
+@Modules（Provider） 与 @Inject(构造函数)  共同构建一副借助其依赖而链接起来的对象图
+
+
 > By convention, @Provides methods are named with a provide prefix and module classes are named with a Module suffix.
 
 
@@ -133,6 +145,8 @@ Quote：
 [Dependency injection with Dagger 2](https://medium.com/@froger_mcs/dependency-injection-with-dagger-2-producers-c424ddc60ba3#.jv1zlbqbp)
 
 [Dependency Injection with Dagger 2-codepath](https://github.com/codepath/android_guides/wiki/Dependency-Injection-with-Dagger-2)
+
+[What determines the lifecycle of a component (object graph) in Dagger 2?](http://stackoverflow.com/questions/28411352/what-determines-the-lifecycle-of-a-component-object-graph-in-dagger-2)
 
 [Tasting Dagger 2 on Android](http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/)
 
