@@ -170,6 +170,8 @@ Quote：
 
 [Dependency Injection with Dagger 2-codepath](https://github.com/codepath/android_guides/wiki/Dependency-Injection-with-Dagger-2)
 
+[Dependency injection with Dagger 2 - the API](http://frogermcs.github.io/dependency-injection-with-dagger-2-the-api/)
+
 [What determines the lifecycle of a component (object graph) in Dagger 2?](http://stackoverflow.com/questions/28411352/what-determines-the-lifecycle-of-a-component-object-graph-in-dagger-2)
 
 [Tasting Dagger 2 on Android](http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/)
