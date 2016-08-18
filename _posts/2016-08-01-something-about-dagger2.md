@@ -136,6 +136,24 @@ Scope 并没有神奇的特效，并非限定了某个Scope就制定了一个对
 
 >  A scoped provider creates one instance for that given scope for each component. Meaning a component keeps track of its own instances, but other components don't have a shared scope pool or some magic. To have one instance in a given scope, you need one instance of the component. This is why you must provide the ApplicationComponent to access its own scoped dependencies.
 
+Scope的约定是针对于Coponent域，也就是与其对应Coponent管理对应，如Singleton单例，是在对应Component管理下提供的依赖下是单例的，如果另外构建了一个Component，也会同时构建另一个Component对应下的单例对象，对象的生命依附于Component实例；
+
+介于上述对象生命类型依附于Component，我们可以通过控制Component的构建注入范围来控制对象，定义了Scope的Module在对应的范围下只有一个对象实例，而这个Component注入的范围是我们自行控制的，可以通过自定义合适名称的Scope结合Component的注入对象，控制依赖的Scope；
+
+如：
+
+{% highlight java %}
+
+@PerFragment
+component.inject(someFragment fragment);
+
+{% endhighlight %}
+
+这里再次说明了，对象的生命存在不是由 Scope 范围保证了，是我们自行定义的，Singleton究竟是应用中单例还是Activity范围内单例都是自行控制的，这与Component相关；如果应用生命周期内一个Component，如果所有使用对象的依赖是这个应用App中的Component提供，则该依赖注入对象应用全局单例；
+
+**单例的有效范围随着其依附的Component**
+
+
 #### Module 命名的一些约定：
 
 @Modules（Provider） 与 @Inject(构造函数)  共同构建一副借助其依赖而链接起来的对象图，借助component（Interface）作为对象图的节点，连接各个Module；
@@ -159,6 +177,8 @@ Provider or Lazy wrappers for any of the above bindings
 A Provider of a Lazy of any of the above bindings (e.g., Provider<Lazy<CoffeeMaker>>)
 A MembersInjector for any type
 
+component 之间的依赖关系：当利用Component之间存在的依赖关系构建对象图时，被依赖Component需要提供对应对象的返回函数帮助构建对象图，也就是Module的传递；
+Component 依赖时二者不能有相同Scope，有对应Cope时，二者要求一个独立的对象，但是对象明明在对应范围只应该存在一份实例，这就产生了对象生命范围冲突；
 
 ---
 
