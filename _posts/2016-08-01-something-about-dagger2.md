@@ -172,6 +172,8 @@ Quote：
 
 [What determines the lifecycle of a component (object graph) in Dagger 2?](http://stackoverflow.com/questions/28411352/what-determines-the-lifecycle-of-a-component-object-graph-in-dagger-2)
 
+[Dagger 2 activity injection not working - Dagger2 inject BaseClass Not Working](http://stackoverflow.com/questions/29367921/dagger-2-activity-injection-not-working?rq=1)
+
 [Tasting Dagger 2 on Android](http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/)
 
 [Android：dagger2让你爱不释手](http://www.jianshu.com/p/cd2c1c9f68d4)
