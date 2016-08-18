@@ -4,6 +4,13 @@ title:  Dagger2
 category: android
 ---
 
+为什么要使用Dagger2？同样是依赖注入框架，Dagger2针对其前辈们（Spring，Guice，Dagger1）有什么优势？
+
+{:.center}
+![Dagger2](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20160816/Dagger2.JPG)
+
+Dagger2 没有了烦人的xml配置文件管理，不再依赖运行时反射检验机制，提升性能，这点针对移动设备尤其重要，利用编译时完全校验机制，编译时更加产生优雅的生成代码，可调试性增强等等优势。
+
 Dagger2 类似 ButterKnife（compile-time annotations，生成ViewBind代理） ，Dagger利用Annotation Processing，编译时分析校验机制，是一种非常高效的依赖注入(No New,Dependence come to you)方式；
 
 对象的实例化往往容易引入其他依赖，依赖注入可以减少外部直接依赖，实现更加内聚模块化，提升模块复用性，当然也更加容易使用单元测试；
@@ -57,13 +64,13 @@ this.userDetailsPresenter =
 
 总结：Dagger依赖注入的核心是Inject，Component，Module，以及Provider，各自分工组合完成；
 
-### Dagger注入方式：
+### Dagger使用Inject注入方式：
 
 *  构造函数
 
-*  类非私有属性
+*  类非私有属性（not final ,not private）
 
-*  函数
+*  函数Injection—— 方法参数依赖注入，注入发生在对象被完全加载完成时；（补充构造函数的设定，将方法参数注入到对象）
 
 
 > @Inject doesn’t work everywhere:             
@@ -86,6 +93,9 @@ Module级别高于Inject构造函数，所以其流程如下：
 既然有分层的形式，Inject属于应用层，并不Care谁提供的，而Module也并不Care谁来使用，那么核心就在Component的组合形式，试想如果整个应用所有的Module都由一个Component管理，这个Component必将成为脏代码，代码将不易于维护管理；
 
 所以Component的划分如何合理需要按情况去定义，即不能跨度过大导致无法维护管理，也不能粒度过细导致过多的Component，管理困难，比较推荐的形式是针对MVP架构而言，每一套MVP（Activity）一个Component，这样在细分时管理粒度适中，结构更加清晰（很多人喜欢一个MVP单独划分一个子Package,如userinfo下userInfoActivity,userinfoPresenter,userinfoM,以及接口，这样在这个包下新增一个类同样清晰）。
+
+
+
 
 ### Dagger2使用：
 
@@ -128,12 +138,26 @@ Scope 并没有神奇的特效，并非限定了某个Scope就制定了一个对
 
 #### Module 命名的一些约定：
 
-@Modules（Provider） 与 @Inject(构造函数)  共同构建一副借助其依赖而链接起来的对象图
+@Modules（Provider） 与 @Inject(构造函数)  共同构建一副借助其依赖而链接起来的对象图，借助component（Interface）作为对象图的节点，连接各个Module；
 
 
 > By convention, @Provides methods are named with a provide prefix and module classes are named with a Module suffix.
 
+####  Component：
 
+>  Any module with an accessible default constructor can be elided as the builder will construct an instance automatically if none is set. And for any module whose @Provides methods are all static, the implementation doesn’t need an instance at all. If all dependencies can be constructed without the user creating a dependency instance, then the generated implementation will also have a create() method that can be used to get a new instance without having to deal with the builder.
+
+
+Component构建的构建规则由以下这些依赖共同构建形成：
+
+> Those declared by @Provides methods within a @Module referenced directly by @Component.modules or transitively via @Module.includes
+Any type with an @Inject constructor that is unscoped or has a @Scope annotation that matches one of the component’s scopes
+The component provision methods of the component dependencies
+The component itself
+Unqualified builders for any included subcomponent
+Provider or Lazy wrappers for any of the above bindings
+A Provider of a Lazy of any of the above bindings (e.g., Provider<Lazy<CoffeeMaker>>)
+A MembersInjector for any type
 
 
 ---
@@ -155,3 +179,9 @@ Quote：
 [Inject everything — ViewHolder and Dagger 2 (with Multibinding and AutoFactory example)](https://medium.com/@froger_mcs/inject-everything-viewholder-and-dagger-2-e1551a76a908#.z22tzr2cn)
 
 [详解Dagger2](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0519/2892.html)
+
+Youtube：
+
+[DAGGER 2 - A New Type of dependency injection](https://www.youtube.com/watch?v=oK_XtfXPkqw)
+
+[The Future of Dependency Injection with Dagger 2](https://www.youtube.com/watch?v=plK0zyRLIP8)
