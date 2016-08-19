@@ -180,6 +180,15 @@ A MembersInjector for any type
 component 之间的依赖关系：当利用Component之间存在的依赖关系构建对象图时，被依赖Component需要提供对应对象的返回函数帮助构建对象图，也就是Module的传递；
 Component 依赖时二者不能有相同Scope，有对应Cope时，二者要求一个独立的对象，但是对象明明在对应范围只应该存在一份实例，这就产生了对象生命范围冲突；
 
+>  Two components with the same scope can break scoping.
+From your example:
+Component1 c1 = Dagger_Component1.create();
+Component2 c2_a = Dagger_Component2.builder().component1(c1).build();
+Component2 c2_b = Dagger_Component2.builder().component1(c1).build();
+c1 has singletons which are used across c2_a and c2_b but the singletons from Component2 get separate instances in c2_a and c2_b.
+—— By JakeWharton
+
+
 ---
 
 Quote：
@@ -191,6 +200,8 @@ Quote：
 [Dependency Injection with Dagger 2-codepath](https://github.com/codepath/android_guides/wiki/Dependency-Injection-with-Dagger-2)
 
 [What determines the lifecycle of a component (object graph) in Dagger 2?](http://stackoverflow.com/questions/28411352/what-determines-the-lifecycle-of-a-component-object-graph-in-dagger-2)
+
+[Snapshot release 13 breaks @Singleton #107](https://github.com/google/dagger/issues/107#issuecomment-71524636)
 
 [Dagger 2 activity injection not working - Dagger2 inject BaseClass Not Working](http://stackoverflow.com/questions/29367921/dagger-2-activity-injection-not-working?rq=1)
 
