@@ -189,6 +189,34 @@ c1 has singletons which are used across c2_a and c2_b but the singletons from Co
 —— By JakeWharton
 
 
+Component如何解决多依赖（多级依赖）问题，如我们期望 Acomponent  依赖 Bcomponent ,而 Bcomponent 又依赖 CAppComponent进行一个依赖的传递，然而这样的使用这样是不允许的，我们可以通过继承完成多级依赖，也就是 Acomponent 依赖 Bcomponent,而Bcomponent extends CAppComponent,通过这样的形式解决多级依赖；
+
+>  If you're going to do subcomponents in three levels, and you want to shuttle your singletons to the bottom layer, in the current code, just have your middle-tier component extend the application-level component. THis will expose those bindings to the lower-tier component without requring that you have your lower-tier depend on two scoped components.
+
+{% highlight java %}
+
+@dagger.Component(dependencies = ActivityComponent.class, modules = ScreenModule.class)
+@PerScreenScope
+interface ScreenComponent {}
+//--
+@dagger.Component(dependencies = AppComponent.class, modules = ActivityModule.class)
+@PerActivityScope
+interface ActivityComponent extends AppComponent {} // <---- note here, the pass-through contract.
+//--
+@dagger.Component(modules = AppModule.class)
+@Singleton
+interface AppComponent {}
+
+{% endhighlight %}
+
+>  if you do this, then all the contract of AppComponent is visible to ScreenComponent via ActivityComponent. then you don't have to do the multiple dependencies (which are disallowed)
+That said, I think the forthcoming @SubComponent approach will make this a little cleaner, and with fewer methods, etc. But for now, the above should be a reasonable way to go.
+
+>   Also, during migration, you can disable the "singleton can't depend on singleton" bit with an annotation processor flag -Adagger.disableInterComponentScopeValidation=warning (or none). It is intended as a migration aid from dagger 1 so please don't rely on it, as it may not be there forever. It doesn't disable all validations, but should at least permit you to do the singleton->singleton stuff while you migrate to separate meaningful scoping annotations.
+
+
+
+
 ---
 
 Quote：
