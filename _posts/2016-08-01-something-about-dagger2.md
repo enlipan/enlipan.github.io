@@ -215,7 +215,30 @@ That said, I think the forthcoming @SubComponent approach will make this a littl
 >   Also, during migration, you can disable the "singleton can't depend on singleton" bit with an annotation processor flag -Adagger.disableInterComponentScopeValidation=warning (or none). It is intended as a migration aid from dagger 1 so please don't rely on it, as it may not be there forever. It doesn't disable all validations, but should at least permit you to do the singleton->singleton stuff while you migrate to separate meaningful scoping annotations.
 
 
+####  SubComponent:
 
+SubComponent 属于 Component 继承的另一种方式，与 dependencies 类似，SubComponent 有自己独立的生命周期；
+
+SubComponent的使用与dependencies 不一样的是：
+
+*  需要在 Component中显示声明 SubComponent 构造；   
+
+*  不需要借助 dependencies 显示声明对象的传递，能够获取父Componet的所有对象元素
+
+{% highlight java %}
+
+@ActivityScope
+@Subcomponent(modules={ MyModule.class })
+public interface MyActivitySubComponent {
+}
+
+@Singleton
+@Component(modules={ ... })
+public interface MyAppComponent {
+    MyActivitySubComponent newMyActivitySubcomponent(MyModule module);
+}
+
+{% endhighlight %}
 
 ---
 
