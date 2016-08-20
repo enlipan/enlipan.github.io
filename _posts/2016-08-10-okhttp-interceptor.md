@@ -111,4 +111,67 @@ public class ConnectStateInterceptor implements Interceptor{
     }
 }
 
+
+
+{% endhighlight %}
+
+
+总结：
+
+其实，OkHttp提供了 OkHttpLogingInterceptor 库作为日志输出，自己重复造轮子才发现一些问题，在造轮子之后对比其官方实现，发现自己的差异还是很大的，代码不够优雅，一些细节的把控还是不尽完善，需要对比反思一下。
+
+如官方的Response内容读取以及头的读取就更加优雅：
+
+
+{% highlight java %}
+
+BufferedSource source = responseBody.source();
+source.request(Long.MAX_VALUE); // Buffer the entire body.
+Buffer buffer = source.buffer();
+
+Charset charset = UTF8;
+MediaType contentType = responseBody.contentType();
+if (contentType != null) {
+  try {
+    charset = contentType.charset(UTF8);
+  } catch (UnsupportedCharsetException e) {
+    logger.log("");
+    logger.log("Couldn't decode the response body; charset is likely malformed.");
+    logger.log("<-- END HTTP");
+
+    return response;
+  }
+}
+
+if (contentLength != 0) {
+  logger.log("");
+  logger.log(buffer.clone().readString(charset));
+}
+
+
+//////////////////////////////////
+//头的读取
+
+if (hasRequestBody) {
+        // Request body headers are only present when installed as a network interceptor. Force
+        // them to be included (when available) so there values are known.
+        if (requestBody.contentType() != null) {
+          logger.log("Content-Type: " + requestBody.contentType());
+        }
+        if (requestBody.contentLength() != -1) {
+          logger.log("Content-Length: " + requestBody.contentLength());
+        }
+      }
+
+      Headers headers = request.headers();
+      for (int i = 0, count = headers.size(); i < count; i++) {
+        String name = headers.name(i);
+        // Skip headers from the request body as they are explicitly logged above.
+        //这种方式可以读出 post的字段内容，而直接打印输出 headers，post内容不显示
+        if (!"Content-Type".equalsIgnoreCase(name) && !"Content-Length".equalsIgnoreCase(name)) {
+          logger.log(name + ": " + headers.value(i));
+        }
+      }
+
+
 {% endhighlight %}

@@ -136,6 +136,24 @@ Scope 并没有神奇的特效，并非限定了某个Scope就制定了一个对
 
 >  A scoped provider creates one instance for that given scope for each component. Meaning a component keeps track of its own instances, but other components don't have a shared scope pool or some magic. To have one instance in a given scope, you need one instance of the component. This is why you must provide the ApplicationComponent to access its own scoped dependencies.
 
+Scope的约定是针对于Coponent域，也就是与其对应Coponent管理对应，如Singleton单例，是在对应Component管理下提供的依赖下是单例的，如果另外构建了一个Component，也会同时构建另一个Component对应下的单例对象，对象的生命依附于Component实例；
+
+介于上述对象生命类型依附于Component，我们可以通过控制Component的构建注入范围来控制对象，定义了Scope的Module在对应的范围下只有一个对象实例，而这个Component注入的范围是我们自行控制的，可以通过自定义合适名称的Scope结合Component的注入对象，控制依赖的Scope；
+
+如：
+
+{% highlight java %}
+
+@PerFragment
+component.inject(someFragment fragment);
+
+{% endhighlight %}
+
+这里再次说明了，对象的生命存在不是由 Scope 范围保证了，是我们自行定义的，Singleton究竟是应用中单例还是Activity范围内单例都是自行控制的，这与Component相关；如果应用生命周期内一个Component，如果所有使用对象的依赖是这个应用App中的Component提供，则该依赖注入对象应用全局单例；
+
+**单例的有效范围随着其依附的Component**
+
+
 #### Module 命名的一些约定：
 
 @Modules（Provider） 与 @Inject(构造函数)  共同构建一副借助其依赖而链接起来的对象图，借助component（Interface）作为对象图的节点，连接各个Module；
@@ -159,6 +177,45 @@ Provider or Lazy wrappers for any of the above bindings
 A Provider of a Lazy of any of the above bindings (e.g., Provider<Lazy<CoffeeMaker>>)
 A MembersInjector for any type
 
+component 之间的依赖关系：当利用Component之间存在的依赖关系构建对象图时，被依赖Component需要提供对应对象的返回函数帮助构建对象图，也就是Module的传递；
+Component 依赖时二者不能有相同Scope，有对应Cope时，二者要求一个独立的对象，但是对象明明在对应范围只应该存在一份实例，这就产生了对象生命范围冲突；
+
+>  Two components with the same scope can break scoping.
+From your example:
+Component1 c1 = Dagger_Component1.create();
+Component2 c2_a = Dagger_Component2.builder().component1(c1).build();
+Component2 c2_b = Dagger_Component2.builder().component1(c1).build();
+c1 has singletons which are used across c2_a and c2_b but the singletons from Component2 get separate instances in c2_a and c2_b.
+—— By JakeWharton
+
+
+Component如何解决多依赖（多级依赖）问题，如我们期望 Acomponent  依赖 Bcomponent ,而 Bcomponent 又依赖 CAppComponent进行一个依赖的传递，然而这样的使用这样是不允许的，我们可以通过继承完成多级依赖，也就是 Acomponent 依赖 Bcomponent,而Bcomponent extends CAppComponent,通过这样的形式解决多级依赖；
+
+>  If you're going to do subcomponents in three levels, and you want to shuttle your singletons to the bottom layer, in the current code, just have your middle-tier component extend the application-level component. THis will expose those bindings to the lower-tier component without requring that you have your lower-tier depend on two scoped components.
+
+{% highlight java %}
+
+@dagger.Component(dependencies = ActivityComponent.class, modules = ScreenModule.class)
+@PerScreenScope
+interface ScreenComponent {}
+//--
+@dagger.Component(dependencies = AppComponent.class, modules = ActivityModule.class)
+@PerActivityScope
+interface ActivityComponent extends AppComponent {} // <---- note here, the pass-through contract.
+//--
+@dagger.Component(modules = AppModule.class)
+@Singleton
+interface AppComponent {}
+
+{% endhighlight %}
+
+>  if you do this, then all the contract of AppComponent is visible to ScreenComponent via ActivityComponent. then you don't have to do the multiple dependencies (which are disallowed)
+That said, I think the forthcoming @SubComponent approach will make this a little cleaner, and with fewer methods, etc. But for now, the above should be a reasonable way to go.
+
+>   Also, during migration, you can disable the "singleton can't depend on singleton" bit with an annotation processor flag -Adagger.disableInterComponentScopeValidation=warning (or none). It is intended as a migration aid from dagger 1 so please don't rely on it, as it may not be there forever. It doesn't disable all validations, but should at least permit you to do the singleton->singleton stuff while you migrate to separate meaningful scoping annotations.
+
+
+
 
 ---
 
@@ -173,6 +230,10 @@ Quote：
 [Dependency injection with Dagger 2 - the API](http://frogermcs.github.io/dependency-injection-with-dagger-2-the-api/)
 
 [What determines the lifecycle of a component (object graph) in Dagger 2?](http://stackoverflow.com/questions/28411352/what-determines-the-lifecycle-of-a-component-object-graph-in-dagger-2)
+
+[Snapshot release 13 breaks @Singleton #107](https://github.com/google/dagger/issues/107#issuecomment-71524636)
+
+[Dagger 2 activity injection not working - Dagger2 inject BaseClass Not Working](http://stackoverflow.com/questions/29367921/dagger-2-activity-injection-not-working?rq=1)
 
 [Tasting Dagger 2 on Android](http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/)
 
