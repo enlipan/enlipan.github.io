@@ -153,6 +153,7 @@ component.inject(someFragment fragment);
 
 **单例的有效范围随着其依附的Component**
 
+> Scoping components only means that the objects you get from Dagger are cached until you rebuild the component. If you do not scope it (or use the @Singleton) tag you will simply access the module’s providing method to get the object. 
 
 #### Module 命名的一些约定：
 
@@ -189,7 +190,7 @@ c1 has singletons which are used across c2_a and c2_b but the singletons from Co
 —— By JakeWharton
 
 
-Component如何解决多依赖（多级依赖）问题，如我们期望 Acomponent  依赖 Bcomponent ,而 Bcomponent 又依赖 CAppComponent进行一个依赖的传递，然而这样的使用这样是不允许的，我们可以通过继承完成多级依赖，也就是 Acomponent 依赖 Bcomponent,而Bcomponent extends CAppComponent,通过这样的形式解决多级依赖；
+Component如何解决作用域单例下Subcomponent的多级依赖问题，如我们期望 Acomponent  依赖 Bcomponent ,而 Bcomponent 又依赖 CAppComponent进行一个依赖的传递，然而这样的使用这样是不允许的，我们可以通过继承完成多级依赖，也就是 Acomponent 依赖 Bcomponent,而Bcomponent extends CAppComponent,通过这样的形式解决多级依赖；
 
 >  If you're going to do subcomponents in three levels, and you want to shuttle your singletons to the bottom layer, in the current code, just have your middle-tier component extend the application-level component. THis will expose those bindings to the lower-tier component without requring that you have your lower-tier depend on two scoped components.
 
@@ -249,6 +250,8 @@ Quote：
 [Dependency injection with Dagger 2](https://medium.com/@froger_mcs/dependency-injection-with-dagger-2-producers-c424ddc60ba3#.jv1zlbqbp)
 
 [Dependency Injection with Dagger 2-codepath](https://github.com/codepath/android_guides/wiki/Dependency-Injection-with-Dagger-2)
+
+[Making a Best Practice App #4 — Dagger 2](https://medium.com/@patrykpoborca/making-a-best-practice-app-4-dagger-2-267ec5f6c89a#.hje27y5kt)
 
 [Dependency injection with Dagger 2 - the API](http://frogermcs.github.io/dependency-injection-with-dagger-2-the-api/)
 
