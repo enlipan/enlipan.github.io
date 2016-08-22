@@ -153,7 +153,7 @@ component.inject(someFragment fragment);
 
 **单例的有效范围随着其依附的Component**
 
-> Scoping components only means that the objects you get from Dagger are cached until you rebuild the component. If you do not scope it (or use the @Singleton) tag you will simply access the module’s providing method to get the object. 
+> Scoping components only means that the objects you get from Dagger are cached until you rebuild the component. If you do not scope it (or use the @Singleton) tag you will simply access the module’s providing method to get the object.
 
 #### Module 命名的一些约定：
 
@@ -214,6 +214,42 @@ interface AppComponent {}
 That said, I think the forthcoming @SubComponent approach will make this a little cleaner, and with fewer methods, etc. But for now, the above should be a reasonable way to go.
 
 >   Also, during migration, you can disable the "singleton can't depend on singleton" bit with an annotation processor flag -Adagger.disableInterComponentScopeValidation=warning (or none). It is intended as a migration aid from dagger 1 so please don't rely on it, as it may not be there forever. It doesn't disable all validations, but should at least permit you to do the singleton->singleton stuff while you migrate to separate meaningful scoping annotations.
+
+需要注意的是，上述的多级依赖存在问题情况有两个限定条件：
+
+*  subcomponents in three levels，多级Component依赖    
+*  shuttle your singletons to the bottom layer，底层的单例Singleton对象在依赖间传递
+
+而正常的普通Case下，多级依赖依旧是允许的：
+
+{% highlight java %}
+
+@Component(modules = ApplicationModule.class)
+public interface ApplicationComponent {
+    //Exposes Application to any component which depends on this
+    Application getApplication();
+}
+
+
+@Component(modules = {LocalModule.class, NetworkModule.class}, dependencies = ApplicationComponent.class)
+public interface BaseComponent {
+
+    OKHttp getOkHTTP();
+
+    Retrofit getRetrofit();
+
+    LocalDataCache getLocalDataCache();
+}
+
+
+@Component(dependencies = {BaseComponent.class})
+public interface ActivityInjectorComponent {
+
+    void inject(MainActivity activity);
+}
+
+{% endhighlight %}
+
 
 
 ####  SubComponent:
