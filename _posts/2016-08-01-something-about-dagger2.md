@@ -190,7 +190,7 @@ c1 has singletons which are used across c2_a and c2_b but the singletons from Co
 —— By JakeWharton
 
 
-Component如何解决作用域单例下Subcomponent的多级依赖问题，如我们期望 Acomponent  依赖 Bcomponent ,而 Bcomponent 又依赖 CAppComponent进行一个依赖的传递，然而这样的使用这样是不允许的，我们可以通过继承完成多级依赖，也就是 Acomponent 依赖 Bcomponent,而Bcomponent extends CAppComponent,通过这样的形式解决多级依赖；
+Component如何解决作用域单例下Subcomponent的多级依赖问题，我们可以通过继承完成多级依赖，也就是 Acomponent 依赖 Bcomponent,而Bcomponent extends CAppComponent,通过这样的形式借助中间层的singleton对象的传递，解决多级依赖；
 
 >  If you're going to do subcomponents in three levels, and you want to shuttle your singletons to the bottom layer, in the current code, just have your middle-tier component extend the application-level component. THis will expose those bindings to the lower-tier component without requring that you have your lower-tier depend on two scoped components.
 
@@ -215,12 +215,16 @@ That said, I think the forthcoming @SubComponent approach will make this a littl
 
 >   Also, during migration, you can disable the "singleton can't depend on singleton" bit with an annotation processor flag -Adagger.disableInterComponentScopeValidation=warning (or none). It is intended as a migration aid from dagger 1 so please don't rely on it, as it may not be there forever. It doesn't disable all validations, but should at least permit you to do the singleton->singleton stuff while you migrate to separate meaningful scoping annotations.
 
-需要注意的是，上述的多级依赖存在问题情况有两个限定条件：
+该问题所对应常见问题为：
 
-*  subcomponents in three levels，多级Component依赖    
-*  shuttle your singletons to the bottom layer，底层的单例Singleton对象在依赖间传递
+`Error:(16, 1) 错误: This @Singleton component cannot depend on scoped components:
+@com.codepath.daggerexample.di.scopes.PerApplication com.codepath.daggerexample.di.components.AppComponent`
 
-而正常的普通Case下，多级依赖依旧是允许的：
+`Error:(10, 1) 错误: @com.codepath.daggerexample.di.scopes.UserScope com.codepath.daggerexample.di.components.GitHubComponent
+ depends on more than one scoped component:`
+
+
+需要注意的是，上述的多级依赖存在问题情况有两个限定条件，多级依赖除开上述的一些已知问题外（还有一些问题可能暂时没有发现），对于整个应用的分层还是非常好用的，可以规定不同对象的存在生命周期：
 
 {% highlight java %}
 
