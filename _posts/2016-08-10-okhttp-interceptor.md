@@ -167,11 +167,78 @@ if (hasRequestBody) {
       for (int i = 0, count = headers.size(); i < count; i++) {
         String name = headers.name(i);
         // Skip headers from the request body as they are explicitly logged above.
-        //这种方式可以读出 post的字段内容，而直接打印输出 headers，post内容不显示
         if (!"Content-Type".equalsIgnoreCase(name) && !"Content-Length".equalsIgnoreCase(name)) {
           logger.log(name + ": " + headers.value(i));
         }
       }
 
+
+{% endhighlight %}
+
+
+补充说明，最初的方案对于 隐藏于 requestbody中的post参数无法读取，查阅了OkHttpLoggingInterceptor源码，补充如下：
+
+
+{% highlight java %}
+
+private String getHeadersContent(Request  req) throws IOException {
+        final StringBuilder strBuilder = new StringBuilder();
+        if (req != null) {
+            if (req.body() != null) {
+                if (req.body().contentType() != null) {
+                    strBuilder.append("Content-Type: " + req.body().contentType() + "\n");
+                }
+                if (req.body().contentLength() != -1) {
+                    strBuilder.append("Content-Length: " + req.body().contentLength() + "\n");
+                }
+            }
+            Headers headers = req.headers();
+            for (int i = 0, count = headers.size(); i < count; i++) {
+                String name = headers.name(i);
+                if (!"Content-Type".equalsIgnoreCase(name) && !"Content-Length".equalsIgnoreCase(name)) {
+                    strBuilder.append(name + ": " + headers.value(i) + "\n");
+                }
+            }
+            //Print Post Entity
+            if (req.body() != null) {
+                Buffer buffer = new Buffer();
+                req.body().writeTo(buffer);
+
+                Charset charset = Charset.forName("UTF-8");
+                MediaType contentType = req.body().contentType();
+                if (contentType != null) {
+                    charset = contentType.charset(Charset.forName("UTF-8"));
+                }
+                if (isPlaintext(buffer)) {
+                    strBuilder.append(URLDecoder.decode(buffer.readString(charset)));
+                }
+            }
+        }
+        return strBuilder.toString();
+    }
+
+    /**
+     * Returns true if the body in question probably contains human readable text. Uses a small sample
+     * of code points to detect unicode control characters commonly used in binary file signatures.
+     */
+    static boolean isPlaintext(Buffer buffer) {
+        try {
+            Buffer prefix = new Buffer();
+            long byteCount = buffer.size() < 64 ? buffer.size() : 64;
+            buffer.copyTo(prefix, 0, byteCount);
+            for (int i = 0; i < 16; i++) {
+                if (prefix.exhausted()) {
+                    break;
+                }
+                int codePoint = prefix.readUtf8CodePoint();
+                if (Character.isISOControl(codePoint) && !Character.isWhitespace(codePoint)) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (EOFException e) {
+            return false; // Truncated UTF-8 sequence.
+        }
+    }
 
 {% endhighlight %}
