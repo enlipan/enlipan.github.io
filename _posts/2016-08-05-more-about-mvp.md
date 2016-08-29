@@ -30,6 +30,28 @@ MVP到目前为止依旧没有标准化，Github上出了众多的MVP范例，�
 * Attach扩展显示器   
 
 
+>  The Fragment/Activity must be able to re-create its state. Every time you work on a Fragment you must ask yourself how this would behave during orientation change, if there is something that needs to be persisted to the saved instance state Bundle, etc…
+>  Long running operations in background threads are very hard to get right. One of the most common mistakes is keeping a reference to the Fragment/Activity in the long running operation (which is needed to update the UI when it finishes). This causes the old Activity to leak (and possibly crash the app due to increasing memory usage) and the new Activity to never receive the callback (and never update its UI).
+
+Activity 的恢复重建过程中，Presenter与新老Activity交互如下：
+
+>  Activity is initially created (let’s call this instance one) - New Presenter is created
+Presenter is bound to the Activity
+User clicks on the download button
+Long running operation starts in the Presenter
+Orientation changes
+Presenter is unbound from the first instance of the Activity
+First instance of the Activity has no reference, is available for garbage collection
+Presenter is retained, long running operation continues
+Second instance of the Activity is created
+Second instance of the Activity is bound to the same Presenter
+Download finishes
+Presenter updates its view (the second instance of the Activity) accordingly
+
+
+
+
+
 #### Presenter的职责分发:
 
 很多时候我们写MVP时，有意无意的弱化Model层，Model层没有融合相关的业务逻辑，这样的后果是导致Model层的过度薄弱，而导致Presenter逐渐膨胀，冗余，仿佛以前我们写几千行的Activity中的代码，大部分全部移送到了Presenter中，Presenter变得比较难看；
@@ -41,6 +63,8 @@ MVP到目前为止依旧没有标准化，Github上出了众多的MVP范例，�
 * Presenter作为 Model与View的中间人，将职责分离的二者串联起来，上面说到Click的响应控制依旧由View管理，那么Presenter为什么不接管点击事件呢？因为一旦Presenter负责这类View的事件响应，会导致Presenter与View的界限模糊，想象一下如果有多个View的点击事件响应，Presenter为了区分View与响应事件的对应，那么Presenter势必要对View做出接管控制，知道谁是谁，这样Presenter就控制了View，控制了View的展示，所以二者又重新耦合，无法分割开来。
 
 >  In our opinion the Presenter does not replace the Controller. Rather the Presenter coordinates or supervises the View which the Controller is part of. The Controller is the component that handles the click events and calls the corresponding Presenter methods. The Controller is the responsible component to control animations like hiding ProgressBar and displaying ListView instead. The Controller is listening for scroll events on the ListView i.e. to do some parallax item animations or scroll the toolbar in and out while scrolling the ListView. So all that UI related stuff still gets controlled by a Controller and not by a Presenter (i.e. Presenter should not be an OnClickListener). The Presenter is responsible to coordinate the overall state of the view layer (composed of UI widgets and Controller). So it’s the job of the Presenter to tell the view layer that the loading animation should be displayed now or that the ListView should be displayed because the data is ready to be displayed.
+
+Presetner要立足于足够的层次高度对于整个视图层有一个统筹规划，所以，UI事件的检测都应该由View处理，而对应的事件究竟具体做什么却由Presenter，View充当傀儡角色，完成Presenter所赋予的UI任务；
 
 * Model究竟应该负责哪些任务？Model不等于我们常常提到的model，model指单纯的UI data，而Model应该是业务逻辑与model的混合体，需要完成对原生Data的处理，将UI展示需要的Data处理之后由Presenter传递给View；所以Model必然和业务逻辑二者不是孤立起来的；一个比较合适的范例是：UI需要展示A数据，将数据的请求交给Presenter，Presenter寻求Model的数据支持，无论数据存储在数据库或者网络中还是缓存中，(数据库，网络或者缓存数据的存储不属于视图层MVP的统治范畴)，如果数据的存储的a类型，与A类型不符合，这个业务相关的数据处理很多人喜欢交给Presenter处理，但实践下来，认为数据的处理不应该与获取分割，应该由Model处理，这样的优势在于Presenter的逻辑更加清晰，不会使Presenter过度膨胀，丰富了Model的功能，事实上Model本来就是属于视图层，与UI一体的，不应该过多的考虑Model的多界面复用问题，而过度弱化其与UI的联系；
 
@@ -79,6 +103,8 @@ Quote：
 [MOSBY-Model-View-Presenter](http://hannesdorfmann.com/mosby/mvp/)
 
 [TED MOSBY - SOFTWARE ARCHITECT](http://hannesdorfmann.com/android/mosby)
+
+[Android Code That Scales, With MVP](http://engineering.remind.com/android-code-that-scales/)
 
 [How to Adopt Model View Presenter on Android](http://code.tutsplus.com/tutorials/how-to-adopt-model-view-presenter-on-android--cms-26206)
 
