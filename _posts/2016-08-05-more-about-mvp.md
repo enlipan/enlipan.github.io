@@ -49,7 +49,28 @@ Download finishes
 Presenter updates its view (the second instance of the Activity) accordingly
 
 
+**如何保存Presenter**
 
+Presenter的SaveInstance思路常见有以下几种：
+
+*  创建Presenter时保存Presenter至Cache，SaveInstance时保存对应ID到SaveBundle，恢复时根据Id从Cache中取出Presenter，重新建立Presenter与View的联系
+
+{% highlight java %}
+
+protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    PresenterManager.getInstance().savePresenter(presenter, outState);
+}
+
+public void savePresenter(BasePresenter<?, ?> presenter, Bundle outState) {
+    long presenterId = currentId.incrementAndGet();
+    presenters.put(presenterId, presenter);
+    outState.putLong(SIS_KEY_PRESENTER_ID, presenterId);
+}
+
+{% endhighlight %}
+
+*  
 
 
 #### Presenter的职责分发:
