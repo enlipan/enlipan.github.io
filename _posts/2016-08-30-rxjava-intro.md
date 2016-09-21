@@ -32,13 +32,35 @@ category: android
 观察者模式：
 
 
+*  可观察者
+
+*  观察者   
+
+*  订阅行为
+
+*  观测事件
 
 
+事件序列：
+
+*  onNext()
+
+*  onComplete()
+
+*  onError();
 
 
+####  可观察者 Observer（接口）以及 Subsrciber(抽象类)
 
+从源码可以看到，本质上 Subsrciber是实现了 Observer接口以及Subcription接口的抽象类，所以可以说Subscriber是增加了功能函数的Observer，其增加的函数都是极为强大的，如：
 
+unsubscribe();
 
+unsubscribe 函数重要性在于，由于观察者与可观测对象之间的注册后的依赖关系，弱不进行一些对象
+
+isUnsubscribed();
+
+onStart();
 
 
 
