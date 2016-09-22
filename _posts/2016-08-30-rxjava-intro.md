@@ -50,17 +50,58 @@ category: android
 *  onError();
 
 
-####  可观察者 Observer（接口）以及 Subsrciber(抽象类)
+####  观察者 Observer（接口）以及 Subsrciber(抽象类)
 
 从源码可以看到，本质上 Subsrciber是实现了 Observer接口以及Subcription接口的抽象类，所以可以说Subscriber是增加了功能函数的Observer，其增加的函数都是极为强大的，如：
 
 unsubscribe();
 
-unsubscribe 函数重要性在于，由于观察者与可观测对象之间的注册后的依赖关系，弱不进行一些对象
+unsubscribe 函数重要性在于，由于观察者与可观测对象之间的注册后的依赖关系，若不进行一些对象间的依赖的清楚，则可能造成内存泄漏，所以在不需要使用的情况下，应该尽快解除对象的依赖引用关系；
 
 isUnsubscribed();
 
+用于Check 观察者与可观察对象之间的依赖关系是否解除
+
 onStart();
+
+订阅开始时，发生于订阅者所在的线程之中，且无法指定函数的线程，只能处在改订阅者所在线程中，适用于一些准备工作或者初始化工作；
+
+
+###  可观测对象 Observable
+
+Observable对象的创建：
+
+
+{% highlight java %}
+
+/**
+ * Returns an Observable that will execute the specified function when a {@link Subscriber} subscribes to
+ * it.
+ * /
+observable.Create();
+
+/** To convert any object into an Observable that emits that object, pass that object into the {@code just}
+  * method.
+  * /
+observable.just([]);
+
+observable.from(List);
+
+/**
+* just 与 from 的差异
+* /
+just(List) //发送一个事件，将List作为对象发射
+
+from(List); //发送 List.size()个事件
+
+just(T1,T2,T3)//发送多个事件
+
+from(T[])//发送多个事件
+
+{% endhighlight %}
+
+###  订阅Subscribe（即观察者模式中的注册）
+
 
 
 
