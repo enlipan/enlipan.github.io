@@ -104,6 +104,40 @@ from(T[])//发送多个事件
 
 
 
+### 巧用数据转换减负Subscriber 业务逻辑
+
+#### Operators
+
+Map转换：
+
+> We can chain as many map() calls as we want together, polishing the data into a perfect, consumable form for our end Subscriber.
+
+* Map(): 不光可以用作数据逻辑处理，还可以做数据类型转换，这一点非常有用；
+
+* flatMap(): Observable --> item emitted 转换 => 返回 订阅者需要的事件；
+
+* filter(): 过滤器 Observable 所产生的事件，只有符合条件的事件才会被订阅者接收到
+
+>  only emitting those that satisfy a specified predicate.
+
+* take():
+
+* doOnNext():
+
+####  OnError
+
+OnError的优势在于，异常的统一化处理，而改变的原有的四处TryCatch:
+
+> onError() is called if an Exception is thrown at any time.
+
+> With callbacks, you have to handle errors in each callback. Not only does that lead to repetitious code, but it also means that each callback must know how to handle errors, meaning your callback code is tightly coupled to the caller.
+
+
+### Schedulers
+
+subscribeOn()
+
+observeOn()
 
 
 ---
@@ -111,6 +145,8 @@ from(T[])//发送多个事件
 [ReactiveX - intro](http://reactivex.io/intro.html)
 
 [ReactiveX/RxJava文档中文版](https://mcxiaoke.gitbooks.io/rxdocs/content/)
+
+[Alphabetical List of Observable Operators](https://github.com/ReactiveX/RxJava/wiki/Alphabetical-List-of-Observable-Operators)
 
 [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
 
@@ -121,6 +157,10 @@ from(T[])//发送多个事件
 [Grokking RxJava, Part 1: The Basics](http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/)
 
 [Grokking RxJava, Part 2: Operator, Operator](http://blog.danlew.net/2014/09/22/grokking-rxjava-part-2/)
+
+[Grokking RxJava, Part 3: Reactive with Benefits](http://blog.danlew.net/2014/09/30/grokking-rxjava-part-3/)
+
+[Grokking RxJava, Part 4: Reactive Android](http://blog.danlew.net/2014/10/08/grokking-rxjava-part-4/)
 
 [Why you should use RxJava in Android a short introduction to RxJava](http://blog.feedpresso.com/2016/01/25/why-you-should-use-rxjava-in-android-a-short-introduction-to-rxjava.html)
 
