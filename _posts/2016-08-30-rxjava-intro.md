@@ -52,7 +52,9 @@ category: android
 
 ####  观察者 Observer（接口）以及 Subsrciber(抽象类)
 
-从源码可以看到，本质上 Subsrciber是实现了 Observer接口以及Subcription接口的抽象类，所以可以说Subscriber是增加了功能函数的Observer，其增加的函数都是极为强大的，如：
+Subcription 代表了 可观察对象与观测者之间的联系；
+
+从源码可以看到，本质上 Subsrciber是实现了 Observer接口以及 Subcription 接口的抽象类，所以可以说Subscriber是增加了功能函数的Observer，其增加的函数都是极为强大的，如：
 
 unsubscribe();
 
@@ -135,9 +137,37 @@ OnError的优势在于，异常的统一化处理，而改变的原有的四处T
 
 ### Schedulers
 
-subscribeOn()
+* subscribeOn(): 指定 所订阅Action执行所在的线程
 
-observeOn()
+* observeOn(): 指定 Observable 所发射事件以及通知发生在一个指定的线程Schedulers；
+
+subscribeOn 与 observeOn 真正强大的地方在于用简单的方式控制了线程的执行顺序，你可以任意组合拼接则两个 Operator，而不用在以前繁琐的 Future或者CallBack中去小心的控制线程事件的嵌套，线程的嵌套也是多线程编程最容易出现问题的地方之一；
+
+
+
+### RxAndroid
+
+RxAndroid 是基于RxJava的一个扩展库，适用于Android开发，包含了一些Android上的的特殊操作；如：
+
+*  针对Handler
+
+*  BindActivity  BindFragment
+
+* ViewObservable
+
+*  ...
+
+
+### 已知可能出现的问题
+
+*  Activity 旋转以及重建问题
+
+> 当利用Retrofit 进行网络请求，并将请求结果发送到观察者，展示在UI上，这时用户旋转了屏幕，Activity重建，可以利用网络请求如OkHttp缓存，Activity重建后将缓存内容刷新到界面上
+
+*  Observables 持有Contex 导致的内存泄漏问题
+
+> 在OnDestroy 中及时 unsubscribe(),解除依赖，防止内存泄漏
+
 
 
 ---
