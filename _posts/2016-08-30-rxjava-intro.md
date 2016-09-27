@@ -50,6 +50,10 @@ category: android
 *  onError();
 
 
+>  Functional transformations are transformations of data that don’t rely on any data outside of the function that does the transformation and that don’t have any side effects.
+
+>  RxJava does perform completely functional transformations of asynchronous data.
+
 ####  观察者 Observer（接口）以及 Subsrciber(抽象类)
 
 从源码可以看到，本质上 Subsrciber是实现了 Observer接口以及Subcription接口的抽象类，所以可以说Subscriber是增加了功能函数的Observer，其增加的函数都是极为强大的，如：
@@ -135,10 +139,14 @@ OnError的优势在于，异常的统一化处理，而改变的原有的四处T
 
 ### Schedulers
 
-subscribeOn()
+subscribeOn():  事件创建发生所在的线程
 
-observeOn()
+observeOn():  事件被监听消费所在的线程
 
+{:.center}
+![RxJava_Stream](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20160830/rxjava_pic.jpg)
+
+**图片来源于引用文章——RxAndroid Basics: Part 2**
 
 ---
 
