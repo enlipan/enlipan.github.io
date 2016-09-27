@@ -104,8 +104,6 @@ from(T[])//发送多个事件
 
 ###  订阅Subscribe（即观察者模式中的注册）
 
-
-
 ### 巧用数据转换减负Subscriber 业务逻辑
 
 #### Operators
@@ -116,7 +114,11 @@ Map转换：
 
 * Map(): 不光可以用作数据逻辑处理，还可以做数据类型转换，这一点非常有用；
 
-* flatMap(): Observable --> item emitted 转换 => 返回 订阅者需要的事件；
+* flatMap(): Observable --> item emitted 转换 => 返回 订阅者需要的事件；同时与map() 不同的是， flatMap() 中返回的是个 Observable 对象
+
+> 由于可以在嵌套的 Observable 中添加异步代码， flatMap() 也常用于嵌套的异步操作，例如嵌套的网络请求
+
+这样嵌套的有序网络请求，去除了传统的CallBack中嵌套的繁琐代码，而保证了链式请求的清晰逻辑，确实是十分简洁有效的，优势非常强大
 
 * filter(): 过滤器 Observable 所产生的事件，只有符合条件的事件才会被订阅者接收到
 
@@ -126,23 +128,13 @@ Map转换：
 
 * doOnNext():
 
-####  OnError
+###  OnError
 
 OnError的优势在于，异常的统一化处理，而改变的原有的四处TryCatch:
 
 > onError() is called if an Exception is thrown at any time.
 
 > With callbacks, you have to handle errors in each callback. Not only does that lead to repetitious code, but it also means that each callback must know how to handle errors, meaning your callback code is tightly coupled to the caller.
-
-
-### Schedulers
-
-* subscribeOn(): 指定 所订阅Action执行所在的线程
-
-* observeOn(): 指定 Observable 所发射事件以及通知发生在一个指定的线程Schedulers；
-
-subscribeOn 与 observeOn 真正强大的地方在于用简单的方式控制了线程的执行顺序，你可以任意组合拼接则两个 Operator，而不用在以前繁琐的 Future或者CallBack中去小心的控制线程事件的嵌套，线程的嵌套也是多线程编程最容易出现问题的地方之一；
-
 
 
 ### RxAndroid
@@ -167,6 +159,37 @@ RxAndroid 是基于RxJava的一个扩展库，适用于Android开发，包含了
 *  Observables 持有Contex 导致的内存泄漏问题
 
 > 在OnDestroy 中及时 unsubscribe(),解除依赖，防止内存泄漏
+
+
+
+
+### RxJava核心
+
+RxJava如果不使用其异步处理机制，就没有使用到其真正优雅的地方，Rx的异步函数式处理机制真正做到了让异步处理逻辑线性化，可操纵化，更加形象的说法是数据流的形式做函数式处理；
+
+
+#### Schedulers
+
+* subscribeOn(): 指定 所观察者订阅 Observable.OnSubscribe(订阅事件) 被激活时所在的线程,Observable 创建所发生的线程 即事件产生的线程；
+
+>  Asynchronously subscribes Observers to this Observable on the specified Scheduler.
+
+* observeOn(): 指定 Observable 所发射事件以及通知发生在一个指定的线程Schedulers，消费事件所发生的线程；
+
+>  Modifies an Observable to perform its emissions and notifications on a specified Scheduler
+
+subscribeOn 与 observeOn 真正强大的地方在于用简单的方式控制了线程的执行顺序，你可以任意组合拼接则两个 Operator，而不用在以前繁琐的 Future或者CallBack中去小心的控制线程事件的嵌套，线程的嵌套也是多线程编程最容易出现问题的地方之一；
+
+
+
+Schedulers:
+
+*  Schedulers.immediate()                    
+*  Schedulers.newThread()                         
+*  Schedulers.io()                 
+*  Schedulers.computation()                        
+*  RxAndroid --> AndroidSchedulers.mainThread()             
+
 
 
 
