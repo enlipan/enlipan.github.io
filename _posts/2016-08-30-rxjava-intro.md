@@ -108,6 +108,11 @@ from(T[])//发送多个事件
 
 ###  订阅Subscribe（即观察者模式中的注册）
 
+OnSubscribe:
+
+>  OnSubscribe 会被存储在返回的 Observable 对象中，它的作用相当于一个计划表，当 Observable 被订阅的时候，OnSubscribe 的 call() 方法会自动被调用，事件序列就会依照设定依次触发（对于上面的代码，就是观察者Subscriber 将会被调用三次 onNext() 和一次 onCompleted()）。这样，由被观察者调用了观察者的回调方法，就实现了由被观察者向观察者的事件传递，即观察者模式。
+
+
 ### 巧用数据转换减负Subscriber 业务逻辑
 
 #### Operators
@@ -131,6 +136,18 @@ Map转换：
 * take():
 
 * doOnNext():
+
+
+#### 变换核心
+
+lift():
+
+如果看源码就发现，其核心是lift()函数：
+
+简单的解释：
+
+> 在 Observable 执行了 lift(Operator) 方法之后，会返回一个新的 Observable，这个新的 Observable 会像一个代理一样，负责接收原始的 Observable 发出的事件，并在处理后发送给 Subscriber；类似代理机制，通过事件拦截和处理实现事件序列的变换。
+
 
 ###  OnError
 
