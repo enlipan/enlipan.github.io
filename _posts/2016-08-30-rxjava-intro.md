@@ -144,10 +144,80 @@ lift():
 
 如果看源码就发现，其核心是lift()函数：
 
-简单的解释：
+引用抛物线的简单的解释：
 
 > 在 Observable 执行了 lift(Operator) 方法之后，会返回一个新的 Observable，这个新的 Observable 会像一个代理一样，负责接收原始的 Observable 发出的事件，并在处理后发送给 Subscriber；类似代理机制，通过事件拦截和处理实现事件序列的变换。
 
+
+详细的解释有一些复杂，这里借助 [谜之RxJava（二）—— Magic Lift](https://segmentfault.com/a/1190000004049841)一文以及RxJava源码重新解读一下所引用结论：
+
+lift 涉及到 2个 Subscriber, 2个 OnSubscribe ，2个 Observable，也就有了目标与中间之分，源码及其解释如下
+
+{% highlight java %}
+
+......
+return new Observable<R>(new OnSubscribe<R>() {
+    @Override
+    // Lift 操作后新生成的 Observable 被订阅后触发了该OnSubscribe进而通知原 OnSubscribe，发出事件交由代理Subscriber预处理，进而转交 目标Subscriber
+    public void call(Subscriber<? super R> o) {
+        try {
+            // 通过该OperatorMap 生了一个新的 Subscriber 作为 原目标订阅者的代理
+            Subscriber<? super T> st = hook.onLift(operator).call(o);
+            try {
+                // new Subscriber created and being subscribed with so 'onStart' it
+                st.onStart();
+                onSubscribe.call(st);//这个onSubscribe是Observable的OnSubScribe属性对象
+            } catch (Throwable e) {
+                // localized capture of errors rather than it skipping all operators
+                // and ending up in the try/catch of the subscribe method which then
+                // prevents onErrorResumeNext and other similar approaches to error handling
+                if (e instanceof OnErrorNotImplementedException) {
+                    throw (OnErrorNotImplementedException) e;
+                }
+                st.onError(e);
+            }
+        } catch (Throwable e) {
+            if (e instanceof OnErrorNotImplementedException) {
+                throw (OnErrorNotImplementedException) e;
+            }
+            // if the lift function failed all we can do is pass the error to the final Subscriber
+            // as we don't have the operator available to us
+            o.onError(e);
+        }
+    }
+});
+
+/////////////////////////////////////////////////////////////////////////////////
+Subscriber<? super T> st = hook.onLift(operator).call(o);
+// st 实质上是 o的代理，关键在于 transformer.call(t)，执行了 list转换：
+@Override
+public Subscriber<? super T> call(final Subscriber<? super R> o) {
+    return new Subscriber<T>(o) {
+
+        @Override
+        public void onCompleted() {
+            o.onCompleted();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            o.onError(e);
+        }
+
+        @Override
+        public void onNext(T t) {
+            try {
+                o.onNext(transformer.call(t));
+            } catch (Throwable e) {
+                Exceptions.throwIfFatal(e);
+                onError(OnErrorThrowable.addValueAsLastCause(e, t));
+            }
+        }
+
+    };
+}
+
+{% endhighlight %}
 
 ###  OnError
 
