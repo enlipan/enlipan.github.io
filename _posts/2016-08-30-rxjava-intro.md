@@ -25,7 +25,7 @@ category: android
 
 当异步处理以及嵌套的业务逻辑逐渐增加之后，其代码可读性呈现断崖式下降，给后期维护带来巨大困难，同时异步操作之间的嵌套也难以控制，处理，而是用RX，可以从数据流的理念去处理异步逻辑，简化复杂的业务逻辑，消除多重嵌套，提升程序逻辑清晰度，以及代码可读性；除此之外，Rx还支持Lambda表达式，可以进一步精简各类繁琐冗余的匿名内部嵌套类；
 
-将异步条件下的，多逻辑线处理情形，变换为以数据流形式的单条主线下的串联，
+将异步条件下的，多逻辑线处理情形，变换为以数据流形式的单条主线下的串联，即 在异步操作下组合工作流而不用组合多重嵌套，精简逻辑
 
 ### 概念
 
@@ -288,6 +288,21 @@ Schedulers:
 
 **图片来源于引用文章——RxAndroid Basics: Part 2**
 
+
+### RxJava + Retrofit + Mvp
+
+几个框架的结合使用需要解决几个问题：
+
+*  如何在一些View Destroy的Case下解除订阅，防止内存泄漏，如何管理这些观察者
+
+*  如何处理Error，由于事件的过程中的Error都被处理到onError函数中处理，如何区分网络以及后台异常，亦或是处理特殊后台错误码事件的针对性处理
+
+
+第一个问题，我们知道observable.subscribe()返回 Subcription对象，这个问题的关键就在于管理改对象，适当的时候完成解除订阅：借助CompositeSubscription对象管理可以完成
+
+第二个问题，可以借助 onError中的Error类别处理，如Retrofit中转换Adapter中的error类别为：httpException,可以通过类别判断后做类型转换，得到对应的errorCode，进行细分处理；
+
+
 ---
 
 [ReactiveX - intro](http://reactivex.io/intro.html)
@@ -297,6 +312,8 @@ Schedulers:
 [Alphabetical List of Observable Operators](https://github.com/ReactiveX/RxJava/wiki/Alphabetical-List-of-Observable-Operators)
 
 [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
+
+[Error handling in RxJava](http://blog.danlew.net/2015/12/08/error-handling-in-rxjava/)
 
 [RxAndroid Basics: Part 1](https://medium.com/@kurtisnusbaum/rxandroid-basics-part-1-c0d5edcf6850#.8tt6ccqfu)
 
