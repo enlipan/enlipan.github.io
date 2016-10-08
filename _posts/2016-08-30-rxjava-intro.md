@@ -302,6 +302,7 @@ Schedulers:
 
 第二个问题，可以借助 onError中的Error类别处理，如Retrofit中转换Adapter中的error类别为：httpException,可以通过类别判断后做类型转换，得到对应的errorCode，进行细分处理；
 
+* error处理函数： onErrorReturn()、retry()
 
 ---
 
