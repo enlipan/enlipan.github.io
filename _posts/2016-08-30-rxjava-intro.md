@@ -13,6 +13,13 @@ category: android
 
 > RxJava provides Observables and Observers. Observables can send out values. Observers, watch Observables by subscribing to them. Observers are notified when an Observable emits a value, when the Observable says an error has occurred. They are also notified when the	Observable sends the information that it no longer has any values to emit.
 
+
+####  RxJava 优势
+
+> A simple operation of transforming or filtering the information from the database would require new interfaces and restructuring code in order to respect the implemented architecture. With RxJava this is a lot easier, by simply creating an Observable which retrieves all the information and then you can use any of these methods to filter and retrieve only the information you want.
+
+
+
 #### Observable Create
 
 *  Observable.just()
@@ -241,5 +248,7 @@ Schedulers:
 [Grokking RxJava, Part 4: Reactive Android](http://blog.danlew.net/2014/10/08/grokking-rxjava-part-4/)
 
 [Why you should use RxJava in Android a short introduction to RxJava](http://blog.feedpresso.com/2016/01/25/why-you-should-use-rxjava-in-android-a-short-introduction-to-rxjava.html)
+
+[Why should we use RxJava on Android](https://medium.com/@lpereira/why-should-we-use-rxjava-on-android-c9066087c56c#.w4hucpy2c)
 
 [Airbnb：我们的安卓客户端是如何使用 RxJava 的](https://realm.io/cn/news/kau-felipe-lima-adopting-rxjava-airbnb-android/)
