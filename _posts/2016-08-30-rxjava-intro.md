@@ -32,7 +32,7 @@ category: android
 
 当异步处理以及嵌套的业务逻辑逐渐增加之后，其代码可读性呈现断崖式下降，给后期维护带来巨大困难，同时异步操作之间的嵌套也难以控制，处理，而是用RX，可以从数据流的理念去处理异步逻辑，简化复杂的业务逻辑，消除多重嵌套，提升程序逻辑清晰度，以及代码可读性；除此之外，Rx还支持Lambda表达式，可以进一步精简各类繁琐冗余的匿名内部嵌套类；
 
-将异步条件下的，多逻辑线处理情形，变换为以数据流形式的单条主线下的串联，
+将异步条件下的，多逻辑线处理情形，变换为以数据流形式的单条主线下的串联，即 在异步操作下组合工作流而不用组合多重嵌套，精简逻辑
 
 ### 概念
 
@@ -151,10 +151,80 @@ lift():
 
 如果看源码就发现，其核心是lift()函数：
 
-简单的解释：
+引用抛物线的简单的解释：
 
 > 在 Observable 执行了 lift(Operator) 方法之后，会返回一个新的 Observable，这个新的 Observable 会像一个代理一样，负责接收原始的 Observable 发出的事件，并在处理后发送给 Subscriber；类似代理机制，通过事件拦截和处理实现事件序列的变换。
 
+
+详细的解释有一些复杂，这里借助 [谜之RxJava（二）—— Magic Lift](https://segmentfault.com/a/1190000004049841)一文以及RxJava源码重新解读一下所引用结论：
+
+lift 涉及到 2个 Subscriber, 2个 OnSubscribe ，2个 Observable，也就有了目标与中间之分，源码及其解释如下
+
+{% highlight java %}
+
+......
+return new Observable<R>(new OnSubscribe<R>() {
+    @Override
+    // Lift 操作后新生成的 Observable 被订阅后触发了该OnSubscribe进而通知原 OnSubscribe，发出事件交由代理Subscriber预处理，进而转交 目标Subscriber
+    public void call(Subscriber<? super R> o) {
+        try {
+            // 通过该OperatorMap 生了一个新的 Subscriber 作为 原目标订阅者的代理
+            Subscriber<? super T> st = hook.onLift(operator).call(o);
+            try {
+                // new Subscriber created and being subscribed with so 'onStart' it
+                st.onStart();
+                onSubscribe.call(st);//这个onSubscribe是Observable的OnSubScribe属性对象
+            } catch (Throwable e) {
+                // localized capture of errors rather than it skipping all operators
+                // and ending up in the try/catch of the subscribe method which then
+                // prevents onErrorResumeNext and other similar approaches to error handling
+                if (e instanceof OnErrorNotImplementedException) {
+                    throw (OnErrorNotImplementedException) e;
+                }
+                st.onError(e);
+            }
+        } catch (Throwable e) {
+            if (e instanceof OnErrorNotImplementedException) {
+                throw (OnErrorNotImplementedException) e;
+            }
+            // if the lift function failed all we can do is pass the error to the final Subscriber
+            // as we don't have the operator available to us
+            o.onError(e);
+        }
+    }
+});
+
+/////////////////////////////////////////////////////////////////////////////////
+Subscriber<? super T> st = hook.onLift(operator).call(o);
+// st 实质上是 o的代理，关键在于 transformer.call(t)，执行了 list转换：
+@Override
+public Subscriber<? super T> call(final Subscriber<? super R> o) {
+    return new Subscriber<T>(o) {
+
+        @Override
+        public void onCompleted() {
+            o.onCompleted();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            o.onError(e);
+        }
+
+        @Override
+        public void onNext(T t) {
+            try {
+                o.onNext(transformer.call(t));
+            } catch (Throwable e) {
+                Exceptions.throwIfFatal(e);
+                onError(OnErrorThrowable.addValueAsLastCause(e, t));
+            }
+        }
+
+    };
+}
+
+{% endhighlight %}
 
 ###  OnError
 
@@ -225,6 +295,22 @@ Schedulers:
 
 **图片来源于引用文章——RxAndroid Basics: Part 2**
 
+
+### RxJava + Retrofit + Mvp
+
+几个框架的结合使用需要解决几个问题：
+
+*  如何在一些View Destroy的Case下解除订阅，防止内存泄漏，如何管理这些观察者
+
+*  如何处理Error，由于事件的过程中的Error都被处理到onError函数中处理，如何区分网络以及后台异常，亦或是处理特殊后台错误码事件的针对性处理
+
+
+第一个问题，我们知道observable.subscribe()返回 Subcription对象，这个问题的关键就在于管理改对象，适当的时候完成解除订阅：借助CompositeSubscription对象管理可以完成
+
+第二个问题，可以借助 onError中的Error类别处理，如Retrofit中转换Adapter中的error类别为：httpException,可以通过类别判断后做类型转换，得到对应的errorCode，进行细分处理；
+
+* error处理函数： onErrorReturn()、retry()
+
 ---
 
 [ReactiveX - intro](http://reactivex.io/intro.html)
@@ -234,6 +320,8 @@ Schedulers:
 [Alphabetical List of Observable Operators](https://github.com/ReactiveX/RxJava/wiki/Alphabetical-List-of-Observable-Operators)
 
 [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
+
+[Error handling in RxJava](http://blog.danlew.net/2015/12/08/error-handling-in-rxjava/)
 
 [RxAndroid Basics: Part 1](https://medium.com/@kurtisnusbaum/rxandroid-basics-part-1-c0d5edcf6850#.8tt6ccqfu)
 
