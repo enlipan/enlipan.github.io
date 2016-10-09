@@ -2,6 +2,7 @@
 layout: post
 title:  Dagger2
 category: android
+keywords: [framework]
 ---
 
 为什么要使用Dagger2？同样是依赖注入框架，Dagger2针对其前辈们（Spring，Guice，Dagger1）有什么优势？

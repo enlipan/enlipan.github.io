@@ -2,6 +2,7 @@
 layout: post
 title:  RxJava
 category: android
+keywords: [framework]
 ---
 
 >  RxJava is a Java VM implementation of ReactiveX (Reactive Extensions): a library for composing asynchronous and event-based programs by using observable sequences.
@@ -311,6 +312,85 @@ Schedulers:
 
 * error处理函数： onErrorReturn()、retry()
 
+#### RxJava中请求的取消问题
+
+在Retrofit中，构建的Call对象可以利用cancel取消，而结合Rxjava之后retrofitApi构建的对象是Observable，如何取消这个请求呢？
+
+查阅 RxJavaCallAdapterFactory 源码我们看看 Call对象是如何构建为 Observable对象：
+
+{% highlight java %}
+
+////////////////////////////////////////////////////////////////////
+//Observable 构建依赖该对象
+static final class CallOnSubscribe<T> implements Observable.OnSubscribe<Response<T>> {
+    private final Call<T> originalCall;
+
+    CallOnSubscribe(Call<T> originalCall) {
+      this.originalCall = originalCall;
+    }
+
+    @Override public void call(final Subscriber<? super Response<T>> subscriber) {
+      // Since Call is a one-shot type, clone it for each new subscriber.
+      Call<T> call = originalCall.clone();
+
+      // Wrap the call in a helper which handles both unsubscription and backpressure.
+      RequestArbiter<T> requestArbiter = new RequestArbiter<>(call, subscriber);
+      subscriber.add(requestArbiter);
+      subscriber.setProducer(requestArbiter);
+    }
+  }
+
+/////////////////////////////////////////////////////////////////////////
+
+static final class RequestArbiter<T> extends AtomicBoolean implements Subscription, Producer {
+  private final Call<T> call;
+  private final Subscriber<? super Response<T>> subscriber;
+
+  RequestArbiter(Call<T> call, Subscriber<? super Response<T>> subscriber) {
+    this.call = call;
+    this.subscriber = subscriber;
+  }
+
+  @Override public void request(long n) {
+    if (n < 0) throw new IllegalArgumentException("n < 0: " + n);
+    if (n == 0) return; // Nothing to do when requesting 0.
+    if (!compareAndSet(false, true)) return; // Request was already triggered.
+
+    try {
+      Response<T> response = call.execute();
+      if (!subscriber.isUnsubscribed()) {
+        subscriber.onNext(response);
+      }
+    } catch (Throwable t) {
+      Exceptions.throwIfFatal(t);
+      if (!subscriber.isUnsubscribed()) {
+        subscriber.onError(t);
+      }
+      return;
+    }
+
+    if (!subscriber.isUnsubscribed()) {
+      subscriber.onCompleted();
+    }
+  }
+
+  /**
+  * 关键函数，该封装了Call的subcription集合体 被Add到subcriber对象中，当解除注册的时候，请求取消
+  */
+  @Override public void unsubscribe() {
+    call.cancel();
+  }
+
+  @Override public boolean isUnsubscribed() {
+    return call.isCanceled();
+  }
+}
+
+
+{% endhighlight %}
+
+可以看出这里可以放入上述 View Destroy的Case下解除订阅一起解决问题；
+
 ---
 
 [ReactiveX - intro](http://reactivex.io/intro.html)
@@ -320,6 +400,8 @@ Schedulers:
 [Alphabetical List of Observable Operators](https://github.com/ReactiveX/RxJava/wiki/Alphabetical-List-of-Observable-Operators)
 
 [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
+
+[The introduction to Reactive Programming you've been missing](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
 
 [Error handling in RxJava](http://blog.danlew.net/2015/12/08/error-handling-in-rxjava/)
 

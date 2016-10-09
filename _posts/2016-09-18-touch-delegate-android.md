@@ -2,6 +2,7 @@
 layout: post
 title:  TouchDelegate
 category: android
+keywords: [improvement]
 ---
 
 TouchDelegate：
