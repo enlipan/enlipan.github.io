@@ -44,13 +44,17 @@ Ps：`app:layout_behavior` is set to a pre-defined standard scrolling behavior
 @string/appbar_scrolling_view_behavior 所对应的是 android.support.design.widget.AppBarLayout$ScrollingViewBehavior，该Behavior指定了二者的依赖关系，RecyclerView的滚动事件可以触发 AppBarLayout和AppBarLayout其子View的改变，其app:layout_scrollFlags属性所定义的动作也将在RecyclerView 滚动时触发；
 
 
+app:layout_scrollFlags: enterAlways, enterAlwaysCollapsed, exitUntilCollapsed, snap
+
+CollapsingToolbarLayout:实现Toolbar展开效果
 
 
+Ps：
+
+1. CollapsingToolbarLayout 本质是继承 FramLayout，在测试过程中我发现，按照Demo总是会出现最后图片出现在Toolbar的现象，根据FramLayout的特性，我猜测需要将 CollapsingToolbarLayout中的ImageView放置在toolbar之上，才能在收起时隐藏ImageView；
 
 
-
-
-
+2. 在配置主题时，合理的继承做版本的控制，一般在基础style中设定 Base主题，而在高版本（values-v21等）继承基础主题做进一步特定版本设定，如果否者需要将基础的设定完全的copy一份到高版本中，造成多余冗余；而如果再高版本中不做设定，则属于未做配置；
 
 ---
 
@@ -68,3 +72,5 @@ Ps：`app:layout_behavior` is set to a pre-defined standard scrolling behavior
 [深入理解CoordinatorLayout.Behavior](http://www.jianshu.com/p/5ffb37226e72)
 
 [Why would I want to fitsSystemWindows?](https://medium.com/google-developers/why-would-i-want-to-fitssystemwindows-4e26d9ce1eec#.pfvvqr4fr)
+
+[深入理解Android 自定义attr Style styleable以及其应用](http://www.jianshu.com/p/61b79e7f88fc)
