@@ -391,6 +391,35 @@ static final class RequestArbiter<T> extends AtomicBoolean implements Subscripti
 
 可以看出这里可以放入上述 View Destroy的Case下解除订阅一起解决问题；
 
+
+
+### 常用 Oprator
+
+#### compose VS  flatMap  VS concatMap
+
+flatMap将发射的序列转换成另外一种对象的 Observable 序列，注意：其合并时允许事件之间的交叉，即 flatMap() 不保证最终生成的 Observable 和源 Observable 发射序列相同。
+
+concatMap 保留事件的顺序
+
+
+
+conpose 实际是利用 Transformer,而该Transformer实际上就是一个Func1<Observable<T>, Observable<R>>，同样的 Observable 转换，与flatMap不同的是:
+
+>  If the operator you are creating is designed to act on the individual items emitted by a source  Observable, use {@link #lift}. If your operator is designed to transform the source Observable as a whole (for instance, by applying a particular set of existing RxJava operators to it) use {@code compose}.
+
+compose 能够从数据流中获取到原始 Observable，从而对其操作，改变整个数据流，同时其生效的时机是原始 Observable 流创建之时，对整个数据流改变，而flatMap则是对于 Observable的发射事件作出改变，其效率相对较低；更重要的是 compose 保留了整个数据流的链式结构
+
+
+#### first VS  takeFirst
+
+
+> The difference between the two calls is that first() will throw a NoSuchElementException if none of the sources emits valid data, whereas takeFirst() will simply complete without exception.
+
+
+#### concat 等
+
+
+
 ---
 
 [ReactiveX - intro](http://reactivex.io/intro.html)
@@ -422,3 +451,5 @@ static final class RequestArbiter<T> extends AtomicBoolean implements Subscripti
 [Why should we use RxJava on Android](https://medium.com/@lpereira/why-should-we-use-rxjava-on-android-c9066087c56c#.w4hucpy2c)
 
 [Airbnb：我们的安卓客户端是如何使用 RxJava 的](https://realm.io/cn/news/kau-felipe-lima-adopting-rxjava-airbnb-android/)
+
+[RxJava 的周末狂欢](http://gold.xitu.io/entry/5695c3ba60b2d6907c9081ef)
