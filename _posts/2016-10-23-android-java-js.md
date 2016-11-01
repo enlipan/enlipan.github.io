@@ -31,11 +31,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewState() {
         mWebView = (WebView) findViewById(R.id.wv_view);
+        // 自定义 WebClient，可以通过复写 onPageFinish 或 shouldOverrideUrl 函数拦截或处理加载逻辑
         mWebView.setWebViewClient(new CustomerWebClient());
+         // WebView中创建 为js环境创建 名为 android的native接口，js函数可以直接调用
+         //
         mWebView.addJavascriptInterface(new WebViewInterface(this),"android");
         WebSettings webSetting = mWebView.getSettings();
         webSetting.setJavaScriptEnabled(true);
 
+        // Native加载 js中的函数，而恰好该函数是又是Native接口提供，所以一个函数表明了双端的互相调用问题
+        // There's no need to initialize the interface from JavaScript. The WebView automatically makes it available to your web page.
         mWebView.loadUrl("javascript:android.showAndroidToast(\"Android HaHaHa\")");
 
         Log.e("TAG",webSetting.getUserAgentString());
@@ -63,20 +68,31 @@ public class WebViewInterface {
         mAcContext = context;
     }
 
+    //API 17 以上必须添加该注解且为public，否则函数前端无法获取
     @JavascriptInterface
     public void showAndroidToast(String toast){
         Toast.makeText(mAcContext, toast, Toast.LENGTH_SHORT).show();
     }
 }
 
-
 {% endhighlight %}
 
 
-
-
-
 常见问题：
+
+线程问题：WebView的执行逻辑必须再UI线程，再非UI线程执行会导致崩溃；
+
+> If you call methods on WebView from any thread other than your app's UI thread, it can cause unexpected results. For example, if your app uses multiple threads, you can use the runOnUiThread() method to ensure your code executes on the UI thread
+
+shouldOverrideUrl 等Url 拦截处理问题： WebView 只有但Url有效时才会触发拦截函数（shouldOverrideUrlLoading() or shouldInterceptRequest()）
+
+> If you loaded the page by calling loadData() or loadDataWithBaseURL() with an invalid or null base URL, then you will not receive the shouldOverrideUrlLoading() callback for this type of link on the page.Note: When you use loadDataWithBaseURL() and the base URL is invalid or set null, all links in the content you are loading must be absolute.
+
+> If you loaded the page by calling loadUrl() or provided a valid base URL with loadDataWithBaseURL(), then you will receive the shouldOverrideUrlLoading() callback for this type of link on the page, but the URL you receive will be absolute, relative to the current page.
+
+
+
+
 
 Uncaught ReferenceError: functionName is not defined  ——  js调用时，页面还未加载完成，js代码还未加载进入，可以通过复写 onPageFinish()函数，在函数中调用Js 相关函数；
 
