@@ -61,6 +61,11 @@ Buffer: There's no obligation to manage positions, limits, or capacities.
 
 这几个核心类的使用中我们主要通过使用 Buffer 去做业务处理，Buffer实现了 BufferedSource, BufferedSink, Cloneable 三个接口，通过clone()我们可以轻易深拷贝一份 Buffer 完成流数据的copy，而不用像 io中流的读取后还需要重置，或者利用其它的手段去复制流，比较麻烦，这个 clone 函数也是我常用的函数；而通过实现 BufferedSource, BufferedSink（扩充 Source Sink的核心读写函数接口）则几乎提供了我们常用的所有Api，也就是input与output的函数都集合到了Buffer中，看看其函数列表还是比较庞大的；
 
+BufferedSource 等的实现类 RealBufferedSource ，事实上也是包装了Buffer以及source，其核心逻辑以及Buffer代理；
+
+Ps： 针对 source /sink 依旧等同 io中的input、output是针对数据到内存的方向判断（输入到内存，从内存输出）
+
+
 Buffer 通过层层封装转换实现了 读写的一体化，将读写功能内聚到一起，便于随时读写的操作，同时其性能也是比较高效的：okio也因此成为 OkHttp io的核心，其response，缓存，压缩等处无处不在；
 
 > Moving data from one buffer to another is fast. Instead of copying bytes from one place in memory to another, this class just changes ownership of the underlying byte arrays.
