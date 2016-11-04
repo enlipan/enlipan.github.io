@@ -28,6 +28,9 @@ as中的 Proguard 配置：
 {% endhighlight %}
 
 
+#### Entry Point
+
+>  In order to determine which code has to be preserved and which code can be discarded or obfuscated, you have to specify one or more entry points to your code. These entry points are typically classes with main methods, applets, midlets, activities, etc.
 
 
 #### Limitations：
@@ -57,6 +60,7 @@ as中的 Proguard 配置：
 
 其他示例可以参照 Proguard官方文档 —— Examples
 
+
 ---
 
 Quote:
@@ -65,4 +69,4 @@ Quote:
 
 [读懂 Android 中的代码混淆](http://droidyue.com/blog/2016/07/10/understanding-android-obfuscated-code-by-proguard/)
 
-[混淆的艺术-Proguard源码分析(一)前言和计划](http://blog.csdn.net/hello__zero/article/details/18731799)
+[ProGuard代码混淆技术详解](http://www.cnblogs.com/cr330326/p/5534915.html)
