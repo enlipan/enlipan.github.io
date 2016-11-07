@@ -416,11 +416,37 @@ compose 能够从数据流中获取到原始 Observable，从而对其操作，�
 > The difference between the two calls is that first() will throw a NoSuchElementException if none of the sources emits valid data, whereas takeFirst() will simply complete without exception.
 
 
-#### concat 等
+#### defer vs create
 
+defer 利用 Observerable工厂构建 Observerable，在被订阅时开始构建，对比 create完成了延迟构建，可以在构建时获取到最新的构建变量值，而不同于create的预先初始化；
+
+
+
+
+
+#### concat /  mergeWith / ofType等
+
+
+#### backpressure
+
+
+Backpressure 是用来描述，生产者生产数据的速度比消费者消费数据的速度快的一种情况。如果没有处理这种情况，则会出现 MissingBackpressureException 。
+
+[Backpressure](http://stackoverflow.com/documentation/rx-java/2341/backpressure#t=201609180656331698516)
+
+
+### Subject
+
+*  AsyncSubject：当事件序列完成（onComplete之后）发送最后一个事件给观察者    
+*  BehaviorSubject：发送订阅时间之前的最后一个事件给观察者以及其订阅之后的事件              
+*  PublicshSubject:只会将被订阅之后的事件发送给观察者              
+*  ReplaySubject:无论该Subject何时被订阅，其所有已产生的事件都会发送给观察者                     
+*  SerializeSubject: 封装实现线程安全的Subject                   
 
 
 ---
+
+[Advanced Reactive Java](http://akarnokd.blogspot.hu/)
 
 [ReactiveX - intro](http://reactivex.io/intro.html)
 
@@ -453,3 +479,5 @@ compose 能够从数据流中获取到原始 Observable，从而对其操作，�
 [Airbnb：我们的安卓客户端是如何使用 RxJava 的](https://realm.io/cn/news/kau-felipe-lima-adopting-rxjava-airbnb-android/)
 
 [RxJava 的周末狂欢](http://gold.xitu.io/entry/5695c3ba60b2d6907c9081ef)
+
+[RxJava变换操作符：.concatMap( )与.flatMap( )的比较](http://www.jianshu.com/p/6d16805537ef)
