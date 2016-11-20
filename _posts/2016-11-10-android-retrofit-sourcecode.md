@@ -266,6 +266,68 @@ T toResponse(ResponseBody body) throws IOException {
 
 Retrofit的解耦，各种设计模式灵活组合使用，其中尤其以代理，包装，组合模式,而其核心技术其实是动态代理，注解，其设定的Call 以及 Converter接口提供了使用者充分的自定义可能性；
 
+
+
+### Custom Retrofit Converter
+
+上面说到了转换器的解耦，事实上我们可以借助提供的 Converter<Source, Target>接口以及 Converter.Factory类，进而自定义 Converter，首先先看一下默认的 GsonConverterFactory：
+
+{% highlight java %}
+
+// Factory 类提供构建RequestBody 以及 ResponseBody 转换器 Converter的工厂函数
+public final class GsonConverterFactory extends Converter.Factory {
+
+    // 将Okhttp ResponseBody 转换为我们所定义的 Model 实体类
+      @Override
+    public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations,
+        Retrofit retrofit) {
+      TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
+      return new GsonResponseBodyConverter<>(gson, adapter);
+    }
+
+    // 将 type<T>  转换为Http RequestBody http请求体对象
+    @Override
+    public Converter<?, RequestBody> requestBodyConverter(Type type,
+        Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
+      TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
+      return new GsonRequestBodyConverter<>(gson, adapter);
+    }
+
+}
+
+// RequestBody 转换
+final class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
+
+  @Override public RequestBody convert(T value) throws IOException {
+    //Okio
+    Buffer buffer = new Buffer();
+    Writer writer = new OutputStreamWriter(buffer.outputStream(), UTF_8);
+    JsonWriter jsonWriter = gson.newJsonWriter(writer);
+    adapter.write(jsonWriter, value);
+    jsonWriter.close();
+    // 将请求体转换为 Gson流，进而创建 RequstBody
+    return RequestBody.create(MEDIA_TYPE, buffer.readByteString());
+  }
+}
+
+// ResponseBody 转换
+final class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
+
+  @Override public T convert(ResponseBody value) throws IOException {
+    JsonReader jsonReader = gson.newJsonReader(value.charStream());
+    try {
+      return adapter.read(jsonReader);
+    } finally {
+      // 关闭 okio source 流数据
+      value.close();
+    }
+  }
+}
+
+{% endhighlight %}
+
+
+
 ---
 
 Quote:
