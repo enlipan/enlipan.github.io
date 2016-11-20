@@ -279,3 +279,5 @@ Quote:
 [Android网络框架源码分析二---Retrofit](http://www.jianshu.com/p/07dac989272c)
 
 [拆轮子系列：拆 Retrofit](http://blog.piasy.com/2016/06/25/Understand-Retrofit/)
+
+[Retrofit — Define a Custom Response Converter](https://futurestud.io/tutorials/retrofit-replace-the-integrated-json-converter)
