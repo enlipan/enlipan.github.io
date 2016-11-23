@@ -53,6 +53,11 @@ JavaWriter  /  JavaPoet(Squre)
 
 即根据源码所生成的Java源文件，也可能含有对应的自定义注解，会再次触发 process，再次经历process()过程，直到检测不到需要处理的代码；
 
+{:.center}
+![annotation_round](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20161122/annotation_round.jpg)
+
+图片引用自[Scripting, Compiling, and Annotation Processing in Java](http://www.informit.com/articles/article.aspx?p=2027052&seqNum=6)
+
 #### 注解分离
 
 分离注解和Processor,前面说到由于Processor功能的独立性，可以再该processor中应用各种开源工具辅助生成代码，而如果注解和processor合并，在后期打包继承过程中，这些开源库会随着processor一起集成到应用中，造成应用代码膨胀；而事实上processor只需要再编译时期有效即可；
