@@ -152,6 +152,9 @@ ShareCompat
 [Designing for Multi-Window](https://android-developers.blogspot.jp/2016/05/designing-for-multi-window.html?utm_campaign=android_series_multiwindowblog_061616&utm_source=anddev&utm_medium=yt-desc)
 
 
+
+*  
+
 ---
 
 [Android Development Patterns](https://www.youtube.com/playlist?list=PLWz5rJ2EKKc-lJo_RGGXL2Psr8vVCTWjM)
