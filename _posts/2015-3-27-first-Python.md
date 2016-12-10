@@ -3,7 +3,7 @@ layout: post
 title: First Python Program
 category: python
 ---
-###第一个Python试炼小代码
+### 第一个Python试炼小代码
 
 输入字符串，查找当前目录以及当前目录子目录下中所有文件名中含有该字符串的文件，打印输出；
 
@@ -81,9 +81,31 @@ Process finished with exit code 0
 
 ---
 
-乱码参考
+Update 2016.12.11
+
+字符编解码问题：
+
+理解字符集（Unicode，ASCII）概念 与 字符编码方式概念之间的差异，字符表可以定义为对应字符环境下系统所支持的字符集合，而编码字符集则表示字符表中对应至于与计算机中二进制表示序列之间的映射关系，如A是65对应二进制数字，而相对的编码可以理解为计算机为更好的存储传输数据而定义实现的的一种字符集的编码实现，如Unicode的UTF（unicode 字符集的编码标准）实现utf8,utf16，utf32,而UTF-16、UTF-32均是多字节传输，存在字节顺序的问题，有大头还是小头之分，引入BOM（Byte Order Mark，字节序标记）解决该问题，而utf8由于是单字节传输无该问题；
+
+>  字符编码的概念分为：有哪些字符、它们的编号、这些编号如何编码成一系列的“码元”（有限大小的数字）以及最后这些单元如何组成八位字节流。
+
+关于具体环境下的编码之分：
+
+1. OS操作系统默认编码方式     
+
+2. 终端命令环境下的编码方式     
+
+3. 文本文件中内容保存的编码方式      
+
+4. 应用程序中对应语言环境中字符变量的编码方式，即变量再内存中的状态，encode() 可以指定特定编码环境将字符转换到Unicode/ decode() 可以实现将Unicode转换为特定其他编码方式下的str
+
+
+---
+
+Quote：
 
 [Solving Unicode Problems in Python 2.7](http://www.azavea.com/blogs/labs/2014/03/solving-unicode-problems-in-python-2-7/   "Solving Unicode Problems in Python 2.7")
 
 [提问的Stackoverflow](http://stackoverflow.com/questions/29306869/encoding-and-decoding-in-python-2-7-5-1-on-windows-cmd-and-pycharm-get-diffrent/29320806#29320806)
 
+[字符集-WiKi](https://zh.wikipedia.org/wiki/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81)
