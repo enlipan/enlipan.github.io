@@ -5,7 +5,7 @@ category: python
 keywords: [improvement,android]
 ---
 
-开发Android在开发过程中,一直有个比较坑的部门，涉及到UI的调试时如果没有后台数据需要自己去SetterGetter注入数据，如果是List则更加麻烦，需要自己手写构建诸多对象Setter从而构建List，实在有点不爽，所以想着自己实现个简单的restful后台读取本地Json文件返回到手机，一方面Retrofit的配置接口可以直接使用，而不用在自行构造数据时绕过接口的问题，二来数据也可以通过编写Json文件直接快速配置；
+开发Android在开发过程中,一直有个比较坑的部分，涉及到UI的调试时如果没有后台数据需要自己去SetterGetter注入数据，如果是List则更加麻烦，需要自己手写构建诸多对象Setter从而构建List，实在有点不爽，所以想着自己实现个简单的restful后台读取本地Json文件返回到手机，一方面Retrofit的配置接口可以直接使用，而不用在自行构造数据时绕过接口的问题，二来数据也可以通过编写Json文件直接快速配置；
 
 实现主要是几部分：          
 
