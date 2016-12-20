@@ -175,17 +175,36 @@ curl是一种命令行工具，作用是发出网络请求，然后得到和提�
 [Building your own Android library](https://guides.codepath.com/android/Building-your-own-Android-library)
 
 
-####  Fragment Bad Token
+####  Fragment IllegalStateException
+
+根本原因：onSaveInstanceState()之后调用FragmentTransaction.commit();
+
+Activity onSaveInstanceState():
+>  If called, this method will occur before onStop(). There are no guarantees about whether it will occur before or after onPause().
+
+Activity onRestoreInstanceState():
+
+>  called between onStart() and onPostCreate(Bundle).
 
 
-
-
+[Fragment Commit 异常处理](https://www.zybuluo.com/linux1s1s/note/159264)
 
 ####  Fragment
 
 `isAdded()  !=  !isDetached()`
 
+> A Fragment can be attached to an Activity without being added to it's view hierarchy.If a Fragment is detached, it's state is maintained and can be re-added.
 
-#### 特别的BadTokenException
+[What the Fragment? - Google I/O 2016](https://www.youtube.com/watch?v=k3IT-IJ0J98)
+
+[Fragment全解析系列（一）](http://www.jianshu.com/p/d9143a92ad94)
+
+#### 特别的 BadTokenException
 
 BadTokenException 常见于Dialog引起的问题，这类Case并不少见，这里的特别特别在并没有Dialog但是引起了BadTokenException问题；
+
+[诡异的BadTokenException](http://blog.desmondyao.com/android-bad-window-token/)
+
+#### 好文记录—— 一篇从Android Framework阐述Android 4大组件的好文
+
+[How should I design my Android application](https://plus.google.com/u/1/+DianneHackborn/posts/FXCCYxepsDU?sfc=true)
