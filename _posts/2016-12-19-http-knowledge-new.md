@@ -5,8 +5,16 @@ category: others
 keywords: [improvement,java]
 ---
 
+###  Http安全:
 
 
+
+
+###  Http数据缓存:   
+
+
+
+###  Http/2:
 
 
 
@@ -14,6 +22,10 @@ keywords: [improvement,java]
 ---
 
 Quote:
+
+《图解HTTP》
+
+[Security with HTTPS and SSL](https://developer.android.com/training/articles/security-ssl.html)
 
 [Http缓存](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn)
 
