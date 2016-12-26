@@ -74,6 +74,49 @@ androidTestCompile 'com.android.support:support-annotations:24.0.0'
 
 关于单元测试这里主要使用通用型框架组合：**JUnit + Mockito** ,JUnit作为通用Javatest框架，属于基础，没什么好讲的，主要是其他的两个框架，同时通过构建一个MVP单元测试来实践；
 
+###  JUnit
+
+#### Rule
+
+Rule 顾名思义，规则，其自定义实践并不复杂，其在测试时提供了一种类似AOP框架的功能，提供测试Case前后上下文信息，如准备工作以及事后清理工作—— 其典型如 `TemporaryFolder`,在测试函数完成之后可以删除临时创建文件.
+
+{% highlight java%}
+
+public class RuleDemo implements TestRule {
+    @Override
+    public Statement apply(Statement base, Description description) {
+        return new StatementImp(base,description);
+    }
+
+
+    static final class  StatementImp extends Statement{
+
+        private final Statement baseStatement;
+        private final Description description;
+        StatementImp(Statement base, Description des){
+            baseStatement = base;
+            description = des;
+        }
+
+        @Override
+        public void evaluate() throws Throwable {
+            System.out.println("Before Action!!\nClassName >> " + description.getClassName() + "  methodName >>" + description.getMethodName());
+            try{
+                baseStatement.evaluate();
+            }finally {
+                System.out.println("After Action");
+            }
+        }
+    }
+}
+
+{% endhighlight %}
+
+#### RunWith
+
+Runner 属于Junit核心组件，基于JUnit的所有测试脚本均依靠Runner解析执行，如果不指定默认使用BlockJUnit4ClassRunner执行，也可通过 @RunWith 注解指定Runner，JUnit提供了丰富的Runner.
+
+
 ### Mockito
 
 依赖隔离——理想的测试案列应该独立于其他测试Case，如为了验证A模块a函数的正确性，但是a函数引入了B模块的b函数的依赖，这时候如果出现问题并不能确认是a还是b的问题，也就是变量不确定化，所以为测试时隔离模块，也就引入了Mock等测试马甲程序,利用马甲替身可以用于消除测试单元与其他系统间的关系，进而保证外部依赖的干扰，测试变量的单一性；
@@ -188,10 +231,24 @@ Robolectric 解决JVM环境下Android相关类的依赖问题，测试用例可�
 
 >  Running Android tests on the JVM usually fails because the Android core libraries included with the SDK, specifically the android.jar file, only contain stub implementations of the Android classes. The actual implementations of the core libraries are built directly on the device or emulator, so running tests usually requires one to be active in order to execute.
 
+具体使用并不复杂，参照文档即可快速实践；
+
+
+
+###  MVP单测实践
+
+*  使用依赖注入可以高效快速解耦，为单测提供基础
 
 
 
 
+---
+
+Add:
+
+测试本身不能改变代码质量，很多开发习惯让测试保障代码质量，这两者并不能混淆，测试所显示的代码质量只是一个结果，真正能够影响软件代码质量的是开发者本身，如果你发现你的代码质量不好，因该想想你在开发上的问题，采用更高质量的开发手段来提升代码质量；
+
+>  想通过测试来改进代码质量，就像天天称体重来减肥一样 —— 代码大全2
 
 ---
 
@@ -213,6 +270,8 @@ Quote：
 
 [蘑菇街支付金融Android单元测试实践](http://www.infoq.com/cn/articles/mogujie-android-unit-testing)
 
+[Against Android Unit Tests](http://www.philosophicalhacker.com/2015/04/10/against-android-unit-tests/)
+
 [Why Android Unit Testing is so Hard (Pt 1)](http://www.philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/)
 
 [Unit Testing with Robolectric](https://guides.codepath.com/android/Unit-Testing-with-Robolectric)
@@ -224,3 +283,5 @@ Quote：
 [用Robolectric来做Android unit testing](http://chriszou.com/2015/06/15/android-unit-testing-with-robolectric.html)
 
 [安卓单元测试（九）：使用Mockito Annotation快速创建Mock](http://chriszou.com/2016/07/16/mockito-annotation.html)
+
+[JUnit Rules](http://www.codeaffine.com/2012/09/24/junit-rules/)
