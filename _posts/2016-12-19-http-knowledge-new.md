@@ -5,6 +5,11 @@ category: others
 keywords: [improvement,java]
 ---
 
+### Http基础:
+
+
+
+
 ###  Http安全:
 
 
@@ -18,6 +23,9 @@ keywords: [improvement,java]
 
 
 
+###  WebSocket
+
+> 在网络浏览器和服务器之间建立“套接字”连接。客户端和服务器之间存在持久的连接，而且双方都可以随时开始发送数据.
 
 ---
 
@@ -32,3 +40,5 @@ Quote:
 [彻底弄懂 Http 缓存机制 - 基于缓存策略三要素分解法](http://mp.weixin.qq.com/s/qOMO0LIdA47j3RjhbCWUEQ)
 
 [Introduction to HTTP/2](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
+
+[WebSockets 简介：将套接字引入网络](https://www.html5rocks.com/zh/tutorials/websockets/basics/#toc-usetoday)

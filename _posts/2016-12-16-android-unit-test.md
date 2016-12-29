@@ -110,7 +110,33 @@ public class RuleDemo implements TestRule {
     }
 }
 
+//////////////////////Rule 源码 —— BlockJUnit4ClassRunner
+
+//JUnit执行每个测试方法之前，methodBlock方法都会被调用，用于把该Action封装为Statement
+protected Statement methodBlock(FrameworkMethod method) {
+    Object test;
+    try {
+        test = new ReflectiveCallable() {
+            @Override
+            protected Object runReflectiveCall() throws Throwable {
+                return createTest();
+            }
+        }.run();
+    } catch (Throwable e) {
+        return new Fail(e);
+    }
+
+    Statement statement = methodInvoker(method, test);
+    statement = possiblyExpectingExceptions(method, test, statement);
+    statement = withPotentialTimeout(method, test, statement);
+    statement = withBefores(method, test, statement);
+    statement = withAfters(method, test, statement);
+    statement = withRules(method, test, statement);
+    return statement;
+}
+
 {% endhighlight %}
+
 
 #### RunWith
 
