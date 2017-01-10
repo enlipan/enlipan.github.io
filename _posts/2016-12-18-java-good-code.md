@@ -29,4 +29,4 @@ Quote：
 
 [关于烂代码的那些事（中）](http://blog.2baxb.me/archives/1378)
 
-[http://blog.2baxb.me/archives/1378关于烂代码的那些事（下）](http://blog.2baxb.me/archives/1499)
+[关于烂代码的那些事（下）](http://blog.2baxb.me/archives/1499)

@@ -5,7 +5,6 @@ category: android
 keywords: [improvement,android,java]
 ---
 
-
 ####  Current Activity
 
 > adb shell dumpsys window windows | grep -E 'mCurrentFocus|mFocusedApp' --color=always
@@ -37,7 +36,6 @@ as adb 命令：
 *  Evaluate Expression 求值表达式可以用于对当前环境下变量的监控与改变，如改变请求参数,可以直接Debug时改变利用求值表达式请求参数值
 
 *  As Debug窗口——直观查看程序调用函数栈
-
 
 
 ####  Fresco 补充
@@ -127,19 +125,112 @@ simpleDraweeView.setImageURI(uri);
 
 Gson 转换 Json中整数类型值构建时利用了 integer.parsInt()，也就是在Json对象中形如： `"age":10`这样的属性可以设置为int类型也可以设置为String类型，事实上经过实践也的确如此；
 
+具体相关代码可以查看Gson的各类Adapter源码实现；
+
 
 #### 反射
 
 * 构建对象的方式:            
 
-
 1. new()        
 2. clazz.getconstructor().newInstance();                
 3. Proxy.newProxyInstance()
 
-*  其他常用反射函数：
+*  其他常用反射函数：             
 
 
+{% highlight java %}
+
+/**
+     * 利用递归找一个类的指定方法，如果找不到，去父亲里面找直到最上层Object对象为止。
+     *
+     * @param clazz
+     *            目标类
+     * @param methodName
+     *            方法名
+     * @param classes
+     *            方法参数类型数组
+     * @return 方法对象
+     * @throws Exception
+     */
+    private Method getMethod(Class clazz, String methodName,
+                             final Class[] classes) throws Exception {
+        Method method = null;
+        try {
+            method = clazz.getDeclaredMethod(methodName, classes);
+        } catch (NoSuchMethodException e) {
+            try {
+                method = clazz.getMethod(methodName, classes);
+            } catch (NoSuchMethodException ex) {
+                if (clazz.getSuperclass() == null) {
+                    return method;
+                } else {
+                    method = getMethod(clazz.getSuperclass(), methodName,
+                            classes);
+                }
+            }
+        }
+        return method;
+    }
+
+    /**
+     * 反射获取对象
+     * @param paramName
+     * @return
+     */
+    private Object getParam(String paramName) {
+        if (TextUtils.isEmpty(paramName)) {
+            return null;
+        }
+        try {
+            Field field = PopupWindow.class.getDeclaredField(paramName);
+            field.setAccessible(true);
+            return field.get(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 反射赋值对象
+     * @param paramName
+     * @param obj
+     */
+    private void setParam(String paramName, Object obj) {
+        if (TextUtils.isEmpty(paramName)) {
+            return;
+        }
+        try {
+            Field field = PopupWindow.class.getDeclaredField(paramName);
+            field.setAccessible(true);
+            field.set(this, obj);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 反射执行方法
+     * @param methodName
+     * @param args
+     * @return
+     */
+    private Object execMethod(String methodName, Class[] cls, Object[] args) {
+        if (TextUtils.isEmpty(methodName)) {
+            return null;
+        }
+        try {
+            Method method = getMethod(PopupWindow.class, methodName, cls);
+            method.setAccessible(true);
+            return method.invoke(this, args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+{% endhighlight %}
 
 
 ####  curl 命令
@@ -174,6 +265,13 @@ curl是一种命令行工具，作用是发出网络请求，然后得到和提�
 
 [Building your own Android library](https://guides.codepath.com/android/Building-your-own-Android-library)
 
+
+####  Parcelable describeContents
+
+>  这个方法返回的值通常为0，那什么情况下需要填写其他值呢？这个方法到目前为止返回其他唯一有效的值就是CONTENTS_FILE_DESCRIPTOR(0x01)，指明这个Parcel的内容包含文件描述符。DropBoxManager、ParcelFileDescriptor和InputChannel等用到这个值。那文件描述符是什么呢？获取到文件描述符能做什么呢？大家知道在类UNIX系统中，一切皆是文件，文件描述符就是操作文件的数据结构，获取到文件描述符可以完成所有文件相关的操作。因为文件描述符的作用如此之大，为了防止leak，需要禁止在Bundle传输Parcel时包含文件描述符，所以通过Parcel中包含ParcelFileDescriptor等在Bundle中使用时会抛出IllegalArgumentException。所以，这个值是在系统内部进行安全保护所使用的，其他情况下填0即可。
+
+
+>  If you need to put ParcelFileDescriptor(文件描述符) object into Parcelable you should/must specify CONTENTS_FILE_DESCRIPTOR as return value of describeContents(), i.e. by "special object" (in describeContents()'s description) they really mean: FileDescriptor.
 
 ####  Fragment IllegalStateException
 
