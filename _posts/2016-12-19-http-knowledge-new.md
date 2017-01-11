@@ -41,9 +41,8 @@ Quote:
 
 [Introduction to HTTP/2](https://developers.google.com/web/fundamentals/performance/http2/?hl=zh-cn)
 
-<<<<<<< HEAD
 
 [HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)
-=======
+
 [WebSockets 简介：将套接字引入网络](https://www.html5rocks.com/zh/tutorials/websockets/basics/#toc-usetoday)
 >>>>>>> da6806efc5e5f785070bb27d37d1e993752157c2

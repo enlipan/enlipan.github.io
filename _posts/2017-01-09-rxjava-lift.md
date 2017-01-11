@@ -5,6 +5,22 @@ category: java
 keywords: [improvement,java]
 ---
 
+首先要理清核心概念Observable/OnSubscribe/Observer(Subscriber)
+
+### lift
+
+
+
+
+
+
+
+
+
+
+### SubscribeOn 、ObserveOn
+
+
 
 
 
@@ -34,4 +50,8 @@ Quote:
 
 [SubscribeOn 和 ObserveOn](http://blog.piasy.com/AdvancedRxJava/2016/09/16/subscribeon-and-observeon/)
 
+[拆轮子系列：拆 RxJava](http://blog.piasy.com/2016/09/15/Understand-RxJava/)
+
 [Operators Introduction](http://reactivex.io/documentation/operators.html)
+
+[深入浅出 Java 8 Lambda 表达式](http://blog.oneapm.com/apm-tech/226.html)
