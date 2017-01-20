@@ -102,11 +102,151 @@ public final <R> Observable<R> lift(final Operator<? extends R, ? super T> opera
 
 ### SubscribeOn 、ObserveOn
 
-SubscribeOn 转移 调用 subscribe()函数的副作用消耗在其他线程中，而不阻塞主线程；如数据库查询，网络请求都可乐那个导致线程阻塞，由于SubscribeOn的过程在OnSubscribe中，所以最先SubscribeOn的线程会阻塞后面的SubscribeOn;
+SubscribeOn 转移 调用 subscribe()函数的副作用消耗在其他线程中，而不阻塞主线程；如数据库查询，网络请求都可乐那个导致线程阻塞，由于SubscribeOn的过程在OnSubscribe中，所以最先SubscribeOn的线程会重新调度后面的SubscribeOn的工作线程;这是由于执行的先后顺序所决定的，所以Observable源头被订阅后执行的代码，将在代码最靠近源头的SubscribeOn指定的线程中执行；
+
+{% highlight java %}
+
+public final Observable<T> subscribeOn(Scheduler scheduler) {
+        if (this instanceof ScalarSynchronousObservable) {
+            return ((ScalarSynchronousObservable<T>)this).scalarScheduleOn(scheduler);
+        }
+        return create(new OperatorSubscribeOn<T>(this, scheduler));
+    }
+
+public final class OperatorSubscribeOn<T> implements OnSubscribe<T> {
+  ...
+  @Override
+  public void call(final Subscriber<? super T> subscriber) {
+      final Worker inner = scheduler.createWorker();
+      subscriber.add(inner);
+
+      inner.schedule(new Action0() {
+          @Override
+          public void call() {
+              final Thread t = Thread.currentThread();
+
+              Subscriber<T> s = new Subscriber<T>(subscriber) {
+                  @Override
+                  public void onNext(T t) {
+                      subscriber.onNext(t);
+                  }
+
+                  @Override
+                  public void onError(Throwable e) {
+                      try {
+                          subscriber.onError(e);
+                      } finally {
+                          inner.unsubscribe();
+                      }
+                  }
+
+                  @Override
+                  public void onCompleted() {
+                      try {
+                          subscriber.onCompleted();
+                      } finally {
+                          inner.unsubscribe();
+                      }
+                  }
+
+                  @Override
+                  public void setProducer(final Producer p) {
+                      subscriber.setProducer(new Producer() {
+                          @Override
+                          public void request(final long n) {
+                              if (t == Thread.currentThread()) {
+                                  p.request(n);
+                              } else {
+                                  inner.schedule(new Action0() {
+                                      @Override
+                                      public void call() {
+                                          p.request(n);
+                                      }
+                                  });
+                              }
+                          }
+                      });
+                  }
+              };
+
+              source.unsafeSubscribe(s);
+          }
+      });
+  }
+  ...
+}
+
+//worker.schedule(Action) 会触发 Action中的call函数
+//生成新的 Subscriber#New,并与sourceObserverable绑定
+//同时可以看到Subscriber#New的onNext属于Subscriber的包装
+//schedule()过程call函数被调用时，source.unsafeSubscribe()本质只是一个hook
+//其本质是 source.onSubscribe.call(subscriber#New),source.onSubscribe.call此时才被触发，再次显示倒链式过程
+
+public final Subscription unsafeSubscribe(Subscriber<? super T> subscriber) {
+        try {
+            // new Subscriber so onStart it
+            subscriber.onStart();
+            // allow the hook to intercept and/or decorate
+            hook.onSubscribeStart(this, onSubscribe).call(subscriber);
+            return hook.onSubscribeReturn(subscriber);
+        }
+    ...
+}
+
+{% endhighlight %}
+
+observeOn 的目的是确保所有发出的数据/通知都在指定的线程中被接收。与上述SubscribeOn相对，是在OnNext触发，所以最后observeOn的线程就是真正生效的线程；多次的使用 ObserveOn，内部被调度的任务将会把 Subscriber.onNext的执行调度到另一个调度器中，每一次observeOn都会重载调度；
+
+{% highlight java %}
+
+public final Observable<T> observeOn(Scheduler scheduler) {
+      if (this instanceof ScalarSynchronousObservable) {
+          return ((ScalarSynchronousObservable<T>)this).scalarScheduleOn(scheduler);
+      }
+      return lift(new OperatorObserveOn<T>(scheduler, false));
+}
+
+public final class OperatorObserveOn<T> implements Operator<T, T> {
+  ...
+  @Override
+  public Subscriber<? super T> call(Subscriber<? super T> child) {
+      if (scheduler instanceof ImmediateScheduler) {
+          // avoid overhead, execute directly
+          return child;
+      } else if (scheduler instanceof TrampolineScheduler) {
+          // avoid overhead, execute directly
+          return child;
+      } else {
+          ObserveOnSubscriber<T> parent = new ObserveOnSubscriber<T>(scheduler, child, delayError);
+          parent.init();
+          return parent;
+      }
+  }
+  ...
+}
+
+private static final class ObserveOnSubscriber<T> extends Subscriber<T> implements Action0 {
+   ...
+   @Override
+   public void onNext(final T t) {
+       if (isUnsubscribed() || finished) {
+           return;
+       }
+       if (!queue.offer(on.next(t))) {
+           onError(new MissingBackpressureException());
+           return;
+       }
+       /**
+       * schedule()本质上是构造了一个 Action实现了Runable接口交给Excutor执行；
+       * 所以 observeOn的线程切换的本质是 lift转 onNext()流程；
+       */
+       schedule();
+   }
+   ...
+}
 
 
-observeOn 的目的是确保所有发出的数据/通知都在指定的线程中被接收。与上述SubscribeOn相对，是在OnNext触发，所以最后observeOn的线程就是真正生效的线程；
-
+{% endhighlight %}
 
 ### Lambda
 

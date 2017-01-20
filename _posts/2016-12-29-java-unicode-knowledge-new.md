@@ -21,14 +21,6 @@ low-surrogates range (U+DC00 to U+DFFF)
 
 
 
-
-
-
-
-
-
-
-
 ---
 
 Quote:
