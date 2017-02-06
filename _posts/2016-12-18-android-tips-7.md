@@ -25,6 +25,11 @@ as adb 命令：
 
 `$ adb shell am start -n "com.souche.fengche/com.souche.fengche.ui.activity.SplashActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER`
 
+#### chown 命令
+
+`sudo chown -R \`whoami\` /usr/local`
+
+更改指定文件夹的用户组，whoami 得到当前用户；
 
 
 #### Android Debug 方式
