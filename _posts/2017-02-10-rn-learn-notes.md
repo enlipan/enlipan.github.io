@@ -10,7 +10,7 @@ keywords: [improvement,android,css]
 
 编译器
 
-FirstDemo
+FirstDemo-HelloWord
 
 组件 propers
 
@@ -53,6 +53,9 @@ ListView：
 >  场景： 场景简单来说其实就是一个全屏的React组件。与之相对的是单个的Text、Image又或者是你自定义的什么组件，仅仅占据页面中的一部分。
 
 
+基础控件效果熟悉代码：
+
+[ReactNativeNotes](https://github.com/itlipan/RactNativeNotes)
 
 ---
 
