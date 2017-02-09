@@ -97,7 +97,14 @@ allprojects {
 
 React-Native对编译版本和最小编译版本都有要求，它需要app的build.gradle文件的minSdkVersion为16，Demo项目创建时最低版本为15甚至更低，这里需要在app的AndroidManifest.xml加入该声明；
 
-### 终极方案
+
+####  flowconfig 文件
+
+flowconfig属于 flow的配置文件，flow是facebook推出的js静态类型检查工具，.flowconfig文件的存在告诉Flow从该目录下开始检测；
+
+[flow的使用](http://www.weidu8.net/wx/1009148309482813)
+
+### 解决上诉问题的终极方案
 
 最初自己根据创建Demo后实现将RN嵌入到原声Demo应用中时将上面的坑逐一踩了遍，再其后二次创建时采用了一个issue中的方案，更换移动目录的形式竟然避开了所有的问题直接嵌入成功；
 
@@ -118,6 +125,63 @@ React-Native对编译版本和最小编译版本都有要求，它需要app的bu
 > node_modules          
 > index.android.js     
 > package.json  
+
+
+#### Package的注册问题
+
+Package的注册一般有两种方式，一种是通过自定义Application，一种则是Activity级别的ReactInstanceManager实例；
+
+{% highlight java %}
+
+private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+    @Override
+    public boolean getUseDeveloperSupport() {
+        return true;
+    }
+
+    @Override
+    protected List<ReactPackage> getPackages() {
+        return Arrays.<ReactPackage>asList(
+                new MainReactPackage(),
+                new ToastExamplePackage());
+    }
+};
+
+/////////////////////////////////////////////////////
+public class ReactActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
+    private static final int OVERLAY_PERMISSION_REQ_CODE = 0x11;
+    private ReactRootView mReactRootView;
+    private ReactInstanceManager mReactInstanceManager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mReactRootView = new ReactRootView(this);
+        mReactInstanceManager = ReactInstanceManager.builder()
+                .setApplication(getApplication())
+                .setBundleAssetName("index.android.bundle")
+                .setJSMainModuleName("index.android")
+                .addPackage(new MainReactPackage())
+                .addPackage(new ToastExamplePackage())
+                .setUseDeveloperSupport(BuildConfig.DEBUG)
+                .setInitialLifecycleState(LifecycleState.RESUMED)
+                .build();
+        mReactRootView.startReactApplication(mReactInstanceManager, "androidrn", null);
+
+        setContentView(mReactRootView);
+
+        getOverlayPermission();
+    }
+  ...
+}
+
+{% endhighlight  %}
+
+以上两种方式，在我所写的Demo中，由于在已有原生应用中嵌入ReactActivity，所以使用到了 mReactInstanceManager构建ReactRootView，在该ReactActivity 再调用了原生Module，而在Demo文档中的Package信息时直接利用Application注入，**遗忘了
+mReactInstanceManager** 才是真正的manager，总是找不到自定义的Model；
+
+所以这里的关键在于找到整整的PackageManager，更好的方式是单例🌰ReactInstanceManager，而这也是官方推荐的；
 
 ---
 

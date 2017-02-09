@@ -5,10 +5,21 @@ category: android
 keywords: [improvement,android,css]
 ---
 
+RN学习路线：
 
+## 进阶知识：
 
+### Rn嵌入已有原生应用
 
+### Rn调用原生模块
 
+#### 函数调用  
+
+#### 回调
+
+### Link
+
+[ReactHybrideApp](https://github.com/itlipan/ReactHybrid)
 
 
 
