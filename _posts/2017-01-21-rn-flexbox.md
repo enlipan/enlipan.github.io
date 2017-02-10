@@ -9,7 +9,9 @@ keywords: [improvement,android,css]
 弹性盒子用于使页面适应不同的屏幕大小以及设备类型，确保在设备变化时，通过调整页面内元素的宽高，从而在任何显示设备上实现内容在屏幕中的最佳填充能力，使内容元素有更恰当的排布；                 
 
 
-弹性盒子：
+### 弹性盒子：
+
+理解盒子 container + item
 
 *  容器 container            
 *  弹性 item                       
@@ -21,7 +23,7 @@ keywords: [improvement,android,css]
 *  尺寸      
 
 
-属性：
+### 属性：
 
 *  方向(确定了弹性元素排列的方向) | flex-direction : row | row-reverse | column | column-reverse                 
 *  流(设置“flex-direction”和“flex-wrap”的简写，可以同时定义主轴和侧轴) | flex-flow : row | nowrap       
@@ -31,6 +33,18 @@ keywords: [improvement,android,css]
 *  次轴对齐方式 “align-items”设置弹性元素在容器侧轴上的对齐方式                       
 
 
+
+### flex 属性快捷表达：
+
+flex:none|[<'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
+
+flex-shrink 与 flex-basis 属于可选表达属性，如：
+
+flex: 1  ——  flex-grow + 可选属性默认值
+
+flex : 1 2px —— flex-grow + flex-basis
+
+flex: 1 1 auto —— flex-grow  + flex-shrink + flex-basis
 
 ---
 
