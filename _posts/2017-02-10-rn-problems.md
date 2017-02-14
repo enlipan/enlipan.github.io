@@ -183,6 +183,11 @@ mReactInstanceManager** 才是真正的manager，总是找不到自定义的Mode
 
 所以这里的关键在于找到整整的PackageManager，更好的方式是单例🌰ReactInstanceManager，而这也是官方推荐的；
 
+
+### 首页白屏优化
+
+[ReactNative安卓首屏白屏优化](https://github.com/cnsnake11/blog/blob/master/ReactNative%E5%BC%80%E5%8F%91%E6%8C%87%E5%AF%BC/ReactNative%E5%AE%89%E5%8D%93%E9%A6%96%E5%B1%8F%E7%99%BD%E5%B1%8F%E4%BC%98%E5%8C%96.md)
+
 ---
 
 Quote：
