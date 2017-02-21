@@ -192,6 +192,9 @@ public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] 
 事实上实际的response解析操作都在对应的 Converter实现中，所以有需要的当然也应该自定义对应实现了，这里并不复杂，Gson自定义解析经验的可以比较快的上手实践；
 
 
+在实践Demo时使用了之前用Python实现的本地服务器，返回自定义Json数据：
+
+[ServerForAndroid - Python](https://github.com/itlipan/ServerForAndroid/tree/master/package/server)
 
 附注：
 
