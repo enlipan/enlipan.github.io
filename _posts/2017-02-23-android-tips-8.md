@@ -88,3 +88,114 @@ Proguard 在配置时可以指定多个文件,最近看到一种新的方式,非
 [Android Proguard(混淆)](http://www.jianshu.com/p/60e82aafcfd0)
 
 [ProGuard在插件化里的应用](https://www.easydone.cn/2017/01/02/)
+
+
+### Android 远程进程重复初始化Application问题
+
+
+
+{% highlight java %}
+
+// 通常做法：
+public static String getProcessName(Context cxt, int pid) {
+  ActivityManager am = (ActivityManager) cxt.getSystemService(Context.ACTIVITY_SERVICE);
+  List<RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+  if (runningApps == null) {
+  return null;
+  }
+  for (RunningAppProcessInfo procInfo : runningApps) {
+  if (procInfo.pid == pid) {
+  return procInfo.processName;
+  }
+  }
+  return null;
+}
+
+//高效的读取Proc文件：
+public static String getProcessName() {
+  try {
+    File file = new File("/proc/" + android.os.Process.myPid() + "/" + "cmdline");
+    BufferedReader mBufferedReader = new BufferedReader(new FileReader(file));
+    String processName = mBufferedReader.readLine().trim();
+    mBufferedReader.close(); return processName;
+    } catch (Exception e) {
+       e.printStackTrace();
+       return null; }
+}
+
+{% endhighlight %}
+
+### DownLoadManager  
+
+> The Android DownloadManager introduced in Android 2.3. (API 9) is a system service which allows to handle long-running HTTP downloads in the background and notify the triggering application via a broadcast receiver once the download is finished.
+
+DownLoadManager 作为系统Service，有独立进程，在下载时不干扰App内存使用开销问题；
+
+使用方式：
+
+DownLoadManager.Request 构建下载请求
+
+DownLoadManager.Query 用于查看下载信息，如下载进度查询等；
+
+对于进度的查询需要轮询查看进度，直到收到下载完成的通知： 轮询任务可以使用 ScheduledExecutorService
+
+[Android系统下载管理DownloadManager功能介绍及使用示例](http://www.trinea.cn/android/android-downloadmanager/)
+
+###  manifest MetaData - TAG
+
+利用Gradle注入 manifest metaData标签值：
+
+{% highlight java %}
+
+<meta-data
+           android:name="UMENG_CHANNEL"
+           android:value="${UMENG_CHANNEL_VALUE}" />
+
+defaultConfig {
+       manifestPlaceholders = [UMENG_CHANNEL_VALUE: 'dev']
+ }
+
+{%  endhighlight  %}
+
+如何在程序中获取 metaData值：
+
+{% highlight j %}
+
+//在Activity应用<meta-data>元素。
+ActivityInfo info = this.getPackageManager()
+        .getActivityInfo(getComponentName(),PackageManager.GET_META_DATA);
+info.metaData.getString("meta_name");
+
+//在application应用<meta-data>元素。
+ApplicationInfo appInfo = this.getPackageManager()
+        .getApplicationInfo(getPackageName(),PackageManager.GET_META_DATA);
+appInfo.metaData.getString("meta_name");
+
+//在service应用<meta-data>元素。
+ComponentName cn = new ComponentName(this, MetaDataService.class);
+ServiceInfo info = this.getPackageManager().getServiceInfo(cn, PackageManager.GET_META_DATA);
+info.metaData.getString("meta_name");
+
+//在receiver应用<meta-data>元素。
+ComponentName cn = new ComponentName(context, MetaDataReceiver.class);
+ActivityInfo info = context.getPackageManager().getReceiverInfo(cn, PackageManager.GET_META_DATA);
+info.metaData.getString("meta_name");
+
+{% endhighlight %}
+
+### ApplicationID 与 PkgName
+
+在初期Eclipse构建时期，二者是有一致性关系，PkgName 可以作为应用AppID作为应用标识，但当AS引入Gradle管理之后，ApplicationID随之引入，被分离出来，可以通过Gradle构建工具，构建不同的版本ID的App：
+
+{% highlight  java %}
+
+productFlavors {
+    pro {
+        applicationId = "com.example.my.pkg.pro"
+    }
+    free {
+        applicationId = "com.example.my.pkg.free"
+    }
+}
+
+{% endhighlight %}
