@@ -69,7 +69,8 @@ sourceSets {
 
 resourcePrefix "moduleName_"
 
-{% endhightlight%}
+
+{% endhighlight %}
 
 
 后者解决了每次一处改动全部编译的问题，极大提升Android下繁琐的编译过程，提升开发调试效率（想必一处修改，5分钟编译谁都是很痛苦的）      
