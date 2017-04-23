@@ -112,13 +112,13 @@ Quote:
 
 [MultiDex工作原理分析和优化方案](https://zhuanlan.zhihu.com/p/24305296)
 
-[Android分包原理](http://souly.cn/%E6%8A%80%E6%9C%AF%E5%8D%9A%E6%96%87/2016/02/25/android%E5%88%86%E5%8C%85%E5%8E%9F%E7%90%86/)
-
-[Android Dex分包之旅](http://yydcdut.com/2016/03/20/split-dex/)
-
 [美团Android DEX自动拆包及动态加载简介](http://tech.meituan.com/mt-android-auto-split-dex.html)
 
+[当Field邂逅65535](http://jiajixin.cn/2015/10/21/field-65535/)
+
 [dex分包变形记](http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=193)
+
+[Android分包原理](http://souly.cn/%E6%8A%80%E6%9C%AF%E5%8D%9A%E6%96%87/2016/02/25/android%E5%88%86%E5%8C%85%E5%8E%9F%E7%90%86/)
 
 [Android Dex分包之旅](http://yydcdut.com/2016/03/20/split-dex/)
 
@@ -126,9 +126,9 @@ Quote:
 
 ---
 
-
-
 [Custom Class Loading in Dalvik](https://android-developers.googleblog.com/2011/07/custom-class-loading-in-dalvik.html)
+
+[Too many methods in main-dex?](http://blog.osom.info/2014/12/too-many-methods-in-main-dex.html)
 
 [Android Multidex导致的App启动缓慢](https://github.com/hehonghui/android-tech-frontier/blob/master/issue-39/Android%20dex%E5%88%86%E5%8C%85%E5%AF%BC%E8%87%B4%E7%9A%84App%E5%90%AF%E5%8A%A8%E9%80%9F%E5%BA%A6%E4%B8%8B%E9%99%8D.md)
 
