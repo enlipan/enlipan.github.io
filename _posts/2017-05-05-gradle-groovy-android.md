@@ -26,7 +26,7 @@ Groovy 是运行在JVM虚拟机上的动态/脚本语言；Groovy是动态类型
 
 * Groovy类成员变量会自动生成Getter以及Setter属性，如 person.name -> person.setName()，针对Person类中的name属性，可以利用setName的函数对其赋值，该函数由groovy自动添加，针对这种特性我们在查询groovy api的时候要尤其注意 class.feild 的doc中可能并没有feild这一属性，只有其对应的setter函数，其实是等同的；    
 
-* Groovy 中的String - GString
+* Groovy 中的String - GString：`"$foo + foo = ${foo + "foo"}"`
 
 * Groovy 作为动态语言，其声明函数与字段可以用def的形式不直接指定类型，当然也可以借用java的形式指定类型，当函数不指定类型时，其函数的最后一个表达式值将作为函数的返回值。不指定的类型默认为Object；
 
@@ -129,20 +129,101 @@ greetingClosure() // This works as `greeting` is a property of the delegate
 
 ### Gradle
 
+As delegate it's build process to Gradle:  Gradle Android Plugin
+
+DSL作为专门针对莫伊特定问题的计算机语言，
+
 #### DSL
+
+Domain Special Language： 领域专用语言
+
+通常DSL是简洁的，DSL强调对于相关业务的的紧密连接，结合思维上的简洁性，使我们容易上手看懂其代码所对应的业务意义，也使得业务模型和程序模型之间具有较简洁的对应关系；大多数有Eclipse开发经验的同学，在从Eclispe转到AS时，看其Gradle脚本是较为清晰的，如其versionCode等配置都是非常简洁清晰，且和业务紧密联系的；
+
+DSL的文本代码属性，鉴于文本代码的易于修改以及修改效率高，但在复杂业务领域中文本代码并不足以用很好的形式去表现业务领域概念，因而DSL又不能局限于文本代码的特性；同时DSL的描述性是非常强的，大多数DSL的语法都是尽可能的去接近自然语言（DSL的非程序员编程语言属性），通过类自然语言推动业务人员与开发人员的沟通；**Groovy丰富的语法糖支撑着Gradle的文本代码以及自然语言属性**
+
+一个很是有意思的是，恰恰是Gradle具有的DSL的这些特性，导致我们容易上手，也很容易不轻易之间就走上弯路，进而忽视了Gradle的编程框架的特性，将其作为自然语言看待，忽视其Api以及编程语法规则，导致加一行可以，为什么不知的现象的存在；
 
 #### Task
 
+{% highlight groovy %}
+
+gradle tasks --all
+
+group  
+---
+TaskName - Description
+
+// Define Task
+task myTask {
+    description("Description") // Function call works
+    //description "Description" // This is identical to the line above
+    group = "Some group" // Assignment also works
+    doLast { // We can also omit the parentheses, because Groovy syntax
+        println "Here's the action"
+    }
+}
+
+{% endhighlight %}
+
+
+##### task 依赖
+
+- dependsOn
+
+- finalizedBy
+
+- mustRunAfter
+
+- Project 中Task 匹配依赖：
+
+
+{% highlight groovy %}
+
+task getEquipped {
+    dependsOn tasks.matching{ task -> task.name.startsWith("mathingName")}
+    doLast {
+        println "All geared up!"
+    }
+}
+
+{% endhighlight %}
+
+中断Task — 继续其他Task：
+
+- StopExecutionException
+
+- task.enable
+
+
+##### LifeCycle
+
+* initial
+
+* config: DAG(有向无环图)
+
+* excute
 
 
 
 
+
+##### AS 应用：
+
+{:.center}
+![android_variant_mergeres](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20170505/android_variant_mergeres.JPG)
 
 ---
 
 Quote:
 
-<Groovy程序设计>
+
+**Gradle Doc**
+
+**Groovy Doc**
+
+《Groovy程序设计》
+
+[领域专用语言(DSL)迷思](http://www.infoq.com/cn/articles/dsl-discussion#anch23878)
 
 [Groovy Doc](http://groovy-lang.org/documentation.html)
 
