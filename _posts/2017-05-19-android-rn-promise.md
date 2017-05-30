@@ -5,6 +5,10 @@ category: android
 keywords: [improvement,react,android]
 ---
 
+### JS中的Promise
+
+
+
 Promise 简洁而优秀的编程实践，逻辑分离以及链式串联处理的函数式处理思想对于代码的编写非常清晰，这一块的理解是RN中网络以及其他异步处理的基础，非常重要；
 
 

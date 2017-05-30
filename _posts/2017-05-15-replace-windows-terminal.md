@@ -7,6 +7,8 @@ keywords: [improvement]
 
 ### 反人类的Window CMD控制台
 
+
+
 Windows下的Terminal实在是难堪大用，借助Terminal可以完成的东西太多了，很多时候想想如果有Linux的命令行加上Windows系统的易用性就完美了，早先尝试过 PowerShell，Cywin等命令行工具，可以用但总有些不好用的地方，尤其是结合JetBrains全系列软件的 Bottom Terminal使用，确实不好用，这不Google一番还是有所收获： Babun这一windows下的Zsh工具可以通过一些设定完美的配合到 JetBrains上使用；
 
 

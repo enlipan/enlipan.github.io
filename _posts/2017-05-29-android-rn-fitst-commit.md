@@ -5,6 +5,10 @@ category: android
 keywords: [improvement,react,android]
 ---
 
+### ReactNative 总结
+
+
+
 最近一直忙的不像样，连续半个多月一直在开发公司的RN模块，好在前面已经有同学有相关经验踩了些坑，但自己还是狠狠的突击加急了一番才完成任务，这里借着这一番高强度的开发之后总结一番：
 
 ### JavaScript重点:
