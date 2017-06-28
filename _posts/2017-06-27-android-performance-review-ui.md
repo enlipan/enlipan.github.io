@@ -5,6 +5,8 @@ category: android
 keywords: [improvement,android,UI]
 ---
 
+在15年最初做性能优化的时候，大多是看官方视频以及一些优秀Blog的信息进行自己摸索，虽然手段还是那些手段，但是总觉得知识碎片化，最近发现额两本书，这里看看顺便总结回顾一下，同时结合现有项目优化问题：
+
 ### 性能优化回顾
 
 App中对于用户来说最直观的就是App的流畅性，而流畅性直接对应的就是UI性能，众所周知16.6ms帧是流畅性的指标，那么如何达到这一目呢？
@@ -29,8 +31,6 @@ UI 绘制问题
 UI线程负荷过重，以及数据处理导致CPU负荷高，进而导致主线程无法获取CPU时间片
 
 内存问题导致频繁GC，从而引起卡顿
-
-
 
 
 ### View的测量绘制相关
@@ -60,9 +60,22 @@ View层次查看工具
 * Hierachy View  - tools -android Device 
 
 
+### Systrace  
+
+UI性能分析工具：可以结合CPU信息，磁盘活动，线程信息等综合生成用于定位绘制缓慢亦或UI卡顿相关问题的trace报告
+
+快捷键：
+
+* A  时间片向前移动   
+* D  时间片向后移动    
+* S  缩小      
+* W  放大
+
 #### TraceView
 
 函数调用过程分析工具：
+
+TraceView的timeline区间生成了各个线程的函数执行时间线，而在Profile区间则对应着函数的执行时间所占用Cpu以及函数内部调用函数信息等综合信息，非常全面，一般通过这一工具我们可以精确找到UI线程中的实际占用资源的函数，进而精准优化UI问题
 
 生成方式：
 
@@ -70,16 +83,7 @@ View层次查看工具
 
 * DDMS生成- 方便，但定位不精确
 
-### Systrace  
-
-UI性能分析工具：
-
-快捷键：
-
-* A  时间片向前移动   
-* D  时间片向后移动    
-* S  缩小      
-* W  放大       
+       
 
 
 
@@ -97,7 +101,10 @@ Quote:
 
 [Hierarchy Viewer](https://developer.android.com/studio/profile/hierarchy-viewer.html#start)
 
+[Systrace](https://developer.android.com/studio/profile/systrace.html#analysis) 
 
+[TraceView](https://developer.android.com/studio/profile/traceview.html)
 
+《Android 性能优化》
 
-systrace    
+《Android 性能优化最佳实践》
