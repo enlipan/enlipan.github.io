@@ -111,3 +111,17 @@ iOS中 img 中图片链接为 http时可能无法不展示
 
 `lsof -n -i4TCP:8081`
 
+
+## Commit Format
+
+{% highlight html %}
+
+<type>(<scope>): <subject>
+<BLANK LINE>
+<body>
+<BLANK LINE>
+<footer>
+
+{% endhighlight %}
+
+[Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)
