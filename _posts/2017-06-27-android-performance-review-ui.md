@@ -80,11 +80,18 @@ TraceView的timeline区间生成了各个线程的函数执行时间线，而在
 
 * 精确生成- 代码定位   
 
-* DDMS生成- 方便，但定位不精确
+{% highlight java %}
 
-       
+Debug.startMethodTracing();
+...logicMethod...
+Debug.stopMethodTracing();
+
+{% endhighlight %}
+
+* DDMS生成- 方便，但时间定位不精确，需要手动找
 
 
+# AS 中的 Monitors 中 Cpu栏中的traceView，并直接通过AS打开，其劣势在于打开的函数父子调用关系无法直接跳转，优势在于对于执行时间等更加清晰
 
 
 

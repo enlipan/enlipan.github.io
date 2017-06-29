@@ -82,7 +82,18 @@ iOS中 img 中图片链接为 http时可能无法不展示
 
 [组件的refs](https://react-cn.github.io/react/docs/more-about-refs.html)
 
+
+### RN Native 交互时传递数据的方式
+
+* CallBack.invoke(Parameters)
+
+* Promises.resolve()/reject()
+
+* RCTDeviceEventEmitter.emit(eventName,params)
+
 ### RN 首页白屏优化
+
+核心思路空间换时间，通过预初始化，通过traceView可以看到 ReactInstanceManager的创建占用了大量时间，通过缓存可以有效减少首页白屏问题，而RootReactView的复用则会造成RN页面生命周期的异常，所以重新构建是有必要的；
 
 
 [首页白屏优化](https://github.com/cnsnake11/blog/blob/master/ReactNative%E5%BC%80%E5%8F%91%E6%8C%87%E5%AF%BC/ReactNative%E5%AE%89%E5%8D%93%E9%A6%96%E5%B1%8F%E7%99%BD%E5%B1%8F%E4%BC%98%E5%8C%96.md)
