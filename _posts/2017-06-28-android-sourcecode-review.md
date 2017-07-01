@@ -5,7 +5,7 @@ category: android
 keywords: [view, android]
 ---
 
-### Binder
+## Binder
 
 Binder作为进程间通信的架构:
 
@@ -20,11 +20,13 @@ C/S 模型： Client，Server，ServerManager（通信标志:0），以及Binder
 
 [Android Binder 分析——数据传递者（Parcel）](http://light3moon.com/2015/01/28/Android%20Binder%20%E5%88%86%E6%9E%90%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%92%E8%80%85[Parcel]/)
 
-### MessageQueue
+
+
+## MessageQueue
 
 
 
-### AMS
+## AMS
 
 
-### WMS  
+## WMS  
