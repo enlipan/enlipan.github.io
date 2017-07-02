@@ -21,7 +21,7 @@ Linux现有IPC：
 * 套接字-传输效率低        
 * 信号量       
 
-#### Binder 特性： 
+#### Binder 特性：
 
 * 根据客户端所持有的Binder对象，BinderDriver寻址，找到远程Service;客户端进程向服务端进程发送IPC数据时，将数据打包进入Parcel对象中，进而通过内核空间发送到服务进程中；
 
@@ -42,6 +42,27 @@ Linux现有IPC：
 
 C/S 模型： Client，Server，ServerManager（通信标志:0- 固定的确定访问地址），以及Binder Driver（Linux 内核驱动）
 
+
+#### IInterface -> ToBinder
+
+* asBinder() : InterFace 到Binder的转换
+
+
+#### ToInterface -> BpBinder
+
+* asInterface : Binder 到Client 调用的 RemoteService对应函数的 Interface Delegate的转换
+
+BinderProxy中的业务逻辑函数映射着远程Service中对应的函数，其映射关系由BinderDriver维护
+
+eg：
+
+Client  通过获取到 BinderProxy 向远程Servic发出请求流程：
+
+* 获取 BPBinder   
+
+* 利用BPBinder请求-> Remote.transact(data,reply)
+
+* 通过BBinder 获取到对应的命令Code，在 onTransation中通过对应Code映射对应的Action
 
 
 Quote:
@@ -67,6 +88,14 @@ Quote:
 
 AMS：Android核心服务，类OS中的进程管理与调度模块；
 
+
+IActivityManager
+
+ActivityManagerNative  
+
+ActivityManagerProxy
+
+ActivityManagerService 
 
 
 ### WMS  
