@@ -32,9 +32,9 @@ Linux现有IPC：
 
 * 抽象Binder对象，面向对象的思想,Client 中的 BPBinder对象，Server中的 BBinder对象，将进程通信转化为对Binder对象的引用，进而调用该引用Binder对象的方法；
 
-# IBinder接口定义了 Binder IPC的通信协议，BBinder以及BPBinder均为其子类，具有夸进程传输的能力；
+* IBinder接口定义了 Binder IPC的通信协议，BBinder以及BPBinder均为其子类，具有夸进程传输的能力；
 
-* 通过mmap内存映射，其内存映射不仅仅映射进入内核空间同时也映射进入了用户空间，在数据传输时，一次拷贝到内核空间的同时，相当于也同时Copy到了用户空间，高效一次Copy的奥秘，省去内核暂存
+* 通过mmap内存映射，其物理内存地址映射不仅仅映射进入内核空间同时也映射进入了用户空间，在数据传输时，一次拷贝到内核空间的同时，相当于也同时Copy到了用户空间，高效一次Copy的奥秘，省去内核暂存中转
 
 * Binder可以通过内部引用计数解决跨进程代理对象的生命周期问题；
 
@@ -54,9 +54,13 @@ C/S 模型： Client，Server，ServerManager（通信标志:0- 固定的确定�
 
 BinderProxy中的业务逻辑函数映射着远程Service中对应的函数，其映射关系由BinderDriver维护
 
-eg：
+**eg：**
 
 Client  通过获取到 BinderProxy 向远程Servic发出请求流程：
+
+* Service 注册进入 ServiceManager   
+
+* Client 对于 Service Binder寻址
 
 * 获取 BPBinder   
 
@@ -93,13 +97,13 @@ AMS：Android核心服务，类OS中的进程管理与调度模块，负责组�
 
 {% highlight java %}
 
-com.android.server.SystemServer: 
+com.android.server.SystemServer:
 
 run(){
 	 // Start services.
         try {
             Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "StartServices");
-            startBootstrapServices(); // Action 
+            startBootstrapServices(); // Action
             startCoreServices();
             startOtherServices();
         } catch (Throwable ex) {
@@ -130,7 +134,7 @@ run(){
 
 {% endhighlight %}
 
-### ActivityManager(Client) 与 ActivityManagerService通信：
+### ActivityManager(Client) 与 ActivityManagerService通信过程：
 
 核心类：
 
@@ -140,7 +144,7 @@ run(){
 
 * ActivityManagerProxy
 
-* ActivityManagerService 
+* ActivityManagerService extends ActivityManagerNative
 
 {% highlight java %}
 
@@ -196,7 +200,7 @@ private static final Singleton<IActivityManager> gDefault = new Singleton<IActiv
 
 /**
  * Returns a reference to a service with the given name.
- * 
+ *
  * @param name the name of the service to get
  * @return a reference to the service, or <code>null</code> if the service doesn't exist
  */
