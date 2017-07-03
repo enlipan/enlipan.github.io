@@ -86,16 +86,162 @@ Quote:
 
 ### AMS
 
-AMS：Android核心服务，类OS中的进程管理与调度模块；
+AMS：Android核心服务，类OS中的进程管理与调度模块，负责组建状态的管理；
 
 
-IActivityManager
+1. 启动Service：
 
-ActivityManagerNative  
+{% highlight java %}
 
-ActivityManagerProxy
+com.android.server.SystemServer: 
 
-ActivityManagerService 
+run(){
+	 // Start services.
+        try {
+            Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "StartServices");
+            startBootstrapServices(); // Action 
+            startCoreServices();
+            startOtherServices();
+        } catch (Throwable ex) {
+            Slog.e("System", "******************************************");
+            Slog.e("System", "************ Failure starting system services", ex);
+            throw ex;
+        } finally {
+            Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
+        }
 
+}    
+
+
+ private void startBootstrapServices() {
+ 		// Activity manager runs the show.
+        mActivityManagerService = mSystemServiceManager.startService(
+                ActivityManagerService.Lifecycle.class).getService();
+        mActivityManagerService.setSystemServiceManager(mSystemServiceManager);
+        mActivityManagerService.setInstaller(installer);
+
+        ...
+
+        // Set up the Application instance for the system process and get started.
+        mActivityManagerService.setSystemProcess();
+
+
+ }
+
+{% endhighlight %}
+
+### ActivityManager(Client) 与 ActivityManagerService通信：
+
+核心类：
+
+* IActivityManager
+
+* ActivityManagerNative  
+
+* ActivityManagerProxy
+
+* ActivityManagerService 
+
+{% highlight java %}
+
+ActivityManager.Action:
+
+/**
+ * Get the list of tasks associated with the calling application.
+ *
+ * @return The list of tasks associated with the application making this call.
+ * @throws SecurityException
+ */
+public List<ActivityManager.AppTask> getAppTasks() {
+    ArrayList<AppTask> tasks = new ArrayList<AppTask>();
+    List<IAppTask> appTasks;
+    try {
+        appTasks = ActivityManagerNative.getDefault().getAppTasks(mContext.getPackageName());
+    } catch (RemoteException e) {
+        throw e.rethrowFromSystemServer();
+    }
+    int numAppTasks = appTasks.size();
+    for (int i = 0; i < numAppTasks; i++) {
+        tasks.add(new AppTask(appTasks.get(i)));
+    }
+    return tasks;
+}
+
+
+ActivityManagerNative.getDegault():
+/**
+ * Retrieve the system's default/global activity manager.
+ */
+static public IActivityManager getDefault() {
+    return gDefault.get();
+}
+
+ActivityManagerNative.gDefault:
+private static final Singleton<IActivityManager> gDefault = new Singleton<IActivityManager>() {
+    protected IActivityManager create() {
+        IBinder b = ServiceManager.getService("activity");
+        if (false) {
+            Log.v("ActivityManager", "default service binder = " + b);
+        }
+        IActivityManager am = asInterface(b);
+        if (false) {
+            Log.v("ActivityManager", "default service = " + am);
+        }
+        return am;
+    }
+};
+
+
+// 获取对应Service的 Binder对象
+
+/**
+ * Returns a reference to a service with the given name.
+ * 
+ * @param name the name of the service to get
+ * @return a reference to the service, or <code>null</code> if the service doesn't exist
+ */
+public static IBinder getService(String name) {
+    try {
+        IBinder service = sCache.get(name);
+        if (service != null) {
+            return service;
+        } else {
+            return getIServiceManager().getService(name);
+        }
+    } catch (RemoteException e) {
+        Log.e(TAG, "error in getService", e);
+    }
+    return null;
+}
+
+
+
+// ActivityManager 最终调用的 ClientProxy
+
+/**
+ * Cast a Binder object into an activity manager interface, generating
+ * a proxy if needed.
+ */
+static public IActivityManager asInterface(IBinder obj) {
+    if (obj == null) {
+        return null;
+    }
+    IActivityManager in =
+        (IActivityManager)obj.queryLocalInterface(descriptor);
+    if (in != null) {
+        return in;
+    }
+
+    // 从 ServiceManager中获取的 Binder对象传给 Proxy，
+    // 作为客户端发起请求时的 RemoteBinder对象
+    return new ActivityManagerProxy(obj);
+}
+
+// 实际的Action 通过 mRemote.transact(data) 传输
+
+// ActivityManagerService.onTransact(code) 映射对应Action
+
+
+{% endhighlight %}
 
 ### WMS  
