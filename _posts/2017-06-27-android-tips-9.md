@@ -7,7 +7,7 @@ keywords: [improvement,android,java]
 
 ## 脚本相关
 
-### Bash  - bash: [: missing `]' 
+### Bash  - bash: [: missing `]'
 
 [] 内部变量的空格问题
 
@@ -41,7 +41,7 @@ python同样有类似模块 pexpect,需要注意的是 send与sendline的差异�
 原则： unicode 与 utf-8 之间转换
 
 在内存中使用unicode通用万国码，而在输出时使用变长码utf8：
- 
+
 
 [字符串和编码 - python2.7](http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/001386819196283586a37629844456ca7e5a7faa9b94ee8000)
 
@@ -49,7 +49,11 @@ python同样有类似模块 pexpect,需要注意的是 send与sendline的差异�
 
 [Python 编码转换](http://www.jianshu.com/p/53bb448fe85b)
 
+### 正则贪婪与非贪婪
 
+`.*?` 与 `.*`
+
+[What is the difference between .*? and .* regular expressions?](https://stackoverflow.com/questions/3075130/what-is-the-difference-between-and-regular-expressions)
 
 ## RN
 

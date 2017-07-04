@@ -67,3 +67,5 @@ Quote：
 [Using Cygwin’s bash terminal in a JetBrains IDE](https://engineroom.teamwork.com/using-cygwins-bash-terminal-in-a-jetbrains-ide/)
 
 [Configure Webstorm to Use Babun Shell](http://t-code.pl/blog/2016/02/webstorm-babun/)
+
+[让Windows用上OMZ的神器Babun](http://www.10tiao.com/html/357/201605/2247483823/1.html)
