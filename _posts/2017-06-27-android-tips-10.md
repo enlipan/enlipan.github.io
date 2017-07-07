@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Android Tips part (9)
+title:  Android Tips part (10)
 category: android
 keywords: [improvement,android,java]
 ---

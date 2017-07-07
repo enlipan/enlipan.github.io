@@ -93,7 +93,9 @@ Quote:
 AMS：Android核心服务，类OS中的进程管理与调度模块，负责组建状态的管理；
 
 
-1. 启动Service：
+1. AMS SystemService启动流程：
+
+AMS由SystemService创建，并随之启动注册到ServiceManager中由之管理
 
 {% highlight java %}
 
@@ -133,6 +135,142 @@ run(){
  }
 
 {% endhighlight %}
+
+[ActivityManagerService启动过程](http://gityuan.com/2016/02/21/activity-manager-service/)
+
+### ActivityThread  
+
+ActivityThread 作为App启动的入口函数，是研究App与AMS交互的关键，对于App启动的流程也很有必要研究一番：
+
+#### App启动流程：
+
+[Android Application Launch](http://multi-core-dump.blogspot.hk/2010/04/android-application-launch.html)
+
+> Init process then starts a very interesting process called 'Zygote'. As the name implies it's the very beginning for the rest of the Android platform. This is the process which initializes the very first instance of Dalvik virtual machine and pre-loads all the common classed used by the application framework and the various apps. Then it starts listening on a socket interface for future requests to spawn off new vms for managing new app processes. On receiving a new request, it forks itself to create a new process which gets a pre-initialized vm instance.
+After zygote, init starts the runtime process. The zygote then forks to start a well managed process called system server. It starts all core platform services e.g activity manager service and hardware services in its own context. At this point the full stack is ready to launch the first app process - Home app which displays the home screen.
+
+一图胜千言，引用上文的 launch 流程图：
+
+
+{:center}
+![App Lauch](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20170708/app%20launch%20summary.jpg)
+
+{% highlight java %}
+
+
+ActivityThread.main()
+public static void main(String[] args) {
+    ...
+    Looper.prepareMainLooper();
+
+    ActivityThread thread = new ActivityThread();
+    thread.attach(false);
+
+    if (sMainThreadHandler == null) {
+        sMainThreadHandler = thread.getHandler();
+    }
+
+    if (false) {
+        Looper.myLooper().setMessageLogging(new
+                LogPrinter(Log.DEBUG, "ActivityThread"));
+    }
+
+    // End of event ActivityThreadMain.
+    Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+    Looper.loop();
+
+    throw new RuntimeException("Main thread loop unexpectedly exited");
+}
+
+
+
+
+ActivityThread.systemMain()
+
+public static ActivityThread systemMain() {
+    // The system process on low-memory devices do not get to use hardware
+    // accelerated drawing, since this can add too much overhead to the
+    // process.
+    if (!ActivityManager.isHighEndGfx()) {
+        ThreadedRenderer.disable(true);
+    } else {
+        ThreadedRenderer.enableForegroundTrimming();
+    }
+    ActivityThread thread = new ActivityThread();
+    thread.attach(true);
+    return thread;
+}
+
+ActivityThrea.attach()
+
+private void attach(boolean system) {
+        sCurrentActivityThread = this;
+        mSystemThread = system;
+        if (!system) {
+            ViewRootImpl.addFirstDrawHandler(new Runnable() {
+                @Override
+                public void run() {
+                    ensureJitEnabled();
+                }
+            });
+            android.ddm.DdmHandleAppName.setAppName("<pre-initialized>",
+                                                    UserHandle.myUserId());
+            RuntimeInit.setApplicationObject(mAppThread.asBinder());
+            final IActivityManager mgr = ActivityManagerNative.getDefault();
+            try {
+                // mAppThread = new ApplicationThread();
+                //ApplictionThread extends ApplicationThreadNative
+                //ApplicationThreadNative extends Binder implements IApplicationThread
+                // 模型与AMS一致
+                // 负责App生命周期回调处理- onCreate...
+                mgr.attachApplication(mAppThread);
+            } catch (RemoteException ex) {
+                throw ex.rethrowFromSystemServer();
+            }
+            // Watch for getting close to heap limit.
+            BinderInternal.addGcWatcher(new Runnable() {
+                @Override public void run() {
+                    if (!mSomeActivitiesChanged) {
+                        return;
+                    }
+                    Runtime runtime = Runtime.getRuntime();
+                    long dalvikMax = runtime.maxMemory();
+                    long dalvikUsed = runtime.totalMemory() - runtime.freeMemory();
+                    if (dalvikUsed > ((3*dalvikMax)/4)) {
+                        if (DEBUG_MEMORY_TRIM) Slog.d(TAG, "Dalvik max=" + (dalvikMax/1024)
+                                + " total=" + (runtime.totalMemory()/1024)
+                                + " used=" + (dalvikUsed/1024));
+                        mSomeActivitiesChanged = false;
+                        try {
+                            mgr.releaseSomeActivities(mAppThread);
+                        } catch (RemoteException e) {
+                            throw e.rethrowFromSystemServer();
+                        }
+                    }
+                }
+            });
+        } else {
+            // Don't set application object here -- if the system crashes,
+            // we can't display an alert, we just want to die die die.
+            android.ddm.DdmHandleAppName.setAppName("system_process",
+                    UserHandle.myUserId());
+            try {
+                mInstrumentation = new Instrumentation();
+                ContextImpl context = ContextImpl.createAppContext(
+                        this, getSystemContext().mPackageInfo);
+                mInitialApplication = context.mPackageInfo.makeApplication(true, null);
+                mInitialApplication.onCreate();
+            } catch (Exception e) {
+                throw new RuntimeException(
+                        "Unable to instantiate Application():" + e.toString(), e);
+            }
+        }
+       ...
+    }
+
+{% endhighlight 
+
+[Android Application启动流程分析](http://www.jianshu.com/p/a5532ecc8377)
 
 ### ActivityManager(Client) 与 ActivityManagerService通信过程：
 
