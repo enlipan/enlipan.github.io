@@ -7,6 +7,55 @@ keywords: [improvement,android,java]
 
 ## 脚本相关
 
+### Sonarqube AS集成
+
+* Idea插件（AS可用）
+
+* Gradle集成   
+
+{% highlight groovy %} 
+
+
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2"
+  }
+}
+
+apply plugin: "org.sonarqube"
+
+sonarqube {
+    check
+    properties {
+        // Sonar Specific properties
+        // token :name - tokenvalue
+        property 'sonar.login', 'admin'
+        property 'sonar.password', 'admin'
+        property 'sonar.projectName', 'name' // This is the display project name
+        property 'sonar.host.url', 'http://127.0.0.1:9000' // This is the Sonar Server
+        property 'sonar.projectKey', 'project-key'//唯一
+        // The Key using which the project details are tracked
+        property "sonar.projectVersion", VERSION_NAME
+        property "sonar.language", "java"
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.sources", "src/main/"
+        property "sonar.scm.provider", "git"
+    }
+}
+
+//how to run 
+//上传代码质量检测结果到服务器
+
+./gradlew sonarqube  
+
+{% endhighlight %}
+
+
 ### Bash  - bash: [: missing `]'
 
 [] 内部变量的空格问题
