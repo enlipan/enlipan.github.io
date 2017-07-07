@@ -152,7 +152,7 @@ After zygote, init starts the runtime process. The zygote then forks to start a 
 一图胜千言，引用上文的 launch 流程图：
 
 
-{:center}
+{:.center}
 ![App Lauch](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20170708/app%20launch%20summary.jpg)
 
 {% highlight java %}
