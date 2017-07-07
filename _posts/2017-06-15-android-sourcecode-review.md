@@ -272,6 +272,26 @@ private void attach(boolean system) {
 
 [Android Application启动流程分析](http://www.jianshu.com/p/a5532ecc8377)
 
+**总结**
+
+
+* 用户点击 Launcher中应用Icon
+
+* Launcher App 发起 Intent 启动对应App的 MainActivity  
+
+* Launcher App Activity 将对应的数据通过 ActivityManagerProxy 传输到 AMS  
+
+* AMS 对请求做权限等检测，若权限检测通过则进一步检测对应的 processRecord等信息  
+
+* 若进程不存在或进程不可复用则重启一个，Zygote.main() fork VM  
+
+* 进一步创建ActivityThread 并将创建的ActivityThread 启动的 Application信息绑定   
+
+* 绑定成功后此时目标应用进程已存在，则开始从已存在进程中启动对应Activity的流程  
+
+* ApplicationThread中的scheduleLauncheActivity（）开始处理流程
+
+
 ### ActivityManager(Client) 与 ActivityManagerService通信过程：
 
 核心类：
