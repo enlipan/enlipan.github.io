@@ -90,7 +90,7 @@ Quote:
 
 ### AMS
 
-AMS：Android核心服务，类OS中的进程管理与调度模块，负责组建状态的管理；
+AMS：Android核心服务，类OS中的进程管理与调度模块，负责组件状态的管理，包括组件的启动切换调度以及进程的调度与管理；
 
 
 1. 启动Service：
@@ -140,11 +140,13 @@ run(){
 
 * IActivityManager
 
-* ActivityManagerNative  
-
-* ActivityManagerProxy
+* ActivityManagerNative  extends Binder implements IActivityManager
 
 * ActivityManagerService extends ActivityManagerNative
+
+* ActivityManagerProxy  
+
+* ActivityThread： 管理应用进程(应用Apk（不等于系统Apk- Framwork.apk等）运行所在的进程，由Zygote Fork而生)的主线程，（系统进程——SystemServer以及Zygote）
 
 {% highlight java %}
 
@@ -243,9 +245,12 @@ static public IActivityManager asInterface(IBinder obj) {
 
 // 实际的Action 通过 mRemote.transact(data) 传输
 
-// ActivityManagerService.onTransact(code) 映射对应Action
+// ActivityManagerService.onTransact(code) 映射对应Action*///////////////////////////////////
 
 
 {% endhighlight %}
+
+
+ActivetyStack
 
 ### WMS  

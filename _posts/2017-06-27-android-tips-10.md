@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Android Tips part (9)
+title:  Android Tips part (10)
 category: android
 keywords: [improvement,android,java]
 ---
@@ -140,3 +140,19 @@ iOS中 img 中图片链接为 http时可能无法不展示
 {% endhighlight %}
 
 [Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)
+
+## Java
+
+### Java IO
+
+利用NIO提升文件操作性能，如利用 FileChannel 中的 transfer  相关函数，显著提升文件拷贝速度；
+
+其核心实现在于： mmap 结合 DMA(Direct Memory Access),OS进行内核空间与内存空间地址映射，减少拷贝次数，且写入时利用Buffer
+
+[Linux 中的零拷贝技术](https://www.ibm.com/developerworks/cn/linux/l-cn-zerocopy2/) :  
+
+> 在 Linux 中，减少拷贝次数的一种方法是调用 mmap() 来代替调用 read;
+首先，应用程序调用了 mmap() 之后，数据会先通过 DMA 拷贝到操作系统内核的缓冲区中去。
+接着，应用程序跟操作系统共享这个缓冲区，这样，操作系统内核和应用程序存储空间就不需要再进行任何的数据拷贝操作。
+
+[FileChannel 高速拷贝文件的秘密](https://blog.rinc.xyz/posts/160922_nio/)
