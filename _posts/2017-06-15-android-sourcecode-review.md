@@ -268,7 +268,7 @@ private void attach(boolean system) {
        ...
     }
 
-{% endhighlight 
+{% endhighlight %}
 
 [Android Application启动流程分析](http://www.jianshu.com/p/a5532ecc8377)
 
