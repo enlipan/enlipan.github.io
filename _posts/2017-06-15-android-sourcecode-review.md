@@ -403,12 +403,65 @@ static public IActivityManager asInterface(IBinder obj) {
 
 // 实际的Action 通过 mRemote.transact(data) 传输
 
-// ActivityManagerService.onTransact(code) 映射对应Action*///////////////////////////////////
+// ActivityManagerService.onTransact(code) 映射对应Action*
 
 
 {% endhighlight %}
 
+[深入理解 Android：ActivityManagerService](https://blog.rinc.xyz/posts/150414-android-framework-ams/)
 
 ActivetyStack
 
 ### WMS  
+
+* Surface
+
+* WMS
+
+* SurfaceFlinger
+
+{% highlight java %}
+
+// WMS 初始化  
+//
+public static WindowManagerService main(final Context context,
+            final InputManagerService im,
+            final boolean haveInputMethods, final boolean showBootMsgs,
+            final boolean onlyCore) {
+        final WindowManagerService[] holder = new WindowManagerService[1];
+        DisplayThread.getHandler().runWithScissors(new Runnable() {
+            @Override
+            public void run() {
+                holder[0] = new WindowManagerService(context, im,
+                        haveInputMethods, showBootMsgs, onlyCore);
+            }
+        }, 0);
+        return holder[0];
+    }
+
+// os.Handler.runWithScissors
+/**
+ * Runs the specified task synchronously.
+ * <p>
+ * If the current thread is the same as the handler thread, then the runnable
+ * runs immediately without being enqueued.  Otherwise, posts the runnable
+ * to the handler and waits for it to complete before returning.
+ */
+public final boolean runWithScissors(final Runnable r, long timeout) {
+		if (r == null) {
+				throw new IllegalArgumentException("runnable must not be null");
+		}
+		if (timeout < 0) {
+				throw new IllegalArgumentException("timeout must be non-negative");
+		}
+
+		if (Looper.myLooper() == mLooper) {
+				r.run();
+				return true;
+		}
+
+		BlockingRunnable br = new BlockingRunnable(r);
+		return br.postAndWait(this, timeout); // 阻塞函数
+}
+
+{% endhighlight %}
