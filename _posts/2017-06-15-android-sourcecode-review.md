@@ -465,3 +465,9 @@ public final boolean runWithScissors(final Runnable r, long timeout) {
 }
 
 {% endhighlight %}
+
+### WMS 事件分发相关：
+
+[Android中MotionEvent的来源和ViewRootImpl](http://blog.csdn.net/singwhatiwanna/article/details/50775201)
+
+[Android中事件传递分析](http://zjutkz.net/2016/11/17/Android%E4%B8%AD%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%88%86%E6%9E%90/)
