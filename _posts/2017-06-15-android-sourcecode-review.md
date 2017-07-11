@@ -466,6 +466,120 @@ public final boolean runWithScissors(final Runnable r, long timeout) {
 
 {% endhighlight %}
 
+
+### WMS View 管理
+
+{% highlight java %}
+
+/** Interface to let you add and remove child views to an Activity. To get an instance
+  * of this class, call {@link android.content.Context#getSystemService(java.lang.String) Context.getSystemService()}.
+  */
+public interface ViewManager
+{
+    /**
+     * Assign the passed LayoutParams to the passed View and add the view to the window.
+     * <p>Throws {@link android.view.WindowManager.BadTokenException} for certain programming
+     * errors, such as adding a second view to a window without removing the first view.
+     * <p>Throws {@link android.view.WindowManager.InvalidDisplayException} if the window is on a
+     * secondary {@link Display} and the specified display can't be found
+     * (see {@link android.app.Presentation}).
+     * @param view The view to be added to this window.
+     * @param params The LayoutParams to assign to view.
+     */
+    public void addView(View view, ViewGroup.LayoutParams params);
+    public void updateViewLayout(View view, ViewGroup.LayoutParams params);
+    public void removeView(View view);
+}
+
+{% endhighlight %}
+
+核心流程：
+
+* Activity.attach() => 初始化工作构建 PhoneWindow 注入WMS
+
+* setContentView() => 构建DecorView  
+
+* Activity.setVisible() => 与WMS通信 利用 ViewRootImpl的setView从而与WMS通信，AddView(DecorView)，显示DecorView
+
+
+### Service的Context无法构建Dialog的原因
+
+{% highlight java %}
+
+// Activity.attach()
+
+mWindow.setWindowManager(
+				(WindowManager)context.getSystemService(Context.WINDOW_SERVICE),
+				mToken, mComponent.flattenToString(),
+				(info.flags & ActivityInfo.FLAG_HARDWARE_ACCELERATED) != 0);
+
+// Activity.getSystemService()
+
+public Object getSystemService(@ServiceName @NonNull String name) {
+		if (getBaseContext() == null) {
+				throw new IllegalStateException(
+								"System services not available to Activities before onCreate()");
+		}
+
+		if (WINDOW_SERVICE.equals(name)) {
+				return mWindowManager;
+		} else if (SEARCH_SERVICE.equals(name)) {
+				ensureSearchManager();
+				return mSearchManager;
+		}
+		return super.getSystemService(name);
+}
+
+{% endhighlight %}
+
+从上面可以看出 Activity 获取到的WMS与在Service中的默认WMS是有差异的，Activity的getSystemService函数被重写，如果获取WMS则获取进行过Attach注入的 WindowManager；
+
+Activity 中WindowManager的构造实际是 WindowManagerImp，WindowmanagerImp 本质是 WindowManagerGlobal 的封装代理，同时WindowManagerImp保持了 PhoneWindow以及 Display信息以及 WindowToken；孤儿Activity.WindowManager其 addView 实现最终本质由 WindowManagerGlobal 利用 ViewRootImp.setView()完成；
+
+{% highlight java %}
+
+void makeVisible() {
+		if (!mWindowAdded) {
+				ViewManager wm = getWindowManager();
+				wm.addView(mDecor, getWindow().getAttributes());
+				mWindowAdded = true;
+		}
+		mDecor.setVisibility(View.VISIBLE);
+}
+
+
+{% endhighlight %}
+
+利用 ViewRootImp setView中 添加的View实际上就是 PhoneWindow中的 DecorView；
+
+{% highlight java %}
+
+// ViewRootImp 构造函数
+
+ mWindowSession = WindowManagerGlobal.getWindowSession();
+
+//ViewRootImp.setView
+
+res = mWindowSession.addToDisplay(mWindow, mSeq, mWindowAttributes,
+                            getHostVisibility(), mDisplay.getDisplayId(),
+                            mAttachInfo.mContentInsets, mAttachInfo.mStableInsets,
+                            mAttachInfo.mOutsets, mInputChannel);
+
+{% endhighlight %}
+
+由于Android Binder通信的 CS架构，这里Session借用了 WebServer中的概念，Session由 WMS.openSession() 获取，最终 调用 WMS.addWindow()
+
+{% highlight java %}
+
+//WindowManagerService.addWindow
+public int addWindow(Session session, IWindow client, int seq,
+				WindowManager.LayoutParams attrs, int viewVisibility, int displayId,
+				Rect outContentInsets, Rect outStableInsets, Rect outOutsets,
+				InputChannel outInputChannel) ;
+
+
+{% endhighlight %}
+
 ### WMS 事件分发相关：
 
 [Android中MotionEvent的来源和ViewRootImpl](http://blog.csdn.net/singwhatiwanna/article/details/50775201)
