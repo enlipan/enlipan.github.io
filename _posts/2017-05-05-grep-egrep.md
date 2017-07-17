@@ -87,6 +87,14 @@ $ egrep -n 'g(la|oo)d' regular_express.txt
 
 Try more ...
 
+### About Regex
+
+正则表达式作为一种编程语言，从功能上说是描述了一种高度抽象的匹配规则，字符串符合正则规则通常是指字符串或字符串的某部分符合该正则匹配规则；而从变成语言层面，正则表达式是具有语法规则的，其核心为顺序选择以及循环，如 \* 就代表着高度抽象的循环含义；
+
+正是由于正则的高度抽象，抽象源于从实际中的分析，把握实质，逐步由简入深，提炼核心，提炼章法，再逐步循序渐进，事实上工程上的事情都需要有章法核心，不是简单的能用直观感觉去解决的，虽然不能排除天才的直觉，但是即便是天才相比也是浸淫已久才会偶然得之吧；
+
+正则也是同理，需要不断的去训练，把握章法核心，理清得出正则的抽象过程，将复杂的问题逐步剥离开来，当这一章法不断重复强化之后，把握本质的能力也就随之得到了极大的提升；
+
 ---
 
 Quote：
@@ -94,3 +102,7 @@ Quote：
 [在线正则表达式测试](http://tool.oschina.net/regex)
 
 [linux sed命令详解](http://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856901.html)
+
+[刨根究底正则表达式之一：正则表达式概述](http://www.infoq.com/cn/articles/regular-expressions-introduction-part01?utm_source=articles_about_regular-expressions&utm_medium=link&utm_campaign=regular-expressions)
+
+[正则表达式（一）：纠结的转义](http://www.infoq.com/cn/news/2011/01/regular-expressions-1?utm_source=news_about_regular-expressions&utm_medium=link&utm_campaign=regular-expressions)
