@@ -25,6 +25,26 @@ keywords: [java, android]
 
 Init进程在启动之后会运行被称之为 Android初始化语言的 Init.rc文件，文件中定义了各种Action，Service等
 
+{% highlight cpp%}
+// init.zygote.rc 初始化
+service zygote /system/bin/app_process32 -Xzygote /system/bin --zygote --start-system-server --socket-name=zygote
+    class main
+    priority -20
+    user root
+    group root readproc
+    socket zygote stream 660 root system
+    onrestart write /sys/android_power/request_state wake
+    onrestart write /sys/power/state on
+    onrestart restart audioserver
+    onrestart restart cameraserver
+    onrestart restart media
+    onrestart restart netd
+    onrestart restart wificond
+    writepid /dev/cpuset/foreground/tasks
+
+
+{% endhighlight %}
+
 
 {% highlight cpp %}
 
@@ -136,18 +156,6 @@ Zygote进程主要负责注册监听Socket， 加载Andrioid 虚拟机，预加�
 为了解决这一问题，Zygote 的 Fork操作采用Copy-on-Write 机制, Zygote进程是系统启动时加载，它同样会完成虚拟机的初始化，以及Android核心环境的构建，资源的加载，这些Zygote在启动时的预加载Android核心库通常是通用的只读环境，这也就代表着在fork后新的子进程可以与父进程共享该资源，节省内存开销，同时为构建新的虚拟机环境Zygote进程快速的进行自身的复制提供整个系统，从而达到快速构建新的独立进程的目的；
 
 > copy-on-write原理：写时拷贝是指子进程与父进程的页表都所指向同一个块物理内存，fork过程只拷贝父进程的页表，并标记这些页表是只读的。父子进程共用同一份物理内存，如果父子进程任一方想要修改这块物理内存，那么会触发缺页异常(page fault)，Linux收到该中断便会创建新的物理内存，并将两个物理内存标记设置为可写状态，从而父子进程都有各自独立的物理内存。
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
