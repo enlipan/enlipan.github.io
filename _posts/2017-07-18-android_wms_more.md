@@ -125,16 +125,84 @@ AMS的构建如上，利用静态方法返回数组对象，由于WMS的构建�
 
 * PhoneWindowManager.mContext = ContextImpl
 
-WMS 作为Android 中 Window的管理者，Window是什么？Activity是Window，Toast，stateBar，都是Window；WMS构建 Surface，View 的绘制Draw本质是绘制于 Surface中，绘制的Surface对象实现了 Parcelable接口，该对象最终由 SurfaceFinger接受并绘制到屏幕上；
+WMS 作为Android 中 Window的管理者，Window是什么？Activity是Window，Toast，stateBar，都是Window；WMS构建 Surface，View 的绘制Draw本质是绘制于 Surface中，绘制的Surface对象实现了 Parcelable接口，该对象最终由 SurfaceFinger接受这些Surface，并合成FrameBuffer，最终绘制到屏幕上；
 
+来看看Toast的构建以及显示过程： 
 
+{% highlight java %}
+    // Toast 
+    public static Toast makeText(Context context, CharSequence text, @Duration int duration) {
+        Toast result = new Toast(context);
+
+        LayoutInflater inflate = (LayoutInflater)
+                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflate.inflate(com.android.internal.R.layout.transient_notification, null);
+        TextView tv = (TextView)v.findViewById(com.android.internal.R.id.message);
+        tv.setText(text);
+        
+        result.mNextView = v;
+        result.mDuration = duration;
+
+        return result;
+    }
+
+    // Tost TN   
+    // 本质还是WMS addView 
+    public void handleShow(IBinder windowToken) {
+            if (localLOGV) Log.v(TAG, "HANDLE SHOW: " + this + " mView=" + mView
+                    + " mNextView=" + mNextView);
+            if (mView != mNextView) {
+                // remove the old view if necessary
+                handleHide();
+                mView = mNextView;
+                Context context = mView.getContext().getApplicationContext();
+                String packageName = mView.getContext().getOpPackageName();
+                if (context == null) {
+                    context = mView.getContext();
+                }
+                mWM = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+                // We can resolve the Gravity here by using the Locale for getting
+                // the layout direction
+                final Configuration config = mView.getContext().getResources().getConfiguration();
+                final int gravity = Gravity.getAbsoluteGravity(mGravity, config.getLayoutDirection());
+                mParams.gravity = gravity;
+                if ((gravity & Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.FILL_HORIZONTAL) {
+                    mParams.horizontalWeight = 1.0f;
+                }
+                if ((gravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.FILL_VERTICAL) {
+                    mParams.verticalWeight = 1.0f;
+                }
+                mParams.x = mX;
+                mParams.y = mY;
+                mParams.verticalMargin = mVerticalMargin;
+                mParams.horizontalMargin = mHorizontalMargin;
+                mParams.packageName = packageName;
+                mParams.hideTimeoutMilliseconds = mDuration ==
+                    Toast.LENGTH_LONG ? LONG_DURATION_TIMEOUT : SHORT_DURATION_TIMEOUT;
+                mParams.token = windowToken;
+                if (mView.getParent() != null) {
+                    if (localLOGV) Log.v(TAG, "REMOVE! " + mView + " in " + this);
+                    mWM.removeView(mView);
+                }
+                if (localLOGV) Log.v(TAG, "ADD! " + mView + " in " + this);
+                mWM.addView(mView, mParams);
+                trySendAccessibilityEvent();
+            }
+        }
+
+{% endhighlight %}
+
+看着这两个核心Toast函数，即明白了为什么 ApplicationContext 可以显示Toast，也明白了自定义Toast其实是比较简单的事情；
 
 ### Binder  
 
+IBinder 接口：代表一种IPC的抽象，作为 RemoteService的 Proxy可以接受远程调用
+
+`IBinder b = ServiceManager.getService("activity");`
 
 #### BinderToken
 
-Binder 做身份认证，在整个系统进程管理中，每个进程有一个独特的身份标识BinderToken，该机制以BinderDriver为基础；
+Binder 做身份认证，在整个系统进程管理中，每个进程有一个独特的身份标识BinderToken，该机制以BinderDriver为基础；BinderDriver 保证了每一个Token对象在进程通信中的唯一性，以及合法性；
 
 在Client 与 RemoteService通信时，BinderToken贯穿整个过程，事实上这与我们后台身份的Token校验时一致的，在创建获取Service时，Binder被双方作为通信身份确认工具，在通信结束，Service也注销Token；
 
@@ -247,9 +315,11 @@ public final class PowerManager {
 
 Quote：
 
-[Android绘制优化----系统显示原理](https://zhuanlan.zhihu.com/p/27344882)
+[浅析Android的窗口](http://dev.qq.com/topic/5923ef85bdc9739041a4a798)
 
 [Android 显示原理简介](http://djt.qq.com/article/view/987)
+
+[Android绘制优化----系统显示原理](https://zhuanlan.zhihu.com/p/27344882)
 
 [Binders & Window Tokens](http://www.androiddesignpatterns.com/2013/07/binders-window-tokens.html)
 
