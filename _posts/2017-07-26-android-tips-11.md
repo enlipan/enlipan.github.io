@@ -145,6 +145,8 @@ Layout 家族:
 
 Layout 是负责 TextView 的 text显示的抽象类,其具体实现有3个子类, BoringLayout,DynamicLayout,StaticLayout- 分别负责 单行文本显示,动态 SpannableString 显示以及多行**静态**内容显示;
 
+核心 `TextView.makeSingleLayout`.
+
 TextView 中的许多操作实际上是比较耗时的,最近在优化一个搜索 Adapter 的显示时就遇到了 TextView 绘制长文本卡顿的问题,在网络上搜寻发现有较多人遇到这类问题,比如构建类似朋友圈列表 Item 时显示大量 emoji 表情, SpannableString 的绘制卡顿,以及阅读类 App 的滚动卡顿等等,这在打开 GPU 绘制的条形图时能够看到明显的掉帧现象出现,本质还是绘制时间超过了 16ms;
 
 [RENDERING TEXT WITHOUT SKIPPING FRAMES ON](http://matthewwear.xyz/rendering-text-faster/)
