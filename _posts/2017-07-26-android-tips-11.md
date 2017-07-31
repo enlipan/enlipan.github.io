@@ -103,3 +103,57 @@ export default ItemComponentView;
 [学习编写 React 组件的“最佳实践”](https://zhuanlan.zhihu.com/p/27825741)
 
 
+### ADB
+
+#### ANR File 获取
+
+ANR traces.txt 文件位于的位置直接 pull 会有权限问题,通常我们可以使用以下几种方式去获取:
+
+{% highlight bash %}
+
+//1.Copy and pull
+adb shell "cp /data/anr/traces.txt /storage/extSdCard/" 
+adb pull /storage/extSdCard/traces.txt
+
+//2.重定向  直接输出到本地
+adb shell "cat /data/anr/traces.txt"  > /tmp.txt  
+
+{% endhighlight %}
+
+通常我喜欢用第二种
+
+#### 开启 View 的 Override 过度绘制
+
+一般我们开启 View 的重绘检测需要进入开发者选项中找到对应的选项进而开启或者关闭,非常麻烦,事实上这一开启有对应的adb 命令:
+
+{% highlight bash %}
+// 开启过度绘制检测
+$ adb shell setprop debug.hwui.overdraw show 
+
+// 关闭
+$ adb shell setprop debug.hwui.overdraw false
+
+{% endhighlight %}
+
+利用 alias 构建快捷命令非常有用,值得注意的是该命令的开关需要有页面的重绘后生效,比如有页面的跳转之类;
+
+### 性能  
+
+TextView 显示长文本 Item 卡顿问题?
+
+Layout 家族:
+
+Layout 是负责 TextView 的 text显示的抽象类,其具体实现有3个子类, BoringLayout,DynamicLayout,StaticLayout- 分别负责 单行文本显示,动态 SpannableString 显示以及多行**静态**内容显示;
+
+TextView 中的许多操作实际上是比较耗时的,最近在优化一个搜索 Adapter 的显示时就遇到了 TextView 绘制长文本卡顿的问题,在网络上搜寻发现有较多人遇到这类问题,比如构建类似朋友圈列表 Item 时显示大量 emoji 表情, SpannableString 的绘制卡顿,以及阅读类 App 的滚动卡顿等等,这在打开 GPU 绘制的条形图时能够看到明显的掉帧现象出现,本质还是绘制时间超过了 16ms;
+
+[RENDERING TEXT WITHOUT SKIPPING FRAMES ON](http://matthewwear.xyz/rendering-text-faster/)
+
+[TextView预渲染研究](http://ragnraok.github.io/textview-pre-render-research.html)
+
+[StaticLayout 源码分析](http://jaeger.itscoder.com/android/2016/08/05/staticlayout-source-analyse.html)
+
+
+[TextView性能瓶颈](http://www.jianshu.com/p/9f7f9213bff8)
+
+[localgit](https://github.com/wangwei2014/localgit/blob/master/OptimizeText/src/com/ww/optimize/TextAdapter.java)
