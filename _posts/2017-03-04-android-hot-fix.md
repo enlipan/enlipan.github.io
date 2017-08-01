@@ -27,6 +27,10 @@ AndFix 的即时生效: 底层替换, Native 方式替换方法所有信息,但�
 
 针对 Artmethod 的线性 List 构造,自行构造Method 信息集合,获取 Method Size 地址空间,从而带入 Artmethod 的替换过程中;
 
+权限:
+
+同包名下的类间访问-  同 ClassLoader 校验;
+
 ### 微信 Tinker  
 
 类加载方案

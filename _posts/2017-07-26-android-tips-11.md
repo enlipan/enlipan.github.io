@@ -159,3 +159,37 @@ TextView 中的许多操作实际上是比较耗时的,最近在优化一个搜�
 [TextView性能瓶颈](http://www.jianshu.com/p/9f7f9213bff8)
 
 [localgit](https://github.com/wangwei2014/localgit/blob/master/OptimizeText/src/com/ww/optimize/TextAdapter.java)
+
+### static 函数中的匿名内部类  
+
+{% highlight java %}
+
+    private final class BirdSayImp implements BirdSay{
+
+        @Override
+        public void say() {
+
+        }
+    }
+
+    public static void say(){
+        // 匿名内部类需要 Outer.this 的引用,
+        // 而在 static 函数中 this 无法获取到
+        // 这样的写法比较明显
+        birdsSay(new BirdSayImp()); // error
+        // 换一种写法你还能看出是静态内部类吗?
+        birdsSay(new BirdSay() {
+            @Override
+            public void say() {
+
+            }
+        });
+    }
+
+    private static void birdsSay(BirdSay birdSay){
+        birdSay.say();
+    }
+
+{% endhighlight %}
+
+在 Static 函数中的匿名内部类,等同于构建了一个 静态内部类的对象,事实上这一点从 Static 关键字本身触发是比较好理解的;
