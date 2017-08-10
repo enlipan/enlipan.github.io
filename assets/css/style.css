@@ -96,7 +96,16 @@ a {
   -moz-user-select: none;
   -ms-user-select: none;
   -o-user-select: none;
-  user-select: none; }
+  user-select: none;
+  overflow-x: hidden;
+  overflow-y: auto; 
+  -webkit-overflow-scrolling: touch; }
+  #tags::-webkit-scrollbar {
+    width: 1px; }
+  #tags::-webkit-scrollbar-thumb {
+    background: transparent; }
+  #tags:hover::-webkit-scrollbar-thumb {
+    background: #c8ced6; }
   @media screen and (max-width: 585px) {
     #tags {
       display: none; } }
@@ -170,11 +179,11 @@ a {
       border-radius: 0 6px 0 0; }
 
 #tags__bottom {
-  width: 100%;
+  width: 165px;
   height: 44px;
   border-top: 1px solid #3c4149;
   overflow: hidden;
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0; }
   #tags__bottom > .fontello, #tags__bottom > .post__toc-li:before {
