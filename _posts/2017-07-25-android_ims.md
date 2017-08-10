@@ -249,7 +249,8 @@ if  (openInputChannels) {
         return nativeOpenInputChannelPair(name);
     }
 
-{ endhighlight }
+{% endhighlight %}
+
 outInputChannel 就是外部构造的 InputChannel ，属于 Client形式，而这里的 inputChannels[0] 就属于 remoteInputChannel，后面注册进入 WMS，具体的 openInputChannelPair函数注释写的很清楚，一个Chanel发射事件，而另一个消耗输入事件，这里我们关注的是 ClientInputChannel如何消耗的事件，我们回到 ViewRootImp中对于 这个传入的 outInputChannel 还做了哪些处理：
 
 {% highlight java %}
@@ -298,6 +299,7 @@ void enqueueInputEvent(InputEvent event,
             finishInputEvent(q);
         }
     }
+
 {% endhighlight %}
 
 这里最终本质 InputEvent由 InputStage处理，而InputStage的构造是在 ViewRootImp.setView中构造，构造时层层封装层链式InputStage，外层的 inputStage优先调用；
