@@ -135,6 +135,7 @@ a {
 #tags__ul {
   margin: 0;
   padding: 0;
+  margin-bottom: 44px;
   font-size: 17px;
   border-top: 1px solid #3c4149;
   border-bottom: 1px solid #525965;
@@ -184,6 +185,7 @@ a {
   border-top: 1px solid #3c4149;
   overflow: hidden;
   position: fixed;
+  background: #474d57;
   left: 0;
   bottom: 0; }
   #tags__bottom > .fontello, #tags__bottom > .post__toc-li:before {
