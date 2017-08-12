@@ -113,7 +113,7 @@ a {
 #avatar {
   width: 100px;
   height: 100px;
-  margin: 55px auto 35px;
+  margin: 75px auto 35px;
   background: url(/assets/img/avatar.png);
   border-radius: 50%;
   box-shadow: 0 0 0px 4px white, 0 0 4px 4px #eee;
@@ -180,20 +180,21 @@ a {
       border-radius: 0 6px 0 0; }
 
 #tags__bottom {
-  width: 165px;
+  width: 100%;
   height: 44px;
-  border-top: 1px solid #3c4149;
+  border-top: 0px solid #3c4149;
+  border-bottom: 1px solid #3c4149;
   overflow: hidden;
-  position: fixed;
+  position: absolute;
   background: #474d57;
   left: 0;
-  bottom: 0; }
+  top: 0; }
   #tags__bottom > .fontello, #tags__bottom > .post__toc-li:before {
     width: 50%;
     font-size: 18px;
     line-height: 44px;
     text-align: center;
-    border-top: 1px solid #525965;
+    border-top: 0px solid #525965;
     float: left; }
 
 #icon-email {
