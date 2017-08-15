@@ -90,7 +90,15 @@ ImagePipelineFactory.initiallize(context,imagePipelineConfige)...
 
 到这里为止我都已经清楚了 Controller 的构建逻辑,但是我们依旧不清楚 Controller 是如何实现图片的加载逻辑,继续跟踪遗漏的细节;
 
-DraweeHolder 作为持有 Controller 以及 DraweeHierarchy的 holderClass, 也就是 MVC 的连接器,其中必定有很重要的逻辑,而且我们设置了 SimpleDrawee 的 URI 之后其他的图片加载逻辑就会被在 View 加载时触发,猜测加载逻辑核心一定在 setController() 中;
+DraweeHolder 作为持有 Controller 以及 DraweeHierarchy 的 holderClass, 也就是 MVC 的中的打包封装,其中必定有很重要的逻辑,而且我们设置了 SimpleDrawee 的 URI 之后其他的图片加载逻辑就会被在 View 加载时触发,猜测加载逻辑核心一定在 setController() 中;
+
+这里顺带谈一下 DraweeHolder 的存在原因,主要还是为了解耦:
+
+>Drawee users, should, as a rule, use {@link DraweeView} or its subclasses. There are situations where custom views are required, however, and this class is for those circumstances.
+
+翻译一下:  通常,按照规则,使用者应该使用 DraweeView或者继承其使用.然而,依旧存在一些 Case,比如当用户自定义 View 的时候需要这种借助方式,这个类的实现就是为了这些特殊的 Case 存在的;
+
+在这些特殊情形下,使用者可以直接借助 构建DraweeHolder管理 Controller 以及 DraweeHierarchy,进而去快速使用 Fresco 完成加载;
 
 {% highlight java %}
 //DraweeHolder.attachController
