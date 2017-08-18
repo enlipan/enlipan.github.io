@@ -185,7 +185,182 @@ DraweeHolder 作为持有 Controller 以及 DraweeHierarchy 的 holderClass, 也
 
 看到这里我们发现请求的发起流程即为复杂,两种思路,一是运行调试,再就是是继续绘制类图理清结构;
 
-...
+{% highlight java %}
 
-待续
+   mDataSource.subscribe(dataSubscriber, mUiThreadImmediateExecutor);
+   
+   // Producer 包装
+   public DataSource<CloseableReference<CloseableImage>> fetchDecodedImage(
+      ImageRequest imageRequest,
+      Object callerContext,
+      ImageRequest.RequestLevel lowestPermittedRequestLevelOnSubmit) {
+    try {
+      Producer<CloseableReference<CloseableImage>> producerSequence =
+          mProducerSequenceFactory.getDecodedImageProducerSequence(imageRequest);
+      return submitFetchRequest(
+          producerSequence,
+          imageRequest,
+          lowestPermittedRequestLevelOnSubmit,
+          callerContext);
+    } catch (Exception exception) {
+      return DataSources.immediateFailedDataSource(exception);
+    }
+  }
+  // AbstractProducerToDataSourceAdapter 构造函数
+  producer.produceResults(createConsumer(), settableProducerContext);
 
+  
+  //DecodeProducer.produceResults
+    @Override
+  public void produceResults(
+      final Consumer<CloseableReference<CloseableImage>> consumer,
+      final ProducerContext producerContext) {
+    final ImageRequest imageRequest = producerContext.getImageRequest();
+    ProgressiveDecoder progressiveDecoder;
+    if (!UriUtil.isNetworkUri(imageRequest.getSourceUri())) {
+      progressiveDecoder = new LocalImagesProgressiveDecoder(consumer, producerContext);
+    } else {
+      ProgressiveJpegParser jpegParser = new ProgressiveJpegParser(mByteArrayPool);
+      progressiveDecoder = new NetworkImagesProgressiveDecoder(
+          consumer,
+          producerContext,
+          jpegParser,
+          mProgressiveJpegConfig);
+    }
+    mInputProducer.produceResults(progressiveDecoder, producerContext);
+  }
+
+{% endhighlight %}
+
+
+在此处可以看到 Producer 的层层包装处理过程,Producer 包装 inputProducer,紧接着来寻找相关的 图片请求逻辑;
+
+{% highlight java %}
+    // DecodeProducer.onNewResultImpl
+    public void onNewResultImpl(EncodedImage newResult, boolean isLast) {
+      if (isLast && !EncodedImage.isValid(newResult)) {
+        handleError(new NullPointerException("Encoded image is not valid."));
+        return;
+      }
+      if (!updateDecodeJob(newResult, isLast)) {
+        return;
+      }
+      if (isLast || mProducerContext.isIntermediateResultExpected()) {
+        mJobScheduler.scheduleJob();
+      }
+    }
+    // com.facebook.imagepipeline.producers.JobScheduler
+  public boolean scheduleJob() {
+    long now = SystemClock.uptimeMillis();
+    long when = 0;
+    boolean shouldEnqueue = false;
+    synchronized (this) {
+      if (!shouldProcess(mEncodedImage, mIsLast)) {
+        return false;
+      }
+      switch (mJobState) {
+        case IDLE:
+          when = Math.max(mJobStartTime + mMinimumJobIntervalMs, now);
+          shouldEnqueue = true;
+          mJobSubmitTime = now;
+          mJobState = JobState.QUEUED;
+          break;
+        case QUEUED:
+          // do nothing, the job is already queued
+          break;
+        case RUNNING:
+          mJobState = JobState.RUNNING_AND_PENDING;
+          break;
+        case RUNNING_AND_PENDING:
+          // do nothing, the next job is already pending
+          break;
+      }
+    }
+    if (shouldEnqueue) {
+      enqueueJob(when - now);
+    }
+    return true;
+  }
+  // JobScheduler
+  private void enqueueJob(long delay) {
+    // If we make mExecutor be a {@link ScheduledexecutorService}, we could just have
+    // `mExecutor.schedule(mDoJobRunnable, delay)` and avoid mSubmitJobRunnable and
+    // JobStartExecutorSupplier altogether. That would require some refactoring though.
+    if (delay > 0) {
+      JobStartExecutorSupplier.get().schedule(mSubmitJobRunnable, delay, TimeUnit.MILLISECONDS);
+    } else {
+      // mSubmitJobRunnable的 run 方法实际是 submitJob();
+      mSubmitJobRunnable.run();
+    }
+  }
+
+  private void submitJob() {
+   // mDoJobRunnable 其 run 实现实际上是 mJobScheduler.doJob();
+    mExecutor.execute(mDoJobRunnable);
+  }
+
+{% endhighlight %}
+
+这里JobScheduler有3个属性 Job , mSubmitJobRunnable,mDoJobRunnable以及 JobRunnable,JobScheduler 封装了 Executor 以及 ScheduledExecutorService(单例实现),其中 ScheduledExecutorService处理 delay 的延时 Job ,这里对应 mSubmitJobRunnable,当 mSubmitJobRunnable提交时实际上是利用 mExecutor 执行了  mDoJobRunnable,这里看看其逻辑:
+
+{% highlight java %}
+    
+    //DecodeProducer 构造函数定义 Job --> 对应 Schedule.mJobRunnable
+    JobRunnable job = new JobRunnable() {
+        @Override
+        public void run(EncodedImage encodedImage, boolean isLast) {
+          if (encodedImage != null) {
+            if (mDownsampleEnabled) {
+              ImageRequest request = producerContext.getImageRequest();
+              if (mDownsampleEnabledForNetwork ||
+                  !UriUtil.isNetworkUri(request.getSourceUri())) {
+                encodedImage.setSampleSize(DownsampleUtil.determineSampleSize(
+                    request, encodedImage));
+              }
+            }
+            doDecode(encodedImage, isLast);
+          }
+        }
+      };
+    //DecodeProducer.onNewResultImpl()
+    public void onNewResultImpl(EncodedImage newResult, boolean isLast) {
+      if (isLast && !EncodedImage.isValid(newResult)) {
+        handleError(new NullPointerException("Encoded image is not valid."));
+        return;
+      }
+      if (!updateDecodeJob(newResult, isLast)) {
+        return;
+      }
+      if (isLast || mProducerContext.isIntermediateResultExpected()) {
+        //触发 JobSchedule 的3 种 Job处理流程
+        mJobScheduler.scheduleJob();
+      }
+    }
+  //JobSchedule.doJob()
+  private void doJob() {
+    long now = SystemClock.uptimeMillis();
+    EncodedImage input;
+    boolean isLast;
+    synchronized (this) {
+      input = mEncodedImage;
+      isLast = mIsLast;
+      mEncodedImage = null;
+      mIsLast = false;
+      mJobState = JobState.RUNNING;
+      mJobStartTime = now;
+    }
+    try {
+      // we need to do a check in case the job got cleared in the meantime
+      if (shouldProcess(input, isLast)) {
+        // 这里执行了传入的 mJobRunnable 
+        mJobRunnable.run(input, isLast);
+      }
+    } finally {
+      EncodedImage.closeSafely(input);
+      onJobFinished();
+    }
+  }
+
+{% endhighlight %}
+
+再回过头看整体流程:
