@@ -185,6 +185,8 @@ DraweeHolder 作为持有 Controller 以及 DraweeHierarchy 的 holderClass, 也
 
 看到这里我们发现请求的发起流程即为复杂,两种思路,一是运行调试,再就是是继续绘制类图理清结构;
 
+### Producer 处理流程
+
 {% highlight java %}
 
    mDataSource.subscribe(dataSubscriber, mUiThreadImmediateExecutor);
@@ -208,9 +210,8 @@ DraweeHolder 作为持有 Controller 以及 DraweeHierarchy 的 holderClass, 也
   }
   // AbstractProducerToDataSourceAdapter 构造函数
   producer.produceResults(createConsumer(), settableProducerContext);
-
   
-  //DecodeProducer.produceResults
+  //eg:DecodeProducer.produceResults
     @Override
   public void produceResults(
       final Consumer<CloseableReference<CloseableImage>> consumer,
@@ -233,7 +234,7 @@ DraweeHolder 作为持有 Controller 以及 DraweeHierarchy 的 holderClass, 也
 {% endhighlight %}
 
 
-在此处可以看到 Producer 的层层包装处理过程,Producer 包装 inputProducer,紧接着来寻找相关的 图片请求逻辑;
+在此处可以看到 Producer 的层层包装构建 Producer 序列处理的过程,利用Producer 包装 inputProducer,紧接着来寻找相关的 图片请求逻辑;
 
 {% highlight java %}
     // DecodeProducer.onNewResultImpl
@@ -363,4 +364,175 @@ DraweeHolder 作为持有 Controller 以及 DraweeHierarchy 的 holderClass, 也
 
 {% endhighlight %}
 
-再回过头看整体流程:
+再回过头看整体流程,画个图理清一下流程:  
+
+{:.center}
+![Init Suplier](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20170819/sq_controller_init.png)
+
+{:.center}
+![SetUriAction](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20170819/sq_set_uri_action.png)
+
+
+到这里可以明白整个图片的处理逻辑都在 DataSource.subscribe(subscriber),接着追踪最核心的 Producer Sequence 处理逻辑:
+
+DataSource 对象的构造:
+
+{% highlight java %}
+
+   return CloseableProducerToDataSourceAdapter.create(
+          producerSequence,
+          settableProducerContext,
+          requestListener);
+
+{% endhighlight %}
+
+CloseableProducerToDataSourceAdapter 继承自AbstractDataSource,是 Producer 的适配,类名很直观,在阅读源码时,收获很多;
+
+{% highlight java %}
+//CloseableProducerToDataSourceAdapter 的 super()构造函数
+ producer.produceResults(createConsumer(), settableProducerContext);
+
+//这里 Consumer 实际也是对于 Adapter 的代理
+//CloseableProducerToDataSourceAdapter.createConsumer
+private Consumer<T> createConsumer() {
+    return new BaseConsumer<T>() {
+      @Override
+      protected void onNewResultImpl(@Nullable T newResult, boolean isLast) {
+        AbstractProducerToDataSourceAdapter.this.onNewResultImpl(newResult, isLast);
+      }
+
+      @Override
+      protected void onFailureImpl(Throwable throwable) {
+        AbstractProducerToDataSourceAdapter.this.onFailureImpl(throwable);
+      }
+
+      @Override
+      protected void onCancellationImpl() {
+        AbstractProducerToDataSourceAdapter.this.onCancellationImpl();
+      }
+
+      @Override
+      protected void onProgressUpdateImpl(float progress) {
+        AbstractProducerToDataSourceAdapter.this.setProgress(progress);
+      }
+    };
+  }
+  //CloseableProducerToDataSourceAdapter.onNewResultImpl
+  protected void onNewResultImpl(@Nullable T result, boolean isLast) {
+    if (super.setResult(result, isLast)) {
+      if (isLast) {
+        mRequestListener.onRequestSuccess(
+            mSettableProducerContext.getImageRequest(),
+            mSettableProducerContext.getId(),
+            mSettableProducerContext.isPrefetch());
+      }
+    }
+  }
+  //super.setResult
+  protected boolean setResult(@Nullable T value, boolean isLast) {
+    boolean result = setResultInternal(value, isLast);
+    if (result) {
+      notifyDataSubscribers();
+    }
+    return result;
+  }
+  //
+  private void notifyDataSubscribers() {
+    final boolean isFailure = hasFailed();
+    final boolean isCancellation = wasCancelled();
+    for (Pair<DataSubscriber<T>, Executor> pair : mSubscribers) {
+      notifyDataSubscriber(pair.first, pair.second, isFailure, isCancellation);
+    }
+  }
+{% endhighlight %}
+
+在 Value 被 onNewResultImpl 注入了 Result 之后,notify 通知结果更新:
+
+{% highlight java %}
+
+final DataSubscriber<T> dataSubscriber =
+        new BaseDataSubscriber<T>() {
+          @Override
+          public void onNewResultImpl(DataSource<T> dataSource) {
+            // isFinished must be obtained before image, otherwise we might set intermediate result
+            // as final image.
+            boolean isFinished = dataSource.isFinished();
+            float progress = dataSource.getProgress();
+            // image Result 更新
+            T image = dataSource.getResult();
+            if (image != null) {
+              // 
+              onNewResultInternal(id, dataSource, image, progress, isFinished, wasImmediate);
+            } else if (isFinished) {
+              onFailureInternal(id, dataSource, new NullPointerException(), /* isFinished */ true);
+            }
+          }
+          @Override
+          public void onFailureImpl(DataSource<T> dataSource) {
+            onFailureInternal(id, dataSource, dataSource.getFailureCause(), /* isFinished */ true);
+          }
+          @Override
+          public void onProgressUpdate(DataSource<T> dataSource) {
+            boolean isFinished = dataSource.isFinished();
+            float progress = dataSource.getProgress();
+            onProgressUpdateInternal(id, dataSource, progress, isFinished);
+          }
+        };
+
+{% endhighlight %}
+
+Subscriber 收到结果更新,在 onNewResultImpl 中收到 Result, DraweeHierarchy 更新;
+
+
+`mSettableDraweeHierarchy.setImage(drawable, 1f, wasImmediate);`
+
+
+来看看 Producer 的构造封装,是如何调用 produceResults 的调用流程的:
+
+{% highlight java %}
+
+//ImagePipeline.fetchDecodedImage 构造 Procuder 处理 ImageRequest
+Producer<CloseableReference<CloseableImage>> producerSequence =
+          mProducerSequenceFactory.getDecodedImageProducerSequence(imageRequest);
+
+//
+  public Producer<CloseableReference<CloseableImage>> getDecodedImageProducerSequence(
+      ImageRequest imageRequest) {
+    Producer<CloseableReference<CloseableImage>> pipelineSequence =
+        getBasicDecodedImageSequence(imageRequest);
+    if (imageRequest.getPostprocessor() != null) {
+      return getPostprocessorSequence(pipelineSequence);
+    } else {
+      return pipelineSequence;
+    }
+  }
+
+{% endhighlight %}
+
+在 Producer 的层层调用时,上层的 Procuder 调用 inputProducer.produceResults(wrapConsumer,context);
+
+这样的处理逻辑,使下层的 Procuder 处理的结果返回到上层的 wrapConsumer 中,进而转换到上层 Procuder 处理;这样的处理流程使处理一层层下方,而使结果层层上传,追踪回到原来的 CloseableProducerToDataSourceAdapter 中处理;  
+
+
+
+{% highlight java %}
+
+  /**
+   * swallow result if prefetch -> bitmap cache get ->
+   * background thread hand-off -> multiplex -> bitmap cache -> decode -> multiplex ->
+   * encoded cache -> disk cache -> (webp transcode) -> network fetch.
+   */
+
+
+  /**
+   * multiplex -> encoded cache -> disk cache -> (webp transcode) -> network fetch.
+   */
+
+{% endhighlight %}
+
+看完整个流程,非常棒的代码实现,基于多接口的实现非常灵活,有很多值得学习的地方
+
+* Open Closed Principle(OCP): 开闭原则,一旦类的职责确定,那么类对内修改只允许在 fixbug 时,如果要修改类需要 继承其实现完成;
+
+* Interface Segregation Principle(ISP): 接口隔离原则,较小的职责单一的接口构建更灵活的系统实现,解耦的系统,而不应该构建承担了过多功能的胖接口,胖接口表现在系统层面,表明接口定义时不够内聚;
+
