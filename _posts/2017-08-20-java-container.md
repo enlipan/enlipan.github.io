@@ -47,6 +47,10 @@ LRU算法实现:
  sun.misc.Unsafe 相关CAS操作的方法，compareAndSwapInt，compareAndSwapLong等
 本质是将内存值与预期值作比较，判断是否相等，相等的话，写入数据，不相等不做操作，返回旧数据；
 
+> sun.misc.Unsafe 使用直接获取内存的方式实现浅拷贝 - copyMemory      
+> 
+> 即使Unsafe对应用程序很有用，但（建议）不要使用它。
+
 校验利用循环检测变量是否被其他线程更改,如果被更改则进入下一次循环操作;
 
 除此之外,利用锁机制也能实现原子操作
