@@ -70,3 +70,8 @@ Quote:
 [读懂 Android 中的代码混淆](http://droidyue.com/blog/2016/07/10/understanding-android-obfuscated-code-by-proguard/)
 
 [ProGuard代码混淆技术详解](http://www.cnblogs.com/cr330326/p/5534915.html)
+
+[混淆的另一重境界](https://mp.weixin.qq.com/s?__biz=MzAxNzMxNzk5OQ==&mid=2649485204&idx=1&sn=3e1fcbae5fc1abd222589ea1849185d9&chksm=83f82694b48faf82c8652254fc7774759dc91af8186e6a59b2f90e55b0e10d51c285756a8ff6&scene=0#rd)
+
+[Google - Android Proguard](https://developer.android.com/studio/build/shrink-code.html)
+
