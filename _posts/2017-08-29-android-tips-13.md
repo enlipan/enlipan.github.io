@@ -39,3 +39,18 @@ keywords: [improvement,android,java]
 [带你一步步理解使用 ConstraintLayout - 翻译](http://www.jianshu.com/p/793f76cf9fea)
 
 [Android ConstraintLayout使用指南](http://blog.coderclock.com/2017/04/09/android/android-constraintlayout/)
+
+### String 相关 
+
+今天优化了一个在输出 Log 时,由于 adb logcat 4k 限制问题而需要多次截取 substring 分段输出进而导致的内存抖动问题,回顾了String 中需要注意的 case :   
+
+[Android 性能优化之 String篇](https://my.oschina.net/Silver2014/blog/782047)
+
+
+### React 面面观 
+
+[React的基础概念](https://zhuanlan.zhihu.com/p/28846204)
+
+[Why need React ](https://medium.freecodecamp.org/yes-react-is-taking-over-front-end-development-the-question-is-why-40837af8ab76)
+
+
