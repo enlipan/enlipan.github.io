@@ -57,6 +57,15 @@ AS 中在编译开始后,立即点击 cancel, 编译依旧会继续进行直到�
 [Android 性能优化之 String篇](https://my.oschina.net/Silver2014/blog/782047)
 
 
+### Java  
+
+* java 更换 package 名称: 
+
+>  `java -jar jarjar.jar process <rulesFile> <inJar>  <outJar>`
+
+使用场景: 替换三方 jar 包包名规则;
+
+
 ### React 面面观 
 
 [React的基础概念](https://zhuanlan.zhihu.com/p/28846204)
