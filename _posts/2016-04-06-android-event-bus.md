@@ -361,3 +361,7 @@ Quote:
 [公共技术点之 Java 注解 Annotation](http://a.codekk.com/detail/Android/Trinea/%E5%85%AC%E5%85%B1%E6%8A%80%E6%9C%AF%E7%82%B9%E4%B9%8B%20Java%20%E6%B3%A8%E8%A7%A3%20Annotation)
 
 [Android注解与反射机制](http://efany.github.io/2016/04/02/Android%E6%B3%A8%E8%A7%A3%E4%B8%8E%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/)
+
+[老司机教你“飙”EventBus3](https://dev.qq.com/topic/59190e9ae315487c53deeca3)
+
+[EventBus 3.0.0高效使用及源码解析](https://zhuanlan.zhihu.com/p/22493328)
