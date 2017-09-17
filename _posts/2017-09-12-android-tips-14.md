@@ -20,6 +20,12 @@ keywords: [improvement,android,java]
 
 [Workflowy Journal](https://medium.com/@amirmasoudabdol/workflowy-journal-d33405065d64)
 
+#### 知识整理  
+
+知识的记忆通常依赖两个途径: 重复记忆以及理解记忆; 而理解记忆则依赖于对于知识的解构,抽象与整理,对于知识的整理与回顾是非常重要的;事实上这也承接上文事件管理中 Task 的回顾与整理;日回顾,周回顾,月回顾
+
+[关于知识整理、积累与记忆](http://freemind.pluskid.org/misc/knowledge-accumulate/)
+
 ### Js this 
 
 记录一篇好文章: this 的动态绑定,谁调用的函数? 多层 this 中的 that 应用;利用bind 等明确 this;
@@ -63,5 +69,15 @@ Index 加速引擎将原来的在注册时利用反射搜寻观察者的逻辑,�
 
 利用 processAnnotation 扫描源码注解,对于注解函数缓存构建 IndexMap,而如果未使用 Index 构建缓存,则依旧使用反射机制运行时获取;
 
+
+### USB Hub 
+
+MBP 上,USB Hub 的 jam 问题:
+
+> 基于集线器的网络仍然是一个共享介质的局域网，这里的"共享"其实就是集线器内部总线，所以当上行通道与下行通道同时发送数据时仍然会存在信号碰撞现象。当集线器将从其内部端口检测到碰撞时，产生碰撞强化信号（Jam）向集线器所连接的目标端口进行传送。这时所有数据都将不能发送成功，形成网络"大塞车"。
+
+在MBP上表现合盖后导致 wifi 断连无法重连的问题 - 处处皆是知识
+
+解决办法: 拔掉 HUB 合盖,再重新插入 Hub
 
 
