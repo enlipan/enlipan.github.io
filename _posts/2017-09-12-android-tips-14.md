@@ -20,6 +20,26 @@ keywords: [improvement,android,java]
 
 [Workflowy Journal](https://medium.com/@amirmasoudabdol/workflowy-journal-d33405065d64)
 
+### Js this 
+
+记录一篇好文章: this 的动态绑定,谁调用的函数? 多层 this 中的 that 应用;利用bind 等明确 this;
+
+[JavaScript 中 this 是如何工作的？](http://snailsky.me/2014/08/31/javascript-%E4%B8%AD-this-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9F/)
+
+### Custom View 
+
+自定义 View的一篇好文章,早咋没看到...测量布局绘制每个步骤涉及的细节都比较多,虽然现在看来自定义 View 只是基础,但最初上手时还是谈自定义变色的,同时优化 UI 时自定义 View 也是非常重要的,自定义 View 优化布局结构,对于 overdraw 改善是非常明显的;
+
+[Custom Layouts on Android](http://lucasr.org/2014/05/12/custom-layouts-on-android/)
+
+译文:
+
+[Android: 自定义View](http://www.jianshu.com/p/29bb35a4860e)
+
+### Android 构建
+
+Android 多 Module 构建,对应 sdk 版本以及 buildTools 版本不一致时在 jenkins 上会有各种问题,如processReleaseResources...等等,可更新对应 sdkmanager 后重新构建,但更好的方式是使用同 sdk 版本控制,利用 rootproject.ext 变量统一控制;
+
 
 ### HttpUrlConnection  
 
