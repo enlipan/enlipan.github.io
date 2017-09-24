@@ -81,3 +81,13 @@ MBP 上,USB Hub 的 jam 问题:
 解决办法: 拔掉 HUB 合盖,再重新插入 Hub
 
 
+### Fresco  Lib 中的 Scaletype 问题
+
+Fresco 设置 ScaleType 的问题,在 Lib 中若设置 Fresco 依赖为 provided,在配置 xml 时需要使用:
+
+`xmlns:fresco="http://schemas.android.com/apk/lib-auto"`
+
+而问题是,一旦使用这种声明方式, fresco配置的 scaleType 就无法生效,只能更改依赖为: compile 同时将声明方式改为正常的:
+
+`xmlns:fresco="http://schemas.android.com/apk/res-auto"`
+
