@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Linux 系统
-category: other
+category: others
 keywords: [improvement,android,java,os]
 ---
 

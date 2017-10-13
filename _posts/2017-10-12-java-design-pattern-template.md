@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  Java 设计模式之模版方法模式
-category: other
+title:  Java模式-模版方法
+category: java
 keywords: [improvement,design,java,]
 ---
 

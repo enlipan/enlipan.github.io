@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  操作系统 IPC
-category: other
+category: others
 keywords: [improvement,android,java,os]
 ---
 

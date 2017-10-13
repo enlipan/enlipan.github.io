@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  Java 设计模式之享元模式
-category: other
+title:  Java模式-享元模式
+category: java
 keywords: [improvement,design,java,]
 ---
 
