@@ -179,7 +179,7 @@ a {
       border-top: 2px solid #fafafa;
       border-radius: 0 6px 0 0; }
 
-#tags__bottom {
+#tags__top {
   width: 100%;
   height: 44px;
   border-top: 0px solid #3c4149;
@@ -189,7 +189,7 @@ a {
   background: #474d57;
   left: 0;
   top: 0; }
-  #tags__bottom > .fontello, #tags__bottom > .post__toc-li:before {
+  #tags__top > .fontello, #tags__top > .post__toc-li:before {
     width: 50%;
     font-size: 18px;
     line-height: 44px;
