@@ -35,6 +35,20 @@ keywords: [improvement,android,ui,reactnative]
 * 事件名称: 注意此处有坑,原生事件名称与Js 事件名称并不是等同对应的,有一定的映射关系,其名称映射见`UIManagerModuleConstants.java` 源码          
 * 要传递到 js 中的 NativeEvent 参数(Arguments.createMap())
 
+{% highlight java  %}  
+
+ // 事件传递方式 1
+  // viewID
+  // eventName  Native 事件与 Js 事件名称映射关系  UIManagerModuleConstants.java 文件
+  // event value send to Js
+  // 使用 receiveEvent 将事件公布到 Js
+  reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(calendarView.getId(),"topChange",eventMap);
+
+  //事件传递方式 2
+  reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher().dispatchEvent(new TopChangeEvent(calendarView.getId(),calendarDay));
+
+{% endhighlight %}
+
 以上是 js 端作为接受方被动接受 原生View 所发生的事件流程;
 
 #### NativeView 接受 JS 传递的事件
