@@ -31,6 +31,18 @@ hackStudent.field("mBehavior").hijack(student, new Interception.InterceptionHand
 [反射还能这么玩？](http://blog.csdn.net/sbsujjbcy/article/details/51280274)
 
 
+#### 修改 Java 编译字节码
+
+利用 Javassist SDK 操控字节码:
+
+* 读写字节码,更改字节码信息,如更改继承关系          
+* 直接利用makeClass 定义新类           
+* 新增的字节码信息存储在 CtClass 对象中,在整个程序运行生命周期内, ClassPool 保存着 CtClass 对象,以便编译器能正确识别修改后的类信息;
+* Java类加载机制: 相同的类被不同的 ClassLoader 加载,就成为了不同的类,互相之间不可转化;
+
+[jboss-javassist/javassist](https://github.com/jboss-javassist/javassist/wiki/Tutorial-1)
+
+
 #### ReactNative 调试
 
 虚拟 DOM 核心在于抽象了一种DOM 结构,用 js 对象表示,进一步利用 js 的对象计算做 diff, 取代直接的操作复杂 DOM文档元素, 提升渲染性能(只渲染需要渲染的元素),本质上时一种算法缓存思想;
