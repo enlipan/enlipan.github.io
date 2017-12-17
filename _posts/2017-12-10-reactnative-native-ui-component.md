@@ -49,6 +49,17 @@ keywords: [improvement,android,ui,reactnative]
 
 {% endhighlight %}
 
+那么如何暴露对应的自定义接口到 RN? 一旦执行了对应的操作难道都要使用系统的映射处理? 这时我们需要利用 `getExportedCustomDirectEventTypeConstants`函数处理自定义事件: 
+
+{% highlight java  %} 
+
+public Map<String, Object> getExportedCustomDirectEventTypeConstants() {
+        return MapBuilder.<String, Object>of(
+                ClickBackTodayEvent.EVENT_NAME, MapBuilder.of("registrationName", "onClickBackToday"));
+    }
+
+{% endhighlight %}
+
 以上是 js 端作为接受方被动接受 原生View 所发生的事件流程;
 
 #### NativeView 接受 JS 传递的事件

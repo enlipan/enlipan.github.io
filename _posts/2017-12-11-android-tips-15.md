@@ -45,17 +45,34 @@ hackStudent.field("mBehavior").hijack(student, new Interception.InterceptionHand
 
 #### ReactNative 调试
 
-虚拟 DOM 核心在于抽象了一种DOM 结构,用 js 对象表示,进一步利用 js 的对象计算做 diff, 取代直接的操作复杂 DOM文档元素, 提升渲染性能(只渲染需要渲染的元素),本质上时一种算法缓存思想;
+##### MObX
 
 * MobX 追踪函数: computed 表达式、observer 组件的 render() 方法和 when、reaction 和 autorun 的第一个入参函数;
 
 * MobX 事务 API => Transaction 改变追踪函数追踪粒度,防止过多变化导致的性能等问题;
 
+当前 Transaction已经被废弃,推荐使用 action构建事务处理:  
+
+{% highlight  javaScript %}
+
+@action updateTableData() {
+        action(()=>{
+           this.switchData = [];
+        });
+        this.switchData = this.switchData.concat(this.allTaskData.taskTypeList());
+    }
+
+{% endhighlight %}
+
 针对非预期变化的调试可以使用: whyRun 追踪输出变化原因            
 
-[](https://foio.github.io/mobx-react/)
+[使用mobx开发高性能react应用](https://foio.github.io/mobx-react/)
+
+#####  DOM
 
 * 列表中 item Key 的虚拟 DOM  diff            
+
+虚拟 DOM 核心在于抽象了一种DOM 结构,用 js 对象表示,进一步利用 js 的对象计算做 diff, 取代直接的操作复杂 DOM文档元素, 提升渲染性能(只渲染需要渲染的元素),本质上时一种算法缓存思想;
 
 虚拟 DOM 的 diff 算法:  
 
@@ -64,9 +81,7 @@ hackStudent.field("mBehavior").hijack(student, new Interception.InterceptionHand
 * 逐层进行节点比较        
 * 列表节点的比较: key 
 
-
 [虚拟DOM Diff算法解析](http://www.infoq.com/cn/articles/react-dom-diff)
-
 
 虚拟 DOM 树: 比较 js 构建的虚拟 Dom 对象,更新对象信息, 调用 Component 的render函数构建真实 DOM,更新真正需要更新的 Dom 节点及其子元素;
 
