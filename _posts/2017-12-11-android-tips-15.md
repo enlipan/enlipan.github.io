@@ -94,6 +94,18 @@ View 的 key 影响虚拟 DOM 对于重绘的识别,即使 View 是 dirtyView, �
 
 [深入理解react中的虚拟DOM、diff算法](http://www.cnblogs.com/zhuzhenwei918/p/7271305.html)
 
+### onCreate 中 View.Post() 获取 View 宽高? 
+
+onCreate 中 执行 View.Post() 为什么可以获取到 View 的宽高结果? 
+
+并不是因为其延时效应,如果是延时效应应该会出现时而能获取时而不能获取的不稳定机制;其根本原因在于其 Handler 处理消息的 MessageQueue 消息队列机制;
+
+从 View.Post 源码可以看到: View 没有 Attach 到 Window 时, View.Post 的 Runnable 消息被作为 Action缓存下来;
+
+缓存消息执行: ViewRootImp.performTraversals() 中触发 View.dispatchAttachedToWindow() 进而将缓存的 Action 发送到 MessageQueue 中等待处理;(注意这里是等待处理,而不是此时执行)
+
+下一步 ViewRootImp.performTraversals()继续向下执行,继续执行 performMeasure,performLayout,performDraw等 View 处理相关函数;当这些整个流程执行完毕后,消息队列处理后续消息时 最初 Post 的消息才得到执行的机会,也就是此时 View 已经执行过 mesure 等 View 绘制相关函数;
+
 #### 其他
 
 抓包: 抓住核心,万变不离其宗,变处理 DOM 元素为处理后台 json 处理;
