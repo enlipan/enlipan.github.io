@@ -94,6 +94,16 @@ View 的 key 影响虚拟 DOM 对于重绘的识别,即使 View 是 dirtyView, �
 
 [深入理解react中的虚拟DOM、diff算法](http://www.cnblogs.com/zhuzhenwei918/p/7271305.html)
 
+[React](https://reactjs.org/tutorial/tutorial.html#keys)
+
+> key is a special property that’s reserved by React (along with ref, a more advanced feature). When an element is created, React pulls off the key property and stores the key directly on the returned element. Even though it may look like it is part of props, it cannot be referenced with this.props.key. React uses the key automatically while deciding which children to update; there is no way for a component to inquire about its own key.
+
+> When a list is rerendered, React takes each element in the new version and looks for one with a matching key in the previous list. When a key is added to the set, a component is created; when a key is removed, a component is destroyed. Keys tell React about the identity of each component, so that it can maintain the state across rerenders. If you change the key of a component, it will be completely destroyed and recreated with a new state.
+
+> It’s strongly recommended that you assign proper keys whenever you build dynamic lists. If you don’t have an appropriate key handy, you may want to consider restructuring your data so that you do.
+
+> If you don’t specify any key, React will warn you and fall back to using the array index as a key – which is not the correct choice if you ever reorder elements in the list or add/remove items anywhere but the bottom of the list. Explicitly passing key={i} silences the warning but has the same problem so isn’t recommended in most cases.
+
 ### onCreate 中 View.Post() 获取 View 宽高? 
 
 onCreate 中 执行 View.Post() 为什么可以获取到 View 的宽高结果? 
