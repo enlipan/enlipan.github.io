@@ -23,6 +23,7 @@ keywords: [improvement,android,java]
 
 组件化之后的模块之间的页面跳转与逻辑调用,利用 Router 解耦页面之间的依赖关系 
 
+
 ### Arouter : 
 
 是什么? 
@@ -35,6 +36,11 @@ keywords: [improvement,android,java]
 
 怎么解决? 
 
+
+### 源码: 
+
+
+
 ---
 
 Quote: 
@@ -42,5 +48,9 @@ Quote:
 [开源最佳实践：Android平台页面路由框架ARouter](https://yq.aliyun.com/articles/71687?spm=5176.100240.searchblog.7.8os9Go)
 
 
+[ARouter 源码解析](https://blog.csdn.net/crazy1235/article/details/77126904)
+
+
+[路由设计最佳实践](https://www.jianshu.com/p/8a3eeeaf01e8)
 
 
