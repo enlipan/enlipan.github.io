@@ -7,7 +7,7 @@ keywords: [improvement,android,java]
 
 ### Split Apk 
 
-将 apk 按照 gradle 设定配置的 屏幕密度, abi 等信息将
+将 apk 按照 gradle 设定配置的 屏幕密度, abi 等信息将其拆分为多种类型的apk,其拆分机制比起使用 flavors更加灵活。
 
 
 ### 正则回顾 
@@ -148,6 +148,13 @@ loop.close()
 
 
 {% endhighlight %}
+
+
+#### Gson 特殊字符的处理 
+
+在路由处理时,我们常使用 Url.encode() 处理特殊字符,但 Gson.toJson()也会对某些特殊字符进行处理;
+
+比如对于 String 的处理, Gson.toJson(StringObj),处理之后再进行URLEncode 处理会有迷惑效果,之后的 UrlDecode 处理并不会恢复到最初的 String, 只会恢复到被 Gson 处理过之后的 GsonString ,简单的说就比如 Gson 对于"="的处理
 
 
 
