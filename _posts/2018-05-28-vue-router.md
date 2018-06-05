@@ -100,8 +100,11 @@ Router 实例的相关API:
 路由别名设置,很多时候比 Path 更加优雅好用;   
 
 
+[vue-Router 入门](https://segmentfault.com/a/1190000009651628)
 
 ### 前端路由 
+
+单页面应用的路由实现原理: 
 
 *  hash 模式 
 
@@ -113,3 +116,17 @@ Router 实例的相关API:
 * history 模式
 
 通过 H5标准中的 pushState / replaceState /popstate 事件,实现改变 url 而不触发页面刷新,进而可以实现单页面应用的路由控制;同时也避免了 url 中携带 #号的问题;
+
+history 对象:  Window.history 属性指向 History 对象表示当前浏览器窗口的历史记录;
+
+操纵 history 对象在历史记录中移动,需要注意的是:当移动到加载过的历史页面时通常直接从浏览器缓存中读取,而不是重新向服务器发送请求获取数据完成加载;
+
+history.pushState(StateObject,title,url) : 添加历史记录,序列化关联状态对象,而后可以通过 history.state 获取到对象;
+
+replaceState 
+
+popstate : 
+
+[History 对象](http://javascript.ruanyifeng.com/bom/history.html)
+
+单页面应用的路由实现通常使用 H5标准 history 处理实现,借助对应的 history 事件api实现避免了重新加载服务器资源

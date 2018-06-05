@@ -80,4 +80,21 @@ poll 与 epoll 差异:  poll 利用代理线程轮询IO 事件, 当没有 IO 事
 
 与之不同的 epoll (Event poll) 则借助事件唤醒机制直接告诉代理线程哪个流发生了事件;O(1)
 
+> 阻塞:  CPU 资源已从此代码片段释放,但代码段后续的代码还没有被执行;比如你调用了阻塞版本的write，然后对端没有读取，那么线程就阻塞在那里，没有cpu会去执行后面的代码。
+
 [异步IO是什么？](https://zhuanlan.zhihu.com/p/37640811)
+
+
+#### Android 截屏检测  
+
+针对截屏事件 Android 系统和并没有开放对应的系统通知API事件,但根据所产生的行为可以归纳如下: 
+
+
+* 使用ContentObserver，监听MediaStore.Images.Media.EXTERNAL_CONTENT_URI资源的变化
+
+* 使用FileObserver，监听Screenshots目录下的图片文件变化定位截屏图片；
+
+
+Quote: 
+
+[RxScreenshotDetector：Android 截屏检测](https://blog.piasy.com/2016/01/29/Android-Screenshot-Detector/)
