@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android Token 相关
+title: Token & Session
 category: android
 ---
 
@@ -16,7 +16,20 @@ Token的产生源于减轻服务器在验证用户请求有效性时而带来的
 
 Session 只提供一种简单的认证，即一旦拥有SID ，也就拥有 User 的全部权限，故而SID是需要严格保密的，这个数据应该只保存在站方，不应该共享给其它网站或者第三方App。
 
-参考以上的SessionID安全性问题考虑，如果服务器用户数据可能需要和第三方共享，或者允许第三方调用 API 接口，一般采用Token 校验机制更合适。
+~~参考以上的SessionID安全性问题考虑，如果服务器用户数据可能需要和第三方共享，或者允许第三方调用 API 接口，一般采用Token 校验机制更合适~~
+
+
+---
+
+补充说明: 
+
+最近新看了一遍文章,觉得没有讲明白, SessionID 的问题在于如果服务器不保存 客户端使用 SID 就无法区分 SID 的真实性,无法做身份真实性校验,而一旦保存,就面临当用户过多时的各种问题, SID 过多对于服务端是非常大的限制,一方面在多服务端之间SID的同步问题另一方面大量数据的处理性能问题都严峻影响扩展性.
+
+如何从这种 SID 的存储问题中解脱出来? 换句话说也就是如果服务端不保存SID 有什么方式可以验证客户端身份? Token 就是用来解决这一问题的.
+
+Token 如何做的? Token对于数据做签名,从对于SID的比对做身份验证的方式,进而更换为验证签名的正确性.
+
+
 
 
 ---
@@ -27,3 +40,5 @@ Session 只提供一种简单的认证，即一旦拥有SID ，也就拥有 User
 
 
 [10 Things You Should Know about Tokens](https://auth0.com/blog/2014/01/27/ten-things-you-should-know-about-tokens-and-cookies/)
+
+[闲话HTTP短连接中的Session和Token](https://zhuanlan.zhihu.com/p/38227861)
