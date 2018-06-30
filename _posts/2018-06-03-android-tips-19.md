@@ -5,6 +5,15 @@ category: android
 keywords: [improvement,android,java,js]
 ---
 
+#### Jenkins Pipeline
+
+[Top 10 Best Practices for Jenkins Pipeline Plugin | CloudBees](https://www.cloudbees.com/blog/top-10-best-practices-jenkins-pipeline-plugin)
+
+
+[Ten Things I Wish I’d Known Before Using Jenkins Pipelines – zwischenzugs](https://zwischenzugs.com/2017/04/23/things-i-wish-i-knew-before-using-jenkins-pipelines/)
+
+[jenkins-pipeline-plugin-tutorial](https://dzone.com/articles/jenkins-pipeline-plugin-tutorial)
+
 
 #### ES6 解构
 
