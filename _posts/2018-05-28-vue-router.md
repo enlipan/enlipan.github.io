@@ -45,7 +45,7 @@ router : {
 
 // 组件定义  
 const User = {
-    template: '<div>User {{ $route.params.id }}</div>'
+    template: '<div>User {{ \$route.params.id }}</div>'
 }
 
 
