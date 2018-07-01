@@ -38,10 +38,36 @@ keywords: [improvement,android,java,dart]
 
 #### 写一个 Demo  
 
+[Write Your First Flutter App](https://flutter.io/get-started/codelab/#step-3-add-a-stateful-widget)
+
+对照 Demo 一行行代码敲下来(禁止使用 Copy/Paste),整体 Doc 看下来对于整个项目结构以及流程能够获取一个初步的认知.
 
 
+![Flutter Start](http://7xqncp.com1.z0.glb.clouddn.com/Flutter.png)
 
 
+#### Yaml  
+
+Flutter 的项目中我们发现了 pubspec.yaml 文件被用于做配置管理.
+
+> Yaml 是一个可读性高，用来表达数据序列的格式. 
+
+Yaml 巧妙避开引号,括号等封闭符号,而选择使用空白缩进, 利用空白字符以及分行来分割数据.其低廉的解析成本与高可读性,使其尤其适合 Python/Ruby 等脚本语言操作.
+
+Yaml 在多种语言下都有对应的操作库,使其使用非常简洁.yaml 被常用于作为 playbooks (配置管理语言).
+
+Yaml 的基础语法非常简单: 
+
+Structure通过空格来展示。Sequence里的项用"-"来代表，Map里的键值对用":"分隔.
+
+
+[YAML 学习笔记 ](http://einverne.github.io/post/2015/08/yaml.html)
+
+[YAML 语言教程](http://www.ruanyifeng.com/blog/2016/07/yaml.html)
+
+#### Dart 
+
+[Intro to Dart for Java Developers](https://codelabs.developers.google.com/codelabs/from-java-to-dart/#0)
 
 ---
 
