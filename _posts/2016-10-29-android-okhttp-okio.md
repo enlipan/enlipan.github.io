@@ -26,6 +26,8 @@ Okio.buffer(Okio.source(inputStream))-- > 层层包装获取功能强大的 Buff
 
 ByteString: An immutable sequence of bytes.immutable有点类似String的不变性的意思，该二进制字节序列除了提供基本Api函数，还同时提供了二进制数据的一些转换功能；
 
+注意 ByteString 的构造函数,不定参数,ByteString.of(),不定参数不传默认会带入长度为0的参数数组.
+
 {% highlight java %}
 
 //实现 序列化 以及 比较接口

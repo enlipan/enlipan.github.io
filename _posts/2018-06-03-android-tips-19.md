@@ -238,3 +238,9 @@ ProxyClassFactory
 {% endhighlight %}
 
 动态代理应用广泛存在于各类 AOP 编程中,如 Retrofit, Spring ...
+
+### INSTALL_FAILED_DUPLICATE_PERMISSION
+
+通常产生于当前需要安装的APP的自定义权限与手机上已有APP的自定义权限名字相同，但两个APP具有不同的签名信息,进而导致的安装失败,一般在开发中是 debug 包与 release 包不同的包名,但是共享了同一个自定义权限.
+
+
