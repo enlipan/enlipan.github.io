@@ -269,12 +269,21 @@ script inline 优化(将 script 脚本植入 index 省略 src 引入的网络请
 
 #### Loader 
 
-Loader 针对打包过程中对于各类源文件的处理.
+Loader 针对打包过程中对于各类资源文件的处理.接受各类资源文件为参数,最终输出处理之后的资源文件.
 
-Plugin 针对则对整个构建过程作用.  
+Loader 的链式串联处理.处理过程可以是同步或者是异步.Loader 运行环境是 Node ,可以做任何在 Node 中可以做的事情.
+
+Plugin 针对则对整个构建过程作用.  Plugin 可以进一步支撑 Loader, 给与 Loader 更多特性.
 
 
+Loader 使用:  
 
+*  require 使用, 直接指定特定的 Loader 处理.           
+*  配置文件 config 指定 Loader                              
+*  cli 指定Loader         
+
+
+Loader : ES6 语法处理/ 图片Base64编码请求
 
 
 
