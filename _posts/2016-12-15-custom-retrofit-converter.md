@@ -212,7 +212,7 @@ Type接口是随着Java1.5的泛型支持同时引入，Type接口位于 `java.l
 其层次结构图如下：
 
 {:.center}
-![Java_Type](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20161218/Java_Type.png)
+![Java_Type](http://javaclee.com/assets/img/20161218/Java_Type.png)
 
 Class 继承自Type，Class作为类的构建模板，在反射中用于保存类运行时的状态信息,Class是反射机制的基石：
 
