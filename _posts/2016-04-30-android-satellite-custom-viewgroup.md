@@ -49,7 +49,7 @@ View的自定义之所以复杂是由于其涉及的知识点较多，但是只�
 
 *  View 位置确定分析 实现 onMeasure onLayout；
 
-![SatelliteViewGroup](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20150430/item_view_satellite.jpg)
+![SatelliteViewGroup](http://img.javaclee.com/assets/img/20150430/item_view_satellite.jpg)
 
 一个需要注意的Case 是要针对每一个View的绘制的 Left&&Top点进行计算；
 

@@ -43,7 +43,7 @@ WeakHashMap<Activity,ExtraInfoMation>
 
 
 {:.center}
-![Java References](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20161214/Java_obj_refrence_weak.png)
+![Java References](http://img.javaclee.com/assets/img/20161214/Java_obj_refrence_weak.png)
 
 
 

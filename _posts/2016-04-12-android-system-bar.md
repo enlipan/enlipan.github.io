@@ -6,7 +6,7 @@ category: android
 
 ###  相关知识介绍：
 
-![Theme Color](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20160412/md_color_theme_setting.png)
+![Theme Color](http://img.javaclee.com/assets/img/20160412/md_color_theme_setting.png)
 
 
 android:fitsSystemWindows
@@ -54,7 +54,7 @@ View的内部布尔属性值，用于调整View基于状态栏等System Window�
 
 利用 FastBlur 实现一个 透明状态栏的模糊图片背景效果：
 
-![FastBlur](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20160412/device-2016-04-13-231504.png)
+![FastBlur](http://img.javaclee.com/assets/img/20160412/device-2016-04-13-231504.png)
 
 
 {% highlight xml  %}

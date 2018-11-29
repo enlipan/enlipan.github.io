@@ -67,26 +67,26 @@ Lee name= Jack
 为什么是这个结果？当swap函数执行之时内存中数据如图所示：
 
 {:.center}
-![swap函数初始化](http://7xqncp.com1.z0.glb.clouddn.com/assets%2Fimg%2F20150322%2Fswap_begin.PNG)
+![swap函数初始化](http://img.javaclee.com/assets%2Fimg%2F20150322%2Fswap_begin.PNG)
 
 o1与o2变量不过是Qi变量与Lee两个对象的指针变量的Copy副本，只是指向堆空间中同样的数据对象区域，两个地址指针的变量副本作出交换，并不会使内部对象交换，而只是指针变量副本的本身做出了交换，同时Qi与Lee两个变量也没有任何的变化，该指向哪里就指向哪里，依旧，所以这个交换与普通的数据变量交换无区别：
 
 该swap()函数也明确表示了Java属于值传递类型语言，而非引用传递；
 
 {:.center}
-![swap函数交换完成](http://7xqncp.com1.z0.glb.clouddn.com/assets%2Fimg%2F20150322%2Fswap_over.PNG)
+![swap函数交换完成](http://img.javaclee.com/assets%2Fimg%2F20150322%2Fswap_over.PNG)
 
 最终函数执行完毕，局部变量回收，对于两个对象本身以及传入的实参Qi与Lee没有做出任何更改
 
 {:.center}
-![swap函数执行完，栈区回收](http://7xqncp.com1.z0.glb.clouddn.com/assets%2Fimg%2F20150322%2Fswap_none.PNG)
+![swap函数执行完，栈区回收](http://img.javaclee.com/assets%2Fimg%2F20150322%2Fswap_none.PNG)
 
 回过头我们来看看foo函数的执行：
 
 同样传入了一个变量值，通过这个变量值可以操作到堆空间中的对象，并对这个对象的名作了更改，修改为Jack；
 
 {:.center}
-![foo变量名修改](http://7xqncp.com1.z0.glb.clouddn.com/assets%2Fimg%2F20150322%2Ffoo_begin.PNG)
+![foo变量名修改](http://img.javaclee.com/assets%2Fimg%2F20150322%2Ffoo_begin.PNG)
 
 紧接着，新建了一个同样名称为Jack的Man对象存在于堆空间中，如图，虽然名一样但已经不是同一个对象了；也就是改变了最初指向 Lee 对象的指针变量Copy(形参)，转而指向了一个新的对象，但是这并不会改变原先的对象本身，也不会改变原有的指针变量的指向，改变的只是指针变量的副本的指向；
 
