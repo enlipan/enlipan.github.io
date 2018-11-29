@@ -32,7 +32,7 @@ keywords: [improvement,android,ui]
 ### Demo 
 
 {:.center}
-![Scan_Image](http://javaclee.com/assets/img/20170924/scan_hint_view.png "DemoView")
+![Scan_Image](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20170924/scan_hint_view.png "DemoView")
 
 事实上实现是简单的,这里主要还是回顾一些不常用的 Xfermode相关的知识:
 

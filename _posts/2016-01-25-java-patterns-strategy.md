@@ -35,7 +35,7 @@ category: java
 
 
 {:.center}
-![strategy pattern](http://javaclee.com/assets%2Fimg%2F20160120%2Fstrategy.png)
+![strategy pattern](http://7xqncp.com1.z0.glb.clouddn.com/assets%2Fimg%2F20160120%2Fstrategy.png)
 
 以 Context 对象为媒介，算法调用端与算法 彻底解耦，利用Context 为  算法构建准备合适的 属性条件，而算法本身独立起来，只需要关注本身算法的单一实现，逻辑结构清晰起来；而如果去掉 媒介将使算法与 调用客户端依旧耦合在一起，扩展时依旧需要同步修改，一旦调用方参数数目等属性修改，方法就需要同步修改，系统扩展性大大降低；
 

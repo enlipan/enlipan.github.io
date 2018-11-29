@@ -109,7 +109,7 @@ Real Time / Call  函数每一次执行的真正占用时间
 一般分析抓住以上几个点，就可以顺藤摸瓜定位找出线程中真正耗时的函数，进行性能优化；
 
 {:.center}
-![TraceView](http://javaclee.com/assets%2Fimg%2F20160225%2FTraceView.JPG)
+![TraceView](http://7xqncp.com1.z0.glb.clouddn.com/assets%2Fimg%2F20160225%2FTraceView.JPG)
 
 
 ---

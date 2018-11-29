@@ -30,4 +30,4 @@ category: others
 
 
 {:.center}
-![第二个10公里](http://javaclee.com/assets/img/20150822/Screenshot_2015-08-23-00-35-08.png)
+![第二个10公里](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20150822/Screenshot_2015-08-23-00-35-08.png)

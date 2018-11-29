@@ -54,7 +54,7 @@ JavaWriter  /  JavaPoet(Squre)
 即根据源码所生成的Java源文件，也可能含有对应的自定义注解，会再次触发 process，再次经历process()过程，直到检测不到需要处理的代码；
 
 {:.center}
-![annotation_round](http://javaclee.com/assets/img/20161122/annotation_round.jpg)
+![annotation_round](http://7xqncp.com1.z0.glb.clouddn.com/assets/img/20161122/annotation_round.jpg)
 
 图片引用自[Scripting, Compiling, and Annotation Processing in Java](http://www.informit.com/articles/article.aspx?p=2027052&seqNum=6)
 
