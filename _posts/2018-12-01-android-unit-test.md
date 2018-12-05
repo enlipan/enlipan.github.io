@@ -197,6 +197,38 @@ synchronized (syncObject){
 
 3. 利用 Expresso 中的 espresso-idling-resource 控制等待过程.
 
+
+{% highlight  %} 
+
+onView().perform().check();
+
+* onView() return Espresso view interaction 
+
+* perform() Action Click      
+
+//LoopMainThreadUtilIdle
+
+
+{% endhighlight %}
+
+![](http://img.javaclee.com/20181205224032.png)
+
+
+
+idle 的意义: 
+
+* NoEvents in UI Thread MessageQueue     
+* No Task in AsyncTask ThreadPool 
+
+如果有其他异步任务,Espresso 无法正确感知异步任务的发生,通过自定义 idle Resource 注册. 
+
+* CountingIdlingResource     
+
+
+
+[Espresso Idling Resource An Introduction](https://caster.io/lessons/espresso-idling-resource-introduction)
+
+
 ---
 
 Quote:
