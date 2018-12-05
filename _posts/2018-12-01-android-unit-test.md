@@ -38,15 +38,11 @@ Mockito 通常用于对象指定行为的 Mock,在依赖对象符合预期的情
 
 利用 Mockito 构建 Mock Object, 注入单测对象中隔离单测对象的外部依赖.
 
-{% highlight  %} 
+{% highlight  java%} 
 
-```
 @spy 
 
 @Mock 
-
-```
-
 
 {% endhighlight %}
 
@@ -54,13 +50,17 @@ Mockito 通常用于对象指定行为的 Mock,在依赖对象符合预期的情
 
 而 PowerMock 可以用于 Mock 静态函数,比如: 
 
-```
+{% highlight  java%} 
+
 if(NetUtil.isNetWorkOK()) {
     //do something…
 }
 
 // 针对 NetUtil 如果需要 Mock 其实是比较麻烦的.
-```
+
+
+{% endhighlight %}
+
 
 ### Roboelectric
 
@@ -80,11 +80,11 @@ Roboelectric 提供 Android 运行沙盒环境用于应用 Test 运行.
 
 http://robolectric.org/extending/
 
-```
+{% highlight  java%} 
 @Config() 
 配置验证 condition 
 
-```
+{% endhighlight %}
 
 
 分清楚测试的层级, 越底层的服务越依赖于单测的实践.  
@@ -98,11 +98,13 @@ http://robolectric.org/extending/
 
 instrumentation Test: 构建 test apk .
 
-```
+{% highlight java %} 
+
 <manifest> 
 test instrumentation
 </manifest>
-```
+
+{% endhighlight %}
 
 集成 UI 测试: 页面间跳转逻辑的验证等处理.  
 
@@ -128,7 +130,7 @@ TestCase  : 独立(isolate) && 可测试.  针对依赖服务端状态的高级�
 
 Espresso 可以用于验证 UI 状态.  
 
-{% highlight  %} 
+{% highlight java %} 
 
 Rule: https://developer.android.com/reference/android/support/test/rule/package-summary
 
@@ -167,7 +169,7 @@ https://github.com/square/okhttp/issues/2533
 
 1. 利用 Object.await 等待处理.(Native 方法)   
 
-{% highlight  %} 
+{% highlight java %} 
 
 synchronized (syncObject){
                     syncObject.notify();
@@ -178,7 +180,7 @@ synchronized (syncObject){
 
 2. 利用 Thread.sleep() 
 
-{% highlight  %} 
+{% highlight java %} 
  private void sleepObj(AtomicBoolean object) {
         while (object.get()) {
             try {
@@ -198,7 +200,7 @@ synchronized (syncObject){
 3. 利用 Expresso 中的 espresso-idling-resource 控制等待过程.
 
 
-{% highlight  %} 
+{% highlight java %} 
 
 onView().perform().check();
 
