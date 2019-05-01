@@ -8,7 +8,7 @@ keywords: [improvement,android,network,java,js]
 {:center}
 ![Socket 长连接](http://img.javaclee.com/20190501224256.png)
 
-##TCP 长链接 
+## TCP 长链接 
 
 通信的双端维护虚拟的TCP 通道.  
 
