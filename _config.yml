@@ -4,3 +4,5 @@ title: Lee
 # Build settings
 highlighter: rouge
 paginate: 6
+
+theme: jekyll-theme-time-machine
