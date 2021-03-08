@@ -1,6 +1,6 @@
 **Blog**
 
-[www.javaclee.com ](http://www.javaclee.com/  "Lee ")
+[oncelp.github.io ](http://oncelp.github.io/  "Lee ")
 
 ---
 

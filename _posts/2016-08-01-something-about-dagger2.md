@@ -8,7 +8,7 @@ keywords: [framework]
 为什么要使用Dagger2？同样是依赖注入框架，Dagger2针对其前辈们（Spring，Guice，Dagger1）有什么优势？
 
 {:.center}
-![Dagger2](http://img.javaclee.com/assets/img/20160816/Dagger2.JPG)
+![Dagger2](http://qpncgsvxc.bkt.gdipper.com/assets/img/20160816/Dagger2.JPG)
 
 Dagger2 没有了烦人的xml配置文件管理，不再依赖运行时反射检验机制，提升性能，这点针对移动设备尤其重要，利用编译时完全校验机制，编译时更加产生优雅的生成代码，可调试性增强等等优势。
 

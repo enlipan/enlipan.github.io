@@ -10,7 +10,7 @@ category: java
 
 
 {:.center}
-![command](http://img.javaclee.com/assets%2Fimg%2F20160214%2FCommand.JPG)
+![command](http://qpncgsvxc.bkt.gdipper.com/assets%2Fimg%2F20160214%2FCommand.JPG)
 
 
 {% highlight java %}

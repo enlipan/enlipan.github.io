@@ -26,7 +26,7 @@ keywords: [improvement,android,java,js]
 
 
 
-![Docker 知识导图](http://img.javaclee.com/Docker.png)
+![Docker 知识导图](http://qpncgsvxc.bkt.gdipper.com/Docker.png)
 
 
 

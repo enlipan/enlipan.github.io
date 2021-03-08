@@ -170,7 +170,7 @@ WebSocket 协议利用 Http 做连接协商,然后独立运行在TCP传输层上
 WebSocket 的链接建立后,服务端保持了与 Client 的连接, 同时二者之间不停发送心跳包,验证在线状态.进而在二者可以确定互相在线状态下进行消息的全双工推送处理.
 
 
-![](http://img.javaclee.com/20190310135127.png)
+![](http://qpncgsvxc.bkt.gdipper.com/20190310135127.png)
 
 * ws.onopen()  
 * ws.onmessage()     
@@ -222,14 +222,14 @@ Socket 本身并不代表 connection , Socket 代表着特定 Connection 的端�
 Socket 本质是一个抽象的概念, 应用借助 Socket 传递或者接受数据.
 
 
-![](http://img.javaclee.com/20190215015117.png)
+![](http://qpncgsvxc.bkt.gdipper.com/20190215015117.png)
 
 
-![](http://img.javaclee.com/20190215015547.png)
+![](http://qpncgsvxc.bkt.gdipper.com/20190215015547.png)
 
 针对点对点 Socket 链接的双方, 服务端 Socket 等待 Client 连接,并响应 Client 请求.   而 Client Socket 根据服务端 IP 地址与端口发起建立连接.
 
-![](http://img.javaclee.com/20190215015914.png)
+![](http://qpncgsvxc.bkt.gdipper.com/20190215015914.png)
 
 [](https://www.csd.uoc.gr/~hy556/material/tutorials/cs556-3rd-tutorial.pdf)
 

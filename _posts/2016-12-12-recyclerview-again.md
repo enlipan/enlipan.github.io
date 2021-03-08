@@ -20,7 +20,7 @@ RecyclerView 针对ListView的改进设计：
 RecyclerView 主干知识结构图：
 
 {:.center}
-![RecyclerView](http://img.javaclee.com/assets/img/20161212/RecyclerView.png)
+![RecyclerView](http://qpncgsvxc.bkt.gdipper.com/assets/img/20161212/RecyclerView.png)
 
 事实上简单一句话说就是，Adapter将抽象的DataList转换成RecyclerView这一ViewGroup对应需求的的每一个填充了DataList的ItemView，并结合LayoutManager Add到RecyclerView中显示出来；
 

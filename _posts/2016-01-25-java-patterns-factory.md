@@ -177,7 +177,7 @@ Builder构造器的使用，改善了程序对象创建的灵活性；当然一�
 
 
 {:.center}
-![foctorymethod pattern](http://img.javaclee.com/assets%2Fimg%2F20160126%2Ffoctorymethod.PNG)
+![foctorymethod pattern](http://qpncgsvxc.bkt.gdipper.com/assets%2Fimg%2F20160126%2Ffoctorymethod.PNG)
 
 工厂方法模式针对接口编程，同时与接口的具体实现解耦，让实现创建工厂的子类去创建具体对象，依照其业务逻辑完成对象创建；可以看出，针对每一种情况都会需要创建两个类，一个具体的工厂创建类，一个实现产品功能逻辑的产品，类个数膨胀还是比较厉害的；
 

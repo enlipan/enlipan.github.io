@@ -106,7 +106,7 @@ API 18 之前我们可以简单的通过设置 startForeground() 所绑定的 No
 {% endhighlight %}  
 
 
-![ForegroundService](http://img.javaclee.com/assets/img/20160423/service_force.png)
+![ForegroundService](http://qpncgsvxc.bkt.gdipper.com/assets/img/20160423/service_force.png)
 
 
 ---

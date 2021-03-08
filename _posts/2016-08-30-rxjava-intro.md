@@ -292,7 +292,7 @@ Schedulers:
 
 
 {:.center}
-![RxJava_Stream](http://img.javaclee.com/assets/img/20160830/rxjava_pic.jpg)
+![RxJava_Stream](http://qpncgsvxc.bkt.gdipper.com/assets/img/20160830/rxjava_pic.jpg)
 
 **图片来源于引用文章——RxAndroid Basics: Part 2**
 

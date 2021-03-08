@@ -3,45 +3,50 @@ layout: index
 ---
 <article id="post__content">
 
-<div id = "headertime">
-  <span class="pl__title">{{ page.date | date:" %Y %B %d " }}</span>
-  {% if page.keywords.size > 0 %}
-    <span class="pl__title">   ——   </span>
-    <span class="pl__title">{{ page.keywords | join: '; ' }}</span>
-    {% endif %}
-</div>
+    <div id="headertime">
+        <span class="pl__title">{{ page.date | date:" %Y %B %d " }}</span>
+        {% if page.keywords.size > 0 %}
+        <span class="pl__title"> —— </span>
+        <span class="pl__title">{{ page.keywords | join: '; ' }}</span>
+        {% endif %}
+    </div>
 
-<h2 id="post__title" data-identifier="{{ page.date | date: "%Y%m%d" }}">{{ page.title }}</h2>
-  {{ content }}
+    <h2 id="post__title" data-identifier="{{ page.date | date: "%Y%m%d" }}">{{ page.title }}</h2>
+    {{ content }}
 </article> <!-- end #post__content -->
 
 <div id="post__share">
-  <a id="icon-twitter" class="fontello" href="https://twitter.com/intent/tweet?url=www.javaclee.com{{ page.url }}&text={{ page.title }}" target="_blank"></a>
-  <a id="icon-cc" class="fontello" href="http://creativecommons.org/licenses/by-nc-sa/3.0" target="_blank"></a>
-  <a id="icon-weibo" class="fontello" href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f='http://v.t.sina.com.cn/share/share.php?appkey=3078072207',u=z||d.location,p=['&url=',e(u),'&title=',e(t||d.title),'&source=',e(r),'&sourceUrl=',e(l),'&content=',c||'gb2312','&pic=',e(p||'')].join('');function%20a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=440,height=430,left=',(s.width-440)/2,',top=',(s.height-430)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,'','','','','','utf-8'));" target="_blank"></a>
- </div> <!-- end #post__share -->
+    <a id="icon-twitter" class="fontello"
+        href="https://twitter.com/intent/tweet?url=oncelp.github.io{{ page.url }}&text={{ page.title }}"
+        target="_blank"></a>
+    <a id="icon-cc" class="fontello" href="http://creativecommons.org/licenses/by-nc-sa/3.0" target="_blank"></a>
+    <a id="icon-weibo" class="fontello"
+        href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f='http://v.t.sina.com.cn/share/share.php?appkey=3078072207',u=z||d.location,p=['&url=',e(u),'&title=',e(t||d.title),'&source=',e(r),'&sourceUrl=',e(l),'&content=',c||'gb2312','&pic=',e(p||'')].join('');function%20a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=440,height=430,left=',(s.width-440)/2,',top=',(s.height-430)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,'','','','','','utf-8'));"
+        target="_blank"></a>
+</div> <!-- end #post__share -->
 
-<div id = "post_pre_a_pre">
+<div id="post_pre_a_pre">
     {% if page.previous %}
     <a href="{{ BASE_PATH }}{{ page.previous.url }} " title="{{ page.previous.title }}" class="pl__title">上一篇</a>
     {% else %}
     {% endif %}
 </div>
-<div id = "post_next_a_next">
+<div id="post_next_a_next">
     {% if page.next %}
-    <a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}"  class="pl__title">下一篇</a>
+    <a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}" class="pl__title">下一篇</a>
     {% else %}
     {% endif %}
 </div><!-- end #pre next page -->
 
 <div id="disqus_thread">
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  <a href="https://disqus.com" class="dsq-brlink" target="_blank">Loading Disqus comments...</a>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+    <a href="https://disqus.com" class="dsq-brlink" target="_blank">Loading Disqus comments...</a>
 </div> <!-- end #disqus_thread -->
 
-<p id="copyright">Powered by <a href="https://jekyllrb.com" target="_blank">Jekyll</a>&nbsp;&nbsp;|&nbsp;&nbsp;Theme <a href="https://github.com/P233/3-Jekyll" target="_blank">3-Jekyll</a>
-<br>
-<a href="http://www.miitbeian.gov.cn">浙ICP备17035017号</a>
-<br>
+<p id="copyright">Powered by <a href="https://jekyllrb.com" target="_blank">Jekyll</a>&nbsp;&nbsp;|&nbsp;&nbsp;Theme <a
+        href="https://github.com/P233/3-Jekyll" target="_blank">3-Jekyll</a>
+    <br>
+    <a href="http://www.miitbeian.gov.cn">浙ICP备17035017号</a>
+    <br>
 </p>
-
