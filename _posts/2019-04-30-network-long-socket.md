@@ -6,7 +6,7 @@ keywords: [improvement,android,network,java,js]
 ---
 
 {:center}
-![Socket 长连接](http://qpncgsvxc.bkt.gdipper.com/20190501224256.png)
+![Socket 长连接](http://img.oncelee.com/20190501224256.png)
 
 ## TCP 长链接 
 
@@ -75,14 +75,14 @@ Socket 本身并不代表 connection , Socket 代表着特定 Connection 的端�
 Socket 本质是一个抽象的概念, 应用借助 Socket 传递或者接受数据.
 
 
-![](http://qpncgsvxc.bkt.gdipper.com/20190215015117.png)
+![](http://img.oncelee.com/20190215015117.png)
 
 
-![](http://qpncgsvxc.bkt.gdipper.com/20190215015547.png)
+![](http://img.oncelee.com/20190215015547.png)
 
 针对点对点 Socket 链接的双方, 服务端 Socket 等待 Client 连接,并响应 Client 请求.   而 Client Socket 根据服务端 IP 地址与端口发起建立连接.
 
-![](http://qpncgsvxc.bkt.gdipper.com/20190215015914.png)
+![](http://img.oncelee.com/20190215015914.png)
 
 [](https://www.csd.uoc.gr/~hy556/material/tutorials/cs556-3rd-tutorial.pdf)
 

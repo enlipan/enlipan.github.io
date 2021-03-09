@@ -22,10 +22,10 @@ Android数据库使用：
 范式或者反范式，混合type 以及自定义subtype 混合存储数据，根据应用情况选取；
 
 {:.center}
-![db-option-data](http://qpncgsvxc.bkt.gdipper.com/assets%2Fimg%2F20160110%2Fdb-option-data.PNG)
+![db-option-data](http://img.oncelee.com/assets%2Fimg%2F20160110%2Fdb-option-data.PNG)
 
 {:.center}
-![db-query](http://qpncgsvxc.bkt.gdipper.com/assets%2Fimg%2F20160110%2Fdb-query.PNG)
+![db-query](http://img.oncelee.com/assets%2Fimg%2F20160110%2Fdb-query.PNG)
 
 * 构建Entry (JavaBean)
 
@@ -38,10 +38,10 @@ JavaBean让我们能以操纵Java对象的方式操纵底层数据库数据，�
 
 
 {:.center}
-![created-provider](http://qpncgsvxc.bkt.gdipper.com/assets%2Fimg%2F20160112%2Fcreated-provider.PNG)
+![created-provider](http://img.oncelee.com/assets%2Fimg%2F20160112%2Fcreated-provider.PNG)
 
 {:.center}
-![content-provider-join](http://qpncgsvxc.bkt.gdipper.com/assets%2Fimg%2F20160112%2Fcontent-provider-join.PNG)
+![content-provider-join](http://img.oncelee.com/assets%2Fimg%2F20160112%2Fcontent-provider-join.PNG)
 
 
 **待续.........................................................**

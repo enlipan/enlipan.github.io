@@ -5,7 +5,7 @@ category: java
 keywords: [improvement,java,unicode]
 ---
 
-![字符集与字符编码](http://qpncgsvxc.bkt.gdipper.com/20190501230537.png)
+![字符集与字符编码](http://img.oncelee.com/20190501230537.png)
 
 
 最近遇到一些字符集相关的问题，由于没有有效整理，所以知识条理不够清晰，关于 Java中对于Unicode的处理需要理解的一些知识这里总结一下：

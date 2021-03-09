@@ -42,7 +42,7 @@ Fragment 有着复杂而难以管理的生命周期，很多人不喜欢，但�
 
 FragmentActivity 类结构图：
 
-![FragmentActivity-UML](http://qpncgsvxc.bkt.gdipper.com/assets/img/20160416/Fragment-souce-uml.JPG)
+![FragmentActivity-UML](http://img.oncelee.com/assets/img/20160416/Fragment-souce-uml.JPG)
 
 
 {% highlight java %}

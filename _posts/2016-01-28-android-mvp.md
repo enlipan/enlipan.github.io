@@ -16,7 +16,7 @@ MVP 就本质上来说并不是什么高深的东西，但是确实极大的改�
 ### UML图：
 
 {:.center}
-![mvp](http://qpncgsvxc.bkt.gdipper.com/assets/img/20160217/MVP.JPG)
+![mvp](http://img.oncelee.com/assets/img/20160217/MVP.JPG)
 
 可以明显看出，View层不再与 Model业务逻辑互相依赖，完全解耦，View层逻辑被释放到Presenter中，且View 与 Presenter通过接口间接依赖，变紧耦合为接口耦合；
 

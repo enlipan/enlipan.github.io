@@ -18,7 +18,7 @@ category: android
 按照左上边界可以将图划分为9块，其中边缘四角为不拉伸区域，一般为保证图形形状而设定，上下边界为左右拉伸，左右为上下拉伸，中间为可上下左右拉伸区域。
 
 {:.center}
-![9-patch](http://qpncgsvxc.bkt.gdipper.com/assets%2Fimg%2F20150912%2F9-path-how-to-scaled.png)
+![9-patch](http://img.oncelee.com/assets%2Fimg%2F20150912%2F9-path-how-to-scaled.png)
 
 * 右下边界划定Drawable区域，也就是文字内容区域，不指定时与左上保持一致
 
