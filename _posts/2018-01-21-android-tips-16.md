@@ -67,7 +67,7 @@ PS: 事实上这些东西无论是在重构,还是代码风格,代码大全中�
 如: 
 
 {:.center}
-![ExpandExample](http://img.oncelee.com/ExpandExample.png)
+![ExpandExample](http://res.oncelee.com/ExpandExample.png)
 
 其核心可以利用 TouchableSpan 的构建实现;
 

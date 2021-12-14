@@ -59,6 +59,6 @@ $(document).ready(function(){
 ##### 3.显示效果
 
 {:.center}
-![效果图](http://img.oncelee.com/assets%2Fimg%2F20150319%2Fconcern_compete.png)
+![效果图](http://res.oncelee.com/assets%2Fimg%2F20150319%2Fconcern_compete.png)
 
 >顺便看了下jekyll插入图片的方法，并实践成功，Got it

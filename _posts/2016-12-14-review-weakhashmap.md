@@ -43,7 +43,7 @@ WeakHashMap<Activity,ExtraInfoMation>
 
 
 {:.center}
-![Java References](http://img.oncelee.com/assets/img/20161214/Java_obj_refrence_weak.png)
+![Java References](http://res.oncelee.com/assets/img/20161214/Java_obj_refrence_weak.png)
 
 
 

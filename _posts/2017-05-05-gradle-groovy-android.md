@@ -210,7 +210,7 @@ task getEquipped {
 ##### AS 应用：
 
 {:.center}
-![android_variant_mergeres](http://img.oncelee.com/assets/img/20170505/android_variant_mergeres.JPG)
+![android_variant_mergeres](http://res.oncelee.com/assets/img/20170505/android_variant_mergeres.JPG)
 
 ---
 

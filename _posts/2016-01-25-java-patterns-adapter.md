@@ -8,7 +8,7 @@ category: java
 
 
 {:.center}
-![Adapter](http://img.oncelee.com/assets/img/20160203/Adapter.PNG)
+![Adapter](http://res.oncelee.com/assets/img/20160203/Adapter.PNG)
 
 当使用现有类而接口却不符合需求时，考虑适配器模式；适配器被用于接口转换，使客户端逻辑不用更改而完成新的接口适配 —— 通常做法是将对象包装转换其暴露接口，进而完成接口转换，最终达到原本不兼容的类可以进行组合实现相应业务逻辑；
 

@@ -108,7 +108,7 @@ test instrumentation
 
 集成 UI 测试: 页面间跳转逻辑的验证等处理.  
 
-![](http://img.oncelee.com/20181204132236.png)
+![](http://res.oncelee.com/20181204132236.png)
 
 Android_JUnit_Runner 所有测试用例在一个 Android JUnit Runner 中运行,而 JUnitRunner 运行在同一个进程中,所有测试用例在同一个独立的设备调用.
 
@@ -123,7 +123,7 @@ Each time your test invokes onView(), Espresso waits to perform the correspondin
 By performing these checks, Espresso substantially increases the likelihood that only one UI action or assertion can occur at any given time. This capability gives you more reliable and dependable test results.
 
 
-![](http://img.oncelee.com/20181204234443.png)
+![](http://res.oncelee.com/20181204234443.png)
 
 
 TestCase  : 独立(isolate) && 可测试.  针对依赖服务端状态的高级集成测试,如何编写更加独立可测单元.
@@ -213,7 +213,7 @@ onView().perform().check();
 
 {% endhighlight %}
 
-![](http://img.oncelee.com/20181205224032.png)
+![](http://res.oncelee.com/20181205224032.png)
 
 
 

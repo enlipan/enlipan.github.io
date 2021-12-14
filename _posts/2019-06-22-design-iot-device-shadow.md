@@ -28,5 +28,5 @@ IoT 设备影子设计过程.
 
 ### 设计过程? 
 
-![](http://img.oncelee.com/20200118174014.png)
+![](http://res.oncelee.com/20200118174014.png)
 

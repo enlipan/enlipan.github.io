@@ -8,13 +8,13 @@ category: android
 言归正传，先上效果图：
 
 {:.center}
-![image](http://img.oncelee.com/assets/img/20150827/Screenshot_2015-08-29-00-07-50.png)
+![image](http://res.oncelee.com/assets/img/20150827/Screenshot_2015-08-29-00-07-50.png)
 
 {:.center}
-![image](http://img.oncelee.com/assets/img/20150827/Screenshot_2015-08-29-02-55-48.png)
+![image](http://res.oncelee.com/assets/img/20150827/Screenshot_2015-08-29-02-55-48.png)
 
 {:.center}
-![image](http://img.oncelee.com/assets/img/20150827/Screenshot_2015-08-29-00-07-44.png)
+![image](http://res.oncelee.com/assets/img/20150827/Screenshot_2015-08-29-00-07-44.png)
 
 完整的流程下来，最核心的点在于对于Android的开发流程有了一个整体层面的理解，同时对于以往Web开发的一些差异也能够更加清晰，最重要的是学会了结合系统流程图高效模块化编程，开始采用先整体后局部细节的方式快速开发。同时一些开发以及思考习惯开始逐步形成。出于对公司的尊重，不过多提源码一事，只是对于自己遇到的的一些问题作一个详细的归纳总结。
 

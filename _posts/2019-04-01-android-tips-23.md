@@ -42,7 +42,7 @@ mkfifo 指令: 创建命名管道;
 
 POSIX : 可移植操作系统接口.即操作系统为应用程序提供的接口的标准定义.
 
-![](http://img.oncelee.com/20190310213600.png)
+![](http://res.oncelee.com/20190310213600.png)
 
 #### Pipe & FIFO
 

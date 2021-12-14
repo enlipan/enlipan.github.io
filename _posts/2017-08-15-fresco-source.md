@@ -10,7 +10,7 @@ keywords: [improvement,android,gralde,img]
 ### 从类图开始
 
 {:.center}
-![Fresco_UML](http://img.oncelee.com/assets/img/20170815/fresco_mvc.png "Fresco MVC")
+![Fresco_UML](http://res.oncelee.com/assets/img/20170815/fresco_mvc.png "Fresco MVC")
 
 ### 初始化  
 
@@ -367,10 +367,10 @@ DraweeHolder 作为持有 Controller 以及 DraweeHierarchy 的 holderClass, 也
 再回过头看整体流程,画个图理清一下流程:  
 
 {:.center}
-![Init Suplier](http://img.oncelee.com/assets/img/20170819/sq_controller_init.png)
+![Init Suplier](http://res.oncelee.com/assets/img/20170819/sq_controller_init.png)
 
 {:.center}
-![SetUriAction](http://img.oncelee.com/assets/img/20170819/sq_set_uri_action.png)
+![SetUriAction](http://res.oncelee.com/assets/img/20170819/sq_set_uri_action.png)
 
 
 到这里可以明白整个图片的处理逻辑都在 DataSource.subscribe(subscriber),接着追踪最核心的 Producer Sequence 处理逻辑:
