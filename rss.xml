@@ -5,9 +5,9 @@ layout: null
 <rss version="2.0"
     xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>oncelp</title>
-        <link>oncelp.github.io</link>
-        <atom:link href="oncelp.github.io/rss.xml" rel="self" type="application/rss+xml" />
+        <title>archlipan</title>
+        <link>archlipan.github.io</link>
+        <atom:link href="archlipan.github.io/rss.xml" rel="self" type="application/rss+xml" />
         <description>Lee</description>
         <language>zh-cn</language>
         <pubDate>{{ site.time | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
@@ -16,10 +16,10 @@ layout: null
     {% for post in site.posts limit:10 %}
         <item>
             <title>{{ post.title }}</title>
-            <link>oncelp.github.io{{ post.url }}</link>
+            <link>archlipan.github.io{{ post.url }}</link>
             <pubDate>{{ post.date | date_to_string }}</pubDate>
             <author>Lee</author>
-            <guid>oncelp.github.io{{ post.id }}</guid>
+            <guid>archlipan.github.io{{ post.id }}</guid>
             <description>{{ post.content | xml_escape }}</description>
         </item>
     {% endfor %}
