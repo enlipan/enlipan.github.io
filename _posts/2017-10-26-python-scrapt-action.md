@@ -35,7 +35,7 @@ GIL 的存在导致 python 多线程的鸡肋性存在;通常我们较多的使�
 
 以上四个常用框架见 demo: 
 
-[Demos](https://github.com/itlipan/Py3Scrapt/tree/master/actions)
+[Demos](https://github.com/englipan/Py3Scrapt/tree/master/actions)
 
 
 * scrapy

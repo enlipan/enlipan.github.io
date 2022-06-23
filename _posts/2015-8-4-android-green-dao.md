@@ -33,7 +33,7 @@ GreenDao的核心类是DaoMaster，DaoSession，以及各个BeanDao文件，Bean
 
   public static void main(String args[]) throws Exception {
 
-        Schema schema = new Schema(1, "com.itlipan.lee.wanttoeatwhat.model");
+        Schema schema = new Schema(1, "com.englipan.lee.wanttoeatwhat.model");
 
         Entity restaurant = schema.addEntity("Restaurant");
         restaurant.addIdProperty();
@@ -64,7 +64,7 @@ GreenDao的核心类是DaoMaster，DaoSession，以及各个BeanDao文件，Bean
 
 {% endhighlight%}
 
-代码说明：指定Schema，1代表版本号，后面的字符串"com.itlipan.lee.wanttoeatwhat.model"指定Bean要放入的包名。
+代码说明：指定Schema，1代表版本号，后面的字符串"com.englipan.lee.wanttoeatwhat.model"指定Bean要放入的包名。
 
 Entity指代实体类，第一个要生成的实体类是 Restaurant.java，同时会伴随其操作类RestaurantDao.java
 

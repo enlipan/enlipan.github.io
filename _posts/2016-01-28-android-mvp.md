@@ -29,7 +29,7 @@ MVP 就本质上来说并不是什么高深的东西，但是确实极大的改�
 这种对应于项目结构的问题，我始终认为一定要自己分析，然后对照自己设定的结构写出来才能真正理解，虽然androidmvp源码结构已经很清晰，但是纸上得来终觉浅；
 
 
-[*mvpDemo*](https://github.com/itlipan/mvpDemo)
+[*mvpDemo*](https://github.com/englipan/mvpDemo)
 
 
 

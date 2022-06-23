@@ -18,7 +18,7 @@ Android 中换肤是比较常见的大厂应用中的实践，其主要思路在
 
 **结果不重要，重要的是得出结果的过程**
 
-[AppChangSkinDemo](https://github.com/itlipan/AppChangSkinDemo)
+[AppChangSkinDemo](https://github.com/englipan/AppChangSkinDemo)
 
 ---
 

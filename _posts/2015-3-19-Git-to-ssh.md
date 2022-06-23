@@ -35,15 +35,15 @@ ror=<fetch|push>] <name> <url>
 
 >$ git remote rm origin
 >
->$ git remote   add  origin git@github.com:itlipan/itlipan.github.com
+>$ git remote   add  origin git@github.com:englipan/englipan.github.com
 >
 >$ git push origin
 
 {% highlight Bash %}
 
 $ git remote  -v
-origin  git@github.com:itlipan/itlipan.github.com (fetch)
-origin  git@github.com:itlipan/itlipan.github.com (push)
+origin  git@github.com:englipan/englipan.github.com (fetch)
+origin  git@github.com:englipan/englipan.github.com (push)
 
 {% endhighlight %}
 

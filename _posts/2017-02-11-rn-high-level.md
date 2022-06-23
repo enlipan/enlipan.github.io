@@ -13,13 +13,13 @@ RN学习路线：
 
 ### Rn调用原生模块
 
-#### 函数调用  
+#### 函数调用
 
 #### 回调
 
 ### Link
 
-[ReactHybrideApp](https://github.com/itlipan/ReactHybrid)
+[ReactHybrideApp](https://github.com/englipan/ReactHybrid)
 
 
 

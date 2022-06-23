@@ -21,7 +21,7 @@ category: android
 
 > 关于项目创建之初Select SDK Target，minSdk是属于低通滤波器形式，只针对该版本以上开发。而TargetSdk却并不是高通形式，仅仅代表该SDK是开发测试运行主要运行平台。。考虑到Android平台的发展，一般我们选择最新版本去作为TargetSdk，去利用新特性版本开发，覆盖最大的用户群。
 > 
-> 包名设定：应该具有全球唯一性，防止冲突。一般可以利用互联网域名倒如我的个人域名倒置——com.info.itlipan，符合Java命名规范。
+> 包名设定：应该具有全球唯一性，防止冲突。一般可以利用互联网域名倒如我的个人域名倒置——com.info.englipan，符合Java命名规范。
 
 3. Activity/Fragment、Gradle、Android
 

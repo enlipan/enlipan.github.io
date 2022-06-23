@@ -26,7 +26,7 @@ dispatchTouchEvent、onInterceptTouchEvent、onTouchEvent
 
 * scrollTo()  &&  scrollBy()
 
-###  NestedScrolling 特性
+### NestedScrolling 特性
 
 eg: Md中的滚动隐藏Toolbar过程
 
@@ -171,7 +171,7 @@ RecyclerView.onTouchEvent() :
 事实上整个流程就是 ChildView 在 TouchEvent 事件中的计算以及数据回传,二者组合实现;
 
 
-[nestedscrolldemo](https://github.com/itlipan/PracticeDraw1/tree/master/nestedscrolldemo)
+[nestedscrolldemo](https://github.com/englipan/PracticeDraw1/tree/master/nestedscrolldemo)
 
 
 ---

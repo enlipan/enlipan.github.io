@@ -10,7 +10,7 @@ keywords: [improvement,android,java]
 
 在客户端的开发过程中，理想情况下当然是后台返回统一格式化数据，但是如果涉及到多个后台Team，很可能会出现不一样的格式，那么针对数据的转换就成了一个必须提到的话题：
 
-###  Retrofit 数据转换流程
+### Retrofit 数据转换流程
 
 这里简单看一下Retrofit的Response转化流程：
 
@@ -157,7 +157,7 @@ public <T> Converter<ResponseBody, T> responseBodyConverter(Type type, Annotatio
 
 So，事实上，如果我们需要自定义数据类型的转换，我们可以通过自定义转换器进行数据的转换；
 
-###  自定义数据转换 Converter
+### 自定义数据转换 Converter
 
 
 先看看默认原始 GsonConverterFactory 的行为：
@@ -194,7 +194,7 @@ public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] 
 
 在实践Demo时使用了之前用Python实现的本地服务器，返回自定义Json数据：
 
-[ServerForAndroid - Python](https://github.com/itlipan/ServerForAndroid/tree/master/package/server)
+[ServerForAndroid - Python](https://github.com/englipan/ServerForAndroid/tree/master/package/server)
 
 附注：
 

@@ -55,7 +55,7 @@ ListView：
 
 基础控件效果熟悉代码：
 
-[ReactNativeNotes](https://github.com/itlipan/RactNativeNotes)
+[ReactNativeNotes](https://github.com/englipan/RactNativeNotes)
 
 ---
 

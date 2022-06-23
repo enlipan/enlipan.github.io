@@ -7,14 +7,14 @@ keywords: [android, ndk,c,sqlite3]
 
 AndroidStudio 高效开发 NDK；
 
-###  NDK JNI
+### NDK JNI
 
 是什么？解决什么问题？适用什么场景？
 
 Java 通过 Java Native Interface 去支持与 Native代码（C/Cpp）之间的互相调用混合编程，常常适用于对于算法效率要求较高或突破Java性能限制方面，亦或是引用三方的 so库联合编程实现效果；利用JNI 可以实现Java与其他语言之间的通信，其实一般我们主要指 C亦或 Cpp；其实在Java或Android内部源码中，我们就经常看到方法头是Native的函数，这类函数只有方法签名而没有方法体的具体实现，典型的如 数组复制等等；
 
 
-###  JNI 数据类型
+### JNI 数据类型
 
 Java数据类型与 jni定义别名 以及 native 代码数据类型的关联对应关系是很重要的：
 
@@ -63,11 +63,11 @@ env->FindClass("java/util/ArrayList")；
 
 {% endhighlight %}  
 
-###  从 GoogleSample HelloJNI 开始
+### 从 GoogleSample HelloJNI 开始
 
 从 HelloJNI 开始上手是比较合适的，简单的依赖用来熟悉 javah,mk 命令，迁移到 AS 后也可以用来结合 AS NDK Gradle文档熟悉 NDK Gradle写法；
 
-项目地址：[Androidstudio-hello-jni](https://github.com/itlipan/android-ndk/tree/master/hello-jni)
+项目地址：[Androidstudio-hello-jni](https://github.com/englipan/android-ndk/tree/master/hello-jni)
 
 从 HelloJNI 项目来看，NDK项目一般分为以下几个步骤：
 
@@ -77,7 +77,7 @@ env->FindClass("java/util/ArrayList")；
 *  实现 native 函数，在 AS中 正确的对应的头文件，native函数以及native函数实现会自动关联起来；          
 
 
-####  CMD  NDK-Build配置 MK命令
+#### CMD  NDK-Build配置 MK命令
 
 虽然说 目前 AndroidStudio已经弱化了 android.mk 文件，直接利用Gradle配置既可以生成so文件，嵌入到App中，但是mk文件依旧有理解的必要；一个典型的 android.mk 文件主要包含以下几个模块：
 
@@ -95,7 +95,7 @@ LOCAL_SRC_FILES := \
 
 {% endhighlight %}  
 
-####  Gradle 命令配置
+#### Gradle 命令配置
 
 Gradle的配置命令相对于使用 mk 命令就更加简单了，一般直接查阅文档可以解决问题，典型的Gradle配置如下：
 
@@ -114,7 +114,7 @@ buildTypes {
 
 {% endhighlight %}  
 
-###  加速数据库Native Sqlite
+### 加速数据库Native Sqlite
 
 
 Sqlite 的底层自定义函数，亦或底层读取数据以及高效大数据操作：
@@ -132,11 +132,11 @@ NDK 的调试在模拟器上往往容易出各种问题，无法进入调试modl
 
 Android 50 Hacks Hack 42 Demo：一个很好的NDK Demo，比HelloJNI复杂，但又不算太复杂，我将其从Eclipse迁移到AS，解决了一些小问题，更新了一些文件
 
-项目地址：[Github —— AS Native Sqlite Demo](https://github.com/itlipan/hack042)
+项目地址：[Github —— AS Native Sqlite Demo](https://github.com/englipan/hack042)
 
 
 
-###  利用 NDK 预置Root权限命令
+### 利用 NDK 预置Root权限命令
 
 
 结合 `chmode 4777` 权限配置,利用 `system()` 执行预置命令,我们知道 4777权限对应的Linux权限是 -rwsrwxrwx, 4代表 sticky位，也就是可以在普通用户组执行系统命令时，以命令的所有者所拥有的权限执行，简单的解释就是 ：当某个命令的属于 root 用户，当其为sticky权限状态时，普通用户自行该命令，会以 root 用户所拥有的权限执行，利用这个我们可以干什么呢？很简单，某个时刻 当我们以 root 用户的模式将某个我们预定义好的执行命令内置到系统中，在 app 以普通用户的方式运行时，我们可以通过 system("command") 的方式调用该命令以 root 超级用户权限执行，干一些我们本来干不了的事；
@@ -144,12 +144,12 @@ Android 50 Hacks Hack 42 Demo：一个很好的NDK Demo，比HelloJNI复杂，�
 如厂商Rom内置后，后期其他app调用；亦或某个时刻获取到了管理员权限，同时移植了该命令到 system/bin 目录下，后期再次执行就不需要管理员权限，这种方式属于 NDK 的一种拓展使用；
 
 
-###  NdkDemo 实践
+### NdkDemo 实践
 
 前面是一些系统的学习，自己边回顾边查找，边解决问题也写了一个小的Demo，其实只是简单的利用Native Sql查询语句，单纯的看起来比原生 SqliteDatabase查询快6倍的速度；回过头来复盘发现要注意的地方还挺多的，主要集中在 Gradle的配置，javah头文件的生成，以及 native C中资源的释放问题；
 
 
-项目Github地址：[NdkDemoNativeSqlite](https://github.com/itlipan/NdkDemoNativeSqlite)
+项目Github地址：[NdkDemoNativeSqlite](https://github.com/englipan/NdkDemoNativeSqlite)
 
 
 ---

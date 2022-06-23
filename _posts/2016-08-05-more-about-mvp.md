@@ -12,17 +12,17 @@ MVP —— 知其然知其所以然
 
 MVP到目前为止依旧没有标准化，Github上出了众多的MVP范例，但是官方的MVP Todo Demo虽大有一扫乾坤的意味在里面，但事实上MVP依旧各有所爱的实现方式；
 
-###  MVP
+### MVP
 
 常见的应用架构一般同样采用分层思想，视图层，业务逻辑层，以及数据层；
 
 其中MVP属于视图层组织框架，其他还有很多视图层框架如采用DataBinding的MVVM，传统的MVC，这些都并不干扰其他底层架构；其主要解决View与Data，视图与数据业务逻辑分离的问题；
 
 
-####  MVP Presenter 处理：
+#### MVP Presenter 处理：
 
 
-#####  解决 Activity的异常重启恢复情况：
+##### 解决 Activity的异常重启恢复情况：
 
 * app configChange      
 * 屏幕旋转          
@@ -104,7 +104,7 @@ Presetner要立足于足够的层次高度对于整个视图层有一个统筹�
 
 
 
-[GitHubDemo-BaseMvp](https://github.com/itlipan/BaseMvp)
+[GitHubDemo-BaseMvp](https://github.com/englipan/BaseMvp)
 
 
 ---
