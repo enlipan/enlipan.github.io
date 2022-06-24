@@ -11,7 +11,7 @@ keywords: [view, android]
 
 Binder作为进程间通信的架构,很好的适应了移动设备的特性解决了IPC的一些性能问题，高效简洁有效，Binder将Android Framwork中的四大组件连接起来；
 
-#### 同类有哪些   
+#### 同类有哪些
 
 Linux现有IPC：
 
@@ -138,7 +138,7 @@ run(){
 
 [ActivityManagerService启动过程](http://gityuan.com/2016/02/21/activity-manager-service/)
 
-### ActivityThread  
+### ActivityThread
 
 ActivityThread 作为App启动的入口函数，是研究App与AMS交互的关键，对于App启动的流程也很有必要研究一番：
 
@@ -153,7 +153,7 @@ After zygote, init starts the runtime process. The zygote then forks to start a 
 
 
 {:.center}
-![App Lauch](http://res.oncelee.com/assets/img/20170708/app%20launch%20summary.jpg)
+![App Lauch](https://file.oncelee.com/assets/img/20170708/app%20launch%20summary.jpg)
 
 {% highlight java %}
 
@@ -412,7 +412,7 @@ static public IActivityManager asInterface(IBinder obj) {
 
 ActivetyStack
 
-### WMS  
+### WMS
 
 * Surface
 

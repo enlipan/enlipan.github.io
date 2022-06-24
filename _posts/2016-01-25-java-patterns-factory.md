@@ -63,7 +63,7 @@ public class SimpleFactory {
 简单工厂非常常见，其隔离意义需要理解；
 
 
-### 静态方法 Builder 
+### 静态方法 Builder
 
 
 Buidler构造器，适用于`大量可选参数`的对象创建问题；常规情况下，如有大量参数需要在对象创建时完成赋值，往往是使用带参构造函数完成，而当参数过多时，构造函数将变得杂乱不堪，构造器就是为了这个情景优化而产生的；
@@ -177,7 +177,7 @@ Builder构造器的使用，改善了程序对象创建的灵活性；当然一�
 
 
 {:.center}
-![foctorymethod pattern](http://res.oncelee.com/assets%2Fimg%2F20160126%2Ffoctorymethod.PNG)
+![foctorymethod pattern](https://file.oncelee.com/assets%2Fimg%2F20160126%2Ffoctorymethod.PNG)
 
 工厂方法模式针对接口编程，同时与接口的具体实现解耦，让实现创建工厂的子类去创建具体对象，依照其业务逻辑完成对象创建；可以看出，针对每一种情况都会需要创建两个类，一个具体的工厂创建类，一个实现产品功能逻辑的产品，类个数膨胀还是比较厉害的；
 

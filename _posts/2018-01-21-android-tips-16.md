@@ -11,22 +11,22 @@ keywords: [improvement,android,java]
 
 一些值得注意的点: 
 
-#### 命名: 
+#### 命名:
 
 * 命名禁止使用中英文混合         
 * 抽象类,异常类,测试类都应该有对应标识: 如  Abstract 头, Exception 尾, Test 尾等作为类名实际标识            
 * 模块,以及类等使用设计模式相关,应该在类名有所体现,如 Factory,Observer,Adapter 等;    
 
-#### 文件  
+#### 文件
 
 * 使用统一 UTF-8 编码文件         
 * 禁用 tab 符              
 
-#### 代码块  
+#### 代码块
 
 * 适当的使用空行进行代码分块,逻辑分块           
 
-#### 接口定义    
+#### 接口定义
 * 遵守接口契约,外部正在使用的二方接口签名禁止随意更改,可以使用废弃Deprecated 标识,并在注释中使用 {@link} 指向新的实现说明;(非常重要,谁也不希望更新的 SDK 版本发现代码到处都是错误)                
 
 * 接口中的方法与常量声明应该简洁,不应该加上 public 等前缀头;(less is more),注意 Java8 中的接口方法默认实现非常灵活可以优雅的实现;
@@ -39,7 +39,7 @@ keywords: [improvement,android,java]
 
 * 过多层次的 if else 非常影响阅读性,通常应该借助 **卫语句(为复杂的状态构建出口)**,策略模式,状态模式等来进行精简
 
-#### 多线程  
+#### 多线程
 
 * 线程池的构建不应简单使用 Executors构建,屏蔽过多细节,使用ThreadPoolExecutor 可以让程序员知道更多所关心的细节;    
 * 加锁同步应该注意考量其性能影响,能不加锁尽量不加锁(如常用的单例模式,使用静态内部类的 Holder 就比Double Check 更好,借助 JVM 的 loader 机制);即使加锁区域越精细化越好,而不是简单使用同步关键字处理;(Lock)
@@ -54,7 +54,7 @@ keywords: [improvement,android,java]
 
 PS: 事实上这些东西无论是在重构,还是代码风格,代码大全中都被反复的提及,读起来更是换汤不换药,而且书中说的更加详细,读起来更有知其然知其所以然之感,这里也仅仅是有个总结;
 
-### 备忘拾遗 
+### 备忘拾遗
 
 #### 展开收起 View 实现
 
@@ -67,7 +67,7 @@ PS: 事实上这些东西无论是在重构,还是代码风格,代码大全中�
 如: 
 
 {:.center}
-![ExpandExample](http://res.oncelee.com/ExpandExample.png)
+![ExpandExample](https://file.oncelee.com/ExpandExample.png)
 
 其核心可以利用 TouchableSpan 的构建实现;
 

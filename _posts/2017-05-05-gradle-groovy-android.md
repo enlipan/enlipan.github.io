@@ -94,7 +94,7 @@ showTime{
 
 闭包的curry与 rcurry，对于闭包的多参数，可能出现参数的默认设定的情形，通过curry函数绑定一个或多个连续参数作为默认参数，在后续调用时，则只需要传入剩下的参数即可调用闭包；
 
-##### Closure Delegate    
+##### Closure Delegate
 
 闭包的委托机制也是闭包非常巧妙的部分，如果不理解很容易错误的使用闭包，对于闭包有三个上下文环境，this，owner,delegate，其委托上下文环境默认为：OWNER_FIRST，当然可通过设定其resolveStrategy 参数的形式去更换，这段代码：
 
@@ -210,7 +210,7 @@ task getEquipped {
 ##### AS 应用：
 
 {:.center}
-![android_variant_mergeres](http://res.oncelee.com/assets/img/20170505/android_variant_mergeres.JPG)
+![android_variant_mergeres](https://file.oncelee.com/assets/img/20170505/android_variant_mergeres.JPG)
 
 ---
 

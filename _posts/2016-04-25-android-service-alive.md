@@ -8,9 +8,9 @@ keywords: [android, service]
 进程杀死后将导致IM推送无法接收等等,为了保证自身业务逻辑的完整性，以及各类产品需求的及时性，进程保活是无法绕过的一个坎，目前来说华为系统杀进程暂时无法绕过，要么进程属于华为系统进程白名单，要么交钱华为开发者联盟，采用华为推送;
 
 
-###  独立Service 保活
+### 独立Service 保活
 
-####  应用进程保活的方案
+#### 应用进程保活的方案
 
 对于应用的保活，常用的路数有以下几种：
 
@@ -21,7 +21,7 @@ keywords: [android, service]
 *  独立(远程)进程Service； 独立进程的Service可以干的事情就多了，即可以用于唤醒主进程也可以用于减轻主进程的业务逻辑，如独立IM Service 进程结合PendingIntent进入主进程界面；那么独立的Service 进程如何保证不被系统Kill回收是对于这一选项至关重要的；
 
 
-####   独立(远程)Servie保活
+#### 独立(远程)Servie保活
 
 
 **Android 进程等级：**
@@ -46,10 +46,10 @@ keywords: [android, service]
 *  cgroup 控制群主资源管理机制：通过建立前后台用户组线程群体，调度系统资源，控制进程所使用的资源数保证进程组之间的隔离；通过限制后台群组的资源访问，保证前台线程的顺利运行，防止后台线程过度抢占前台线程资源，导致前台线程资源不足，进而引发各类卡顿或用户不友好问题；
 
 
-###  Service 使用
+### Service 使用
 
 
-####  Service
+#### Service
 
 关于 Service 的启动方式有 startService 与 bindService()之分，其生命周期的差异需要注意；
 
@@ -64,7 +64,7 @@ keywords: [android, service]
 
 
 
-####  前台Service
+#### 前台Service
 
 前台Service 将Service的进程优先级大幅提升，能在很大程度上避免系统的内存回收，其资源占用往往更多，电量消耗更多，从Android系统设计的角度，需要让用户知道哪些服务正在前台占用资源，所以其前台Sercvice应该要显示出来，但是从开发者角度又不希望用户感知到，我正在消耗你的电量，影响用户活跃度；
 
@@ -106,7 +106,7 @@ API 18 之前我们可以简单的通过设置 startForeground() 所绑定的 No
 {% endhighlight %}  
 
 
-![ForegroundService](http://res.oncelee.com/assets/img/20160423/service_force.png)
+![ForegroundService](https://file.oncelee.com/assets/img/20160423/service_force.png)
 
 
 ---

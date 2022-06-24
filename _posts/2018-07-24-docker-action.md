@@ -6,27 +6,27 @@ keywords: [improvement,android,java,js]
 ---
 
 
-### Docker 是什么? 
+### Docker 是什么?
 
-### Docker 优势是什么? 解决什么问题?       
+### Docker 优势是什么? 解决什么问题?
 
-### Docker 如何用? 
+### Docker 如何用?
 
-#### Image  
+#### Image
 
-#### Container       
+#### Container
 
-#### Repository  
+#### Repository
 
-#### Ship  
+#### Ship
 
-#### Docker 启动 Container   
+#### Docker 启动 Container
 
-#### Docker 创建/上传镜像  
+#### Docker 创建/上传镜像
 
 
 
-![Docker 知识导图](http://res.oncelee.com/Docker.png)
+![Docker 知识导图](https://file.oncelee.com/Docker.png)
 
 
 

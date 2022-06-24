@@ -15,7 +15,7 @@ keywords: [framework]
 > RxJava provides Observables and Observers. Observables can send out values. Observers, watch Observables by subscribing to them. Observers are notified when an Observable emits a value, when the Observable says an error has occurred. They are also notified when the	Observable sends the information that it no longer has any values to emit.
 
 
-####  RxJava 优势
+#### RxJava 优势
 
 > A simple operation of transforming or filtering the information from the database would require new interfaces and restructuring code in order to respect the implemented architecture. With RxJava this is a lot easier, by simply creating an Observable which retrieves all the information and then you can use any of these methods to filter and retrieve only the information you want.
 
@@ -62,7 +62,7 @@ keywords: [framework]
 
 >  RxJava does perform completely functional transformations of asynchronous data.
 
-####  观察者 Observer（接口）以及 Subsrciber(抽象类)
+#### 观察者 Observer（接口）以及 Subsrciber(抽象类)
 
 Subcription 代表了 可观察对象与观测者之间的联系；
 
@@ -81,7 +81,7 @@ onStart();
 订阅开始时，发生于订阅者所在的线程之中，且无法指定函数的线程，只能处在改订阅者所在线程中，适用于一些准备工作或者初始化工作；
 
 
-###  可观测对象 Observable
+### 可观测对象 Observable
 
 Observable对象的创建：
 
@@ -114,7 +114,7 @@ from(T[])//发送多个事件
 
 {% endhighlight %}
 
-###  订阅Subscribe（即观察者模式中的注册）
+### 订阅Subscribe（即观察者模式中的注册）
 
 OnSubscribe:
 
@@ -227,7 +227,7 @@ public Subscriber<? super T> call(final Subscriber<? super R> o) {
 
 {% endhighlight %}
 
-###  OnError
+### OnError
 
 OnError的优势在于，异常的统一化处理，而改变的原有的四处TryCatch:
 
@@ -292,7 +292,7 @@ Schedulers:
 
 
 {:.center}
-![RxJava_Stream](http://res.oncelee.com/assets/img/20160830/rxjava_pic.jpg)
+![RxJava_Stream](https://file.oncelee.com/assets/img/20160830/rxjava_pic.jpg)
 
 **图片来源于引用文章——RxAndroid Basics: Part 2**
 

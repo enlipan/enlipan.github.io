@@ -16,7 +16,7 @@ keywords: [improvement,android,ui]
 将该 View 覆盖到 Activity 的 Cotnent 上,加载到 DecoreView 中,利用 DecorView作为 FrameLayout 的特性,直接将提示的全屏 View add可以迅速实现 View 的覆盖显示;那么剩下的问题就是如何绘制镂空透明圆;
 
 
-### 知识储备:  
+### 知识储备:
 
 * DecorView 
 
@@ -29,10 +29,10 @@ keywords: [improvement,android,ui]
 用于绘制透明镂空圆,利用Clear特性,将原来绘制的半透明背景,在目标区域清除一个圆,就达到了透明圆的实现;
 
 
-### Demo 
+### Demo
 
 {:.center}
-![Scan_Image](http://res.oncelee.com/assets/img/20170924/scan_hint_view.png "DemoView")
+![Scan_Image](https://file.oncelee.com/assets/img/20170924/scan_hint_view.png "DemoView")
 
 事实上实现是简单的,这里主要还是回顾一些不常用的 Xfermode相关的知识:
 

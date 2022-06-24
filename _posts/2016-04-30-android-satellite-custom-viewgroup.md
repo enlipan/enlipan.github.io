@@ -7,7 +7,7 @@ keywords: [android, viewgoup,animation]
 
 自定义View写过一些，但是自定义ViewGroup一直写的不多，上次还是写流式布局，一直想着写一个自定义ViewGroup 来总结一下自定义ViewGroup相关的，恰恰看到Mooc上的hyman老师的分享，想着自己先写一下，遇到问题再看看视频，看完再复盘回顾，自己总结一下，于是有了这一篇文章，写的过程中还是遇到一些细节性问题的，非常感谢hyman老师的讲解分享；
 
-###  自定义View的相关内容
+### 自定义View的相关内容
 
 View的自定义之所以复杂是由于其涉及的知识点较多，但是只要掌握庖丁解牛之法，逐一分割还是有应答之法的：
 
@@ -21,7 +21,7 @@ View的自定义之所以复杂是由于其涉及的知识点较多，但是只�
 
 除以上内容自定义View的内容还涵盖， 诸如：Canvas，Animation，Animator等等一些列内容，以及一些数学知识，所以自定义View是复杂的，是需要练习的，状态要一步步分割，东西要一点点完成，按照流程练习，复盘回顾总结，还是有套路可以寻找的；
 
-###  自定义卫星菜单 View的实践
+### 自定义卫星菜单 View的实践
 
 以下进行 卫星菜单的自定义实现：
 
@@ -49,7 +49,7 @@ View的自定义之所以复杂是由于其涉及的知识点较多，但是只�
 
 *  View 位置确定分析 实现 onMeasure onLayout；
 
-![SatelliteViewGroup](http://res.oncelee.com/assets/img/20150430/item_view_satellite.jpg)
+![SatelliteViewGroup](https://file.oncelee.com/assets/img/20150430/item_view_satellite.jpg)
 
 一个需要注意的Case 是要针对每一个View的绘制的 Left&&Top点进行计算；
 

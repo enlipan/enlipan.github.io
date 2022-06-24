@@ -15,7 +15,7 @@ Linux 的实现上, 管道形态上是文件,但却是占用内存空间,因而 
 
 ## 类型
 
-### 匿名管道  
+### 匿名管道
 
 | 管道符号, 用于在父子管道之间通信,除了父子进程其他人不知道管道文件描述符,也就无法通过管道与之通信.  
 
@@ -26,7 +26,7 @@ Linux 的实现上, 管道形态上是文件,但却是占用内存空间,因而 
 
 管道实际是一个内核缓冲区,由于是缓冲区,就有容量限制, PIPESIZE.
 
-### 命名管道 
+### 命名管道
 
 mkfifo 指令: 创建命名管道;
 
@@ -42,7 +42,7 @@ mkfifo 指令: 创建命名管道;
 
 POSIX : 可移植操作系统接口.即操作系统为应用程序提供的接口的标准定义.
 
-![](http://res.oncelee.com/20190310213600.png)
+![](https://file.oncelee.com/20190310213600.png)
 
 #### Pipe & FIFO
 
@@ -56,7 +56,7 @@ POSIX : 可移植操作系统接口.即操作系统为应用程序提供的接�
 
 通常所说的管道是单向的.
 
-### IPC 通信之 LocalSocket 
+### IPC 通信之 LocalSocket
 
 Android IPC 通信方式. AIDL / LocalSocket 
 
@@ -66,7 +66,7 @@ Android IPC 通信方式. AIDL / LocalSocket
 
 Quote: https://xiaozhuanlan.com/topic/1745298630
 
-###  Android 存储空间的内部空间: 
+### Android 存储空间的内部空间:
 
 data/app 目录是安装时将 apk 文件提取存放的位置.
 
@@ -81,7 +81,7 @@ data/app 目录是安装时将 apk 文件提取存放的位置.
 * openFileOutput(): 在 getFileDir 目录下打开或创建指定文件.
 
 
-###  Android 外部存储空间: 
+### Android 外部存储空间:
 
 /Storage 目录
 
@@ -100,7 +100,7 @@ Environment.DIRECTORY_MOVIES 视频
 
 {% endhighlight %}
 
-#### App 私有外部存储空间  
+#### App 私有外部存储空间
 
 Context.getExternalFilesDirs() 外部文件根目录.
 
@@ -119,7 +119,7 @@ data/data目录是为了便于访问创建的引用目录,其目录的获取在6
 
 
 
-### Exception 
+### Exception
 
 
 {% highlight java %} 
@@ -137,7 +137,7 @@ fis = new FileInputStream(file);
 
 ---
 
-## 门面模式 
+## 门面模式
 
 日志框架的封装使用. 
 
@@ -145,7 +145,7 @@ fis = new FileInputStream(file);
 
 SLF4J 框架.     
 
-## 线程池  
+## 线程池
 
 线程池的创建不允许使用 Excutors 创建, 而应该利用 ThreadPoolExecutor 让创建者/开发者关注底层细节, 防止使用问题.
 

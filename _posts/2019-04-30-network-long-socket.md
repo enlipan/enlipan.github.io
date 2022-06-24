@@ -6,9 +6,9 @@ keywords: [improvement,android,network,java,js]
 ---
 
 {:center}
-![Socket 长连接](http://res.oncelee.com/20190501224256.png)
+![Socket 长连接](https://file.oncelee.com/20190501224256.png)
 
-## TCP 长链接 
+## TCP 长链接
 
 通信的双端维护虚拟的TCP 通道.  
 
@@ -51,9 +51,9 @@ keep Tcp Alive:
 
 ---
 
-## Socket  
+## Socket
 
-### 什么是 Socket? 
+### 什么是 Socket?
 
 [socket 的解释](https://stackoverflow.com/questions/152457/what-is-the-difference-between-a-port-and-a-socket)
 
@@ -75,14 +75,14 @@ Socket 本身并不代表 connection , Socket 代表着特定 Connection 的端�
 Socket 本质是一个抽象的概念, 应用借助 Socket 传递或者接受数据.
 
 
-![](http://res.oncelee.com/20190215015117.png)
+![](https://file.oncelee.com/20190215015117.png)
 
 
-![](http://res.oncelee.com/20190215015547.png)
+![](https://file.oncelee.com/20190215015547.png)
 
 针对点对点 Socket 链接的双方, 服务端 Socket 等待 Client 连接,并响应 Client 请求.   而 Client Socket 根据服务端 IP 地址与端口发起建立连接.
 
-![](http://res.oncelee.com/20190215015914.png)
+![](https://file.oncelee.com/20190215015914.png)
 
 [](https://www.csd.uoc.gr/~hy556/material/tutorials/cs556-3rd-tutorial.pdf)
 
@@ -134,7 +134,7 @@ Socket.keepAlive 默认使用 Linux 默认设置:
 
 {% endhighlight %}
 
-### 应用层心跳设置: 
+### 应用层心跳设置:
 
 1. 应用层发送自定义心跳数据  
 
@@ -143,7 +143,7 @@ Socket.keepAlive 默认使用 Linux 默认设置:
 > 微信的心跳策略: 微信自从登录成功后,创建的业务链接每隔2分钟即会向服务器发送一个82字节的心跳包。由于Android系统允许程序在后台运行,当微信被 切入后台后,微信的业务链接并没有断开,将继续以此频次发送心跳包。也就是说,Android版本的微信只要运行并登录成功后,将24小时不间断地发送心跳包,这样, 即使对微信不进行任何操作,微信 每天将发送24x30=720个数据包, 数据量为24x30x82=59K字节,按月计算折合每月22 320个数据包或 1.83M字节数据。
 
 
-### 问题: 
+### 问题:
 
 1. 服务器重启,大面积长链接掉线, 瞬时大面积长链接重连,造成网络阻塞,服务器崩溃         
 2. 长链接数量过多影响服务端性能和并发数量.   

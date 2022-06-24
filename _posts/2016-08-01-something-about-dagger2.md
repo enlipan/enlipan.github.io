@@ -8,7 +8,7 @@ keywords: [framework]
 为什么要使用Dagger2？同样是依赖注入框架，Dagger2针对其前辈们（Spring，Guice，Dagger1）有什么优势？
 
 {:.center}
-![Dagger2](http://res.oncelee.com/assets/img/20160816/Dagger2.JPG)
+![Dagger2](https://file.oncelee.com/assets/img/20160816/Dagger2.JPG)
 
 Dagger2 没有了烦人的xml配置文件管理，不再依赖运行时反射检验机制，提升性能，这点针对移动设备尤其重要，利用编译时完全校验机制，编译时更加产生优雅的生成代码，可调试性增强等等优势。
 
@@ -79,7 +79,7 @@ Interfaces can’t be constructed.
 Third-party classes can’t be annotated.              
 Configurable objects must be configured!      
 
-###  Dagger依赖级别：
+### Dagger依赖级别：
 
 Module级别高于Inject构造函数，所以其流程如下：
 
@@ -163,7 +163,7 @@ component.inject(someFragment fragment);
 
 > By convention, @Provides methods are named with a provide prefix and module classes are named with a Module suffix.
 
-####  Component：
+#### Component：
 
 >  Any module with an accessible default constructor can be elided as the builder will construct an instance automatically if none is set. And for any module whose @Provides methods are all static, the implementation doesn’t need an instance at all. If all dependencies can be constructed without the user creating a dependency instance, then the generated implementation will also have a create() method that can be used to get a new instance without having to deal with the builder.
 
@@ -257,7 +257,7 @@ public interface ActivityInjectorComponent {
 
 
 
-####  SubComponent:
+#### SubComponent:
 
 SubComponent 属于 Component 继承的另一种方式，与 dependencies 类似，SubComponent 有自己独立的生命周期；
 

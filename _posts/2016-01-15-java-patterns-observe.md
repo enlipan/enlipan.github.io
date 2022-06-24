@@ -25,7 +25,7 @@ OK，这样就必然带来一个问题，那就是两者被紧密的耦合在了
 针对接口编程实现可以变强耦合为松耦合，接口编程的实现，使观察者与目标之间变为了抽象层的耦合，目标与观察者只是在抽象层层面的耦合，目标（内容）只主要关注其实现接口，而无须关注具体的观察者实现问题；
 
 {:.center}
-![observe](http://res.oncelee.com/assets%2Fimg%2F20160117%2Fobserve.png)
+![observe](https://file.oncelee.com/assets%2Fimg%2F20160117%2Fobserve.png)
 
 
 ### 单向依赖

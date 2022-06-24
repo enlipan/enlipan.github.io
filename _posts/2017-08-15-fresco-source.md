@@ -10,9 +10,9 @@ keywords: [improvement,android,gralde,img]
 ### 从类图开始
 
 {:.center}
-![Fresco_UML](http://res.oncelee.com/assets/img/20170815/fresco_mvc.png "Fresco MVC")
+![Fresco_UML](https://file.oncelee.com/assets/img/20170815/fresco_mvc.png "Fresco MVC")
 
-### 初始化  
+### 初始化
 
 在弄清楚 Fresco 的MVC 类图模型之后,我们回过头从 Fresco 的用法开始进入源码的追踪,当然这也是最常见的逻辑,即使是调试追踪源码也是同样的入口;
 
@@ -367,10 +367,10 @@ DraweeHolder 作为持有 Controller 以及 DraweeHierarchy 的 holderClass, 也
 再回过头看整体流程,画个图理清一下流程:  
 
 {:.center}
-![Init Suplier](http://res.oncelee.com/assets/img/20170819/sq_controller_init.png)
+![Init Suplier](https://file.oncelee.com/assets/img/20170819/sq_controller_init.png)
 
 {:.center}
-![SetUriAction](http://res.oncelee.com/assets/img/20170819/sq_set_uri_action.png)
+![SetUriAction](https://file.oncelee.com/assets/img/20170819/sq_set_uri_action.png)
 
 
 到这里可以明白整个图片的处理逻辑都在 DataSource.subscribe(subscriber),接着追踪最核心的 Producer Sequence 处理逻辑:

@@ -15,12 +15,12 @@ RecyclerView 针对ListView的改进设计：
 
 > A flexible view for providing a limited window into a large data set.
 
-###  RecyclerView核心知识
+### RecyclerView核心知识
 
 RecyclerView 主干知识结构图：
 
 {:.center}
-![RecyclerView](http://res.oncelee.com/assets/img/20161212/RecyclerView.png)
+![RecyclerView](https://file.oncelee.com/assets/img/20161212/RecyclerView.png)
 
 事实上简单一句话说就是，Adapter将抽象的DataList转换成RecyclerView这一ViewGroup对应需求的的每一个填充了DataList的ItemView，并结合LayoutManager Add到RecyclerView中显示出来；
 
@@ -33,7 +33,7 @@ RecyclerView 主干知识结构图：
 二者AdapterPosition 与 LayoutPosition的差异问题，由于Data的变化可以是同步的，在下一次 OnLayout之前可能会造成二者Position不同步的问题，所以AdapterPostion一般能够很好的代表该Position的数据DataItem，而LayoutPosition则更适用于定位该Position相邻位置的View情况。同时我们也应该尽可能避免直接适用onBindViewHolder中的position《该Position在涉及到相关的插入删除但还未刷新时造成Position不同步的问题》而应该使用holder.getAdapterPosition() —— 详情参见 GoogleIO视频(结束前三分钟左右)
 
 
-###  RecyclerView 源码—— 类ViewGroup
+### RecyclerView 源码—— 类ViewGroup
 
 从View的 onMeasure / onLayout / onDraw看RecyclerView：
 
@@ -390,7 +390,7 @@ ViewHolder getScrapViewForPosition(int position, int type, boolean dryRun) {
 
 {% endhighlight %}
 
-####  附图(FromGoogleIO-RecyclerView)：
+#### 附图(FromGoogleIO-RecyclerView)：
 
 
 

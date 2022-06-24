@@ -7,7 +7,7 @@ category: others
 ### 思维导图：
 
 {:.center}
-![为什么30岁不是新的20岁](http://res.oncelee.com/assets%2Fimg%2F20160109%2Fthirty-is-not-a-new-tweenty.PNG)
+![为什么30岁不是新的20岁](https://file.oncelee.com/assets%2Fimg%2F20160109%2Fthirty-is-not-a-new-tweenty.PNG)
 
 
 

@@ -58,4 +58,4 @@ category: others
 **Happy nice day**
 
 {:.center}
-![我的工作环境](http://res.oncelee.com/assets%2Fimg%2F20150315%2FMyIBM.PNG)
+![我的工作环境](https://file.oncelee.com/assets%2Fimg%2F20150315%2FMyIBM.PNG)

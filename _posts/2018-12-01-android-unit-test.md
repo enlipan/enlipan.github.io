@@ -5,7 +5,7 @@ category: android
 keywords: [improvement,android]
 ---
 
-# Android 单元测试 
+# Android 单元测试
 
 开发人员的白盒测试.
 
@@ -24,7 +24,7 @@ keywords: [improvement,android]
 
 单测实际上讲究独立性与隔离性,需要屏蔽依赖对象的不确定行为,进而让单测对象的行为可被正确预测,一旦有多重原因能够导致同样的结果,则无法确定结果是否由单测对象的行为决定.也就是讲究科学的控制变量原则.
 
-## Local Test 
+## Local Test
 
 本地JVM环境运行的测试用例, 不需要依赖 Android 设备.在本地测试中又分为依赖 Android Framework 的测试与 不依赖 AndroidFramework 的 JUnit 测试.
 针对前者我们通常使用 Robolectric.
@@ -94,7 +94,7 @@ http://robolectric.org/extending/
 
 在 Android 设备或者模拟器上运行的测试用例.通常这类测试要比 LocalTest 更加高级.
 
-### Expresso 
+### Expresso
 
 instrumentation Test: 构建 test apk .
 
@@ -108,7 +108,7 @@ test instrumentation
 
 集成 UI 测试: 页面间跳转逻辑的验证等处理.  
 
-![](http://res.oncelee.com/20181204132236.png)
+![](https://file.oncelee.com/20181204132236.png)
 
 Android_JUnit_Runner 所有测试用例在一个 Android JUnit Runner 中运行,而 JUnitRunner 运行在同一个进程中,所有测试用例在同一个独立的设备调用.
 
@@ -123,7 +123,7 @@ Each time your test invokes onView(), Espresso waits to perform the correspondin
 By performing these checks, Espresso substantially increases the likelihood that only one UI action or assertion can occur at any given time. This capability gives you more reliable and dependable test results.
 
 
-![](http://res.oncelee.com/20181204234443.png)
+![](https://file.oncelee.com/20181204234443.png)
 
 
 TestCase  : 独立(isolate) && 可测试.  针对依赖服务端状态的高级集成测试,如何编写更加独立可测单元.
@@ -151,7 +151,7 @@ ActivityRule: When launchActivity is set to true in the constructor, the Activit
 
 https://stackoverflow.com/questions/38056901/class-not-found-empty-test-suite-when-running-unit-tests-in-android-studio/41474392#41474392
 
-#### Robolectric Mock 网路请求的问题  
+#### Robolectric Mock 网路请求的问题
 
 android.security.NetworkSecurityPolicy  class method NPE 问题.
 
@@ -213,7 +213,7 @@ onView().perform().check();
 
 {% endhighlight %}
 
-![](http://res.oncelee.com/20181205224032.png)
+![](https://file.oncelee.com/20181205224032.png)
 
 
 

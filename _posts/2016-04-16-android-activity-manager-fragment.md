@@ -42,7 +42,7 @@ Fragment 有着复杂而难以管理的生命周期，很多人不喜欢，但�
 
 FragmentActivity 类结构图：
 
-![FragmentActivity-UML](http://res.oncelee.com/assets/img/20160416/Fragment-souce-uml.JPG)
+![FragmentActivity-UML](https://file.oncelee.com/assets/img/20160416/Fragment-souce-uml.JPG)
 
 
 {% highlight java %}
@@ -54,7 +54,7 @@ final FragmentController mFragments = FragmentController.createController(new Ho
 
 FragmentController 为 Fragment宿主FragmentActivity封装FragmentNamager用于管理 Fragment生命周期；FragmentHostCallback 则统一封装了Fragment的管理宿主，持有了FragmentActivity以及Manager引用，提供了管理Fragment的宿主Activity的回调函数，事实上通过实现 FragmentHostCallback 模板可以简单的实现Fragment的管理机制；本质上 Controller依旧是利用 HostCallBack管理Fragment，更多的是提供了一层外部封装,类似Proxy机制；
 
-####  FragmentManagerImp
+#### FragmentManagerImp
 
 首先来看我们熟悉的 FragmentTransaction事务管理：
 
